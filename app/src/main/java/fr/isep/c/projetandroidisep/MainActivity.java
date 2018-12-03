@@ -50,33 +50,23 @@ public class MainActivity extends Activity
 
         setFabAndBnv();
 
-        try  // get already logged in user
-        {
-            Intent intent_from_login_activity = getIntent();
-            Bundle e = intent_from_login_activity.getExtras();
-            String name = e.getString("name");
+/*
+        Intent intent_from_login_activity = getIntent();
+        Bundle extras = intent_from_login_activity.getExtras();
+        String name = extras.getString("name");
 
-            Toast.makeText(getApplicationContext(),
-                    "Welcome back " + name + " ! :)", Toast.LENGTH_SHORT).show();
-        }
-        catch (NullPointerException npe) // start login activity
-        {
-            Intent intent_to_login_activity = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent_to_login_activity);
-        }
+        Toast.makeText(getApplicationContext(),
+                "Welcome back " + name + " ! :)", Toast.LENGTH_SHORT).show();
+*/
 
 
         // test
        // parseRecette.execute();
     }
 
-    @Override
-    public void onBackPressed() {
-        ///
-    }
 
 
-    public void setFabAndBnv() {
+    private void setFabAndBnv() {
         // sets default fab action
         fab = findViewById(R.id.fab);
         setFloatingActionButton_recipes();

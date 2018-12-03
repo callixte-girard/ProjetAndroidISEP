@@ -1,5 +1,7 @@
 package fr.isep.c.projetandroidisep.login;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +26,7 @@ public class LoginActivity extends AppCompatActivity
     private static Fragment frag_register = new FragRegister();
     private static Fragment frag_forgot_password = new FragForgotPassword();
 
+
     /* LoginActivity #TO-DO :
     - Instantier une seule Fragment et l'appeler directement
     - [FragForgotPswd] rajouter envoi mail réel (attemptUserPasswordRecovery)
@@ -36,15 +39,53 @@ public class LoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        this.toFragLogin();
+        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+        boolean is_logged = sp.getBoolean("logged", false);
+
+        if (is_logged) {
+            this.transferToMainActivity();
+        } else {
+            this.toFragLogin();
+        }
     }
 
-    /*
+/*
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         // handle action here
+        Fragment current_frag = frag_manager.getFragments().get(0);
+        Log.d("current_frag", String.valueOf(current_frag.getClass()));
+
+        if (current_frag.getClass() == FragLogin.class) {
+
+        } else if (current_frag.getClass() == FragRegister.class) {
+            toFragLogin();
+
+        } else if (current_frag.getClass() == FragForgotPassword.class) {
+            toFragLogin();
+
+        }
     }
-    */
+*/
+
+    protected void transferToMainActivity()
+    {
+        ///////// perform transfer to main activity
+        Intent intent_to_main_activity = new Intent(this, MainActivity.class);
+        startActivity(intent_to_main_activity);
+
+        // save logged in status in sharedprefs
+        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+        sp.edit()
+                .putBoolean("logged", true)
+        //        .putString("user_name", u.getName())
+        .apply();
+
+        // kill process for it not to come back after login completed
+        finish();
+    }
+
 
     protected void toFragLogin() {
         frag_manager

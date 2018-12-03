@@ -66,13 +66,7 @@ public class FragLogin extends Fragment implements View.OnClickListener
 
                 if (matching_user != null)  // si le login a été effectué avec succès
                 {
-                    ///////// perform transfer to main activity
-                    //Intent intent_to_main_activity = new Intent(getActivity(), MainActivity.class);
-                    Intent intent_to_main_activity = new Intent(getActivity(), MainActivity.class);
-
-                    intent_to_main_activity.putExtra("name", matching_user.getName());
-                    //intent_to_main_activity.putExtra("email", matching_user.getEmail());
-                    startActivity(intent_to_main_activity);
+                    mother_activity.transferToMainActivity();
                 }
                 break;
 
