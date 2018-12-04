@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -35,12 +37,16 @@ import fr.isep.c.projetandroidisep.login.LoginActivity;
 import fr.isep.c.projetandroidisep.parseRecette.*;
 
 
-public class MainActivity extends Activity
+public class MainActivity extends AppCompatActivity
 {
-
     private BottomNavigationView bnv ;
-    private FloatingActionButton fab ;
-    private TextView mTextMessage;
+
+    private FragmentManager frag_manager = getSupportFragmentManager();
+
+    private Fragment frag_search_recipe = new FragSearchRecipe();
+    private Fragment frag_my_recipes = new FragMyRecipes();
+    private Fragment frag_my_shopping_lists = new FragMyShoppingLists();
+    private Fragment frag_user = new FragUser();
 
 
     @Override
@@ -48,7 +54,8 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setFabAndBnv();
+        setBottomNavigationDrawer();
+
 
 /*
         Intent intent_from_login_activity = getIntent();
@@ -59,17 +66,14 @@ public class MainActivity extends Activity
                 "Welcome back " + name + " ! :)", Toast.LENGTH_SHORT).show();
 */
 
-
-        // test
-       // parseRecette.execute();
+        ///
     }
 
 
 
-    private void setFabAndBnv() {
-        // sets default fab action
-        fab = findViewById(R.id.fab);
-        setFloatingActionButton_recipes();
+    private void setBottomNavigationDrawer() {
+        // set default bnv item action
+        displayFrag_searchRecipe();
 
         // sets fab action button
         bnv = findViewById(R.id.navigation);
@@ -83,22 +87,22 @@ public class MainActivity extends Activity
                         int id = item.getItemId();
 
                         if (id == R.id.nav_search_recipe) {
-                            setFloatingActionButton_recipes();
+                            displayFrag_searchRecipe();
                             Log.d("bnv", "search_recipe");
                             return true ;
                         }
                         else if (id == R.id.nav_my_recipes) {
-                            setFloatingActionButton_shopping();
+                            displayFrag_myRecipes();
                             Log.d("bnv", "my_recipes");
                             return true ;
                         }
                         else if (id == R.id.nav_my_shopping_lists) {
-                            setFloatingActionButton_user();
+                            displayFrag_myShoppingLists();
                             Log.d("bnv", "my_shopping_lists");
                             return true ;
                         }
                         else if (id == R.id.nav_user) {
-                            setFloatingActionButton_user();
+                            displayFrag_user();
                             Log.d("bnv", "user");
                             return true ;
                         }
@@ -109,36 +113,44 @@ public class MainActivity extends Activity
                 });
     }
 
-
-    private void setFloatingActionButton_recipes() {
-        //fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("fab", "recipes");
-            }
-        });
+    private void displayFrag_searchRecipe()
+    {
+        frag_manager
+                .beginTransaction()
+                .replace(R.id.frame_container, frag_search_recipe)
+                .commit();
+        
+        
     }
 
-    private void setFloatingActionButton_shopping() {
-        //fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Log.d("fab", "shopping");
-            }
-        });
+    private void displayFrag_myRecipes()
+    {
+        frag_manager
+                .beginTransaction()
+                .replace(R.id.frame_container, frag_my_recipes)
+                .commit();
+
+
     }
 
-    private void setFloatingActionButton_user() {
-        //fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("fab", "user");
-            }
-        });
+    private void displayFrag_myShoppingLists()
+    {
+        frag_manager
+                .beginTransaction()
+                .replace(R.id.frame_container, frag_my_shopping_lists)
+                .commit();
+
+
+    }
+
+    private void displayFrag_user()
+    {
+        frag_manager
+                .beginTransaction()
+                .replace(R.id.frame_container, frag_user)
+                .commit();
+
     }
 
 }

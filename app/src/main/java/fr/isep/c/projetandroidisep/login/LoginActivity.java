@@ -40,9 +40,10 @@ public class LoginActivity extends AppCompatActivity
         setContentView(R.layout.activity_login);
 
         SharedPreferences sp = getPreferences(MODE_PRIVATE);
-        boolean is_logged = sp.getBoolean("logged", false);
+        boolean logged = sp.getBoolean("logged", false);
+        Log.d("logged", String.valueOf(logged));
 
-        if (is_logged) {
+        if (logged) {
             this.transferToMainActivity();
         } else {
             this.toFragLogin();
