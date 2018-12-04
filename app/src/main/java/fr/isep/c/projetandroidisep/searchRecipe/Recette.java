@@ -1,10 +1,18 @@
-package fr.isep.c.projetandroidisep.parseRecette;
+package fr.isep.c.projetandroidisep.searchRecipe;
 
-import fr.isep.c.projetandroidisep.myClasses.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+
+import fr.isep.c.projetandroidisep.myClasses.*;
+import fr.isep.c.projetandroidisep.parseAlim.*;
+import fr.isep.c.projetandroidisep.searchRecipe.*;
+//import fr.isep.c.projetandroidisep.myRecipes.*;
+//import fr.isep.c.projetandroidisep.myShoppingLists.*;
+
+
 
 public class Recette implements Serializable
 {
@@ -18,7 +26,7 @@ public class Recette implements Serializable
 	private String url ;
 	private String instructions ;
 	private String img_url ;
-	private final LocalDateTime date_ajout ;
+	private LocalDateTime date_ajout ;
 	private double rating = 0 ;
 	private String duration = "?" ;
 	private String type = "" ; // dépend de l'user
@@ -34,32 +42,32 @@ public class Recette implements Serializable
 
 		this.nom = nom ;
 		this.url = url ;
-		this.date_ajout = LocalDateTime.now() ;
+		//this.date_ajout = LocalDateTime.now() ;
 	}
 	
 
 	public void dispAttr(boolean disp_ingr)
 	{
-		System.out.print("# Recette N°" + this.id);
-		System.out.print(" | " + ParseText.formatLocalDateTime(this.date_ajout));
+		//System.out.print("# Recette N°" + this.id);
+		//System.out.print(" | " + ParseText.formatLocalDateTime(this.date_ajout));
 
 		if (!this.type.isEmpty())
 		{
-			//System.out.print(" | " + this.type);
+			////System.out.print(" | " + this.type);
 		}
 
-		//System.out.print(" | Durée : " + this.duration);
+		////System.out.print(" | Durée : " + this.duration);
 
 		if (this.rating != 0)
 		{
-			//System.out.print(" | " + this.rating);
+			////System.out.print(" | " + this.rating);
 		}
 
-		System.out.print(" | " + this.nom);
-		System.out.print(" | " + this.url);
+		//System.out.print(" | " + this.nom);
+		//System.out.print(" | " + this.url);
 
-		System.out.println();
-		System.out.println(Disp.line);
+		////System.out.println();
+		////System.out.println(Disp.line);
 
 		if (disp_ingr)
 		{
@@ -67,7 +75,7 @@ public class Recette implements Serializable
 			{
 				ing.dispQty();
 			}
-			System.out.println(Disp.star);
+			////System.out.println(Disp.star);
 		}
 	}
 	

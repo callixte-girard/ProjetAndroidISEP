@@ -24,11 +24,11 @@ public class ParseHtml extends ParseText
 	{
 		try
 		{
-			String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36";
+			//String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36";
 
 			Document doc = Jsoup.connect(url)
 					.maxBodySize(6500000)
-					.userAgent(userAgent)
+				//	.userAgent(userAgent)
 					.get();
 
 			return doc ;
@@ -36,7 +36,7 @@ public class ParseHtml extends ParseText
 
 		catch (IOException e)
 		{
-			System.out.println("!!! ERROR WHILE FETCHING FILE !!!");
+			//System.out.println("!!! ERROR WHILE FETCHING FILE !!!");
 			e.printStackTrace();
 			return null ;
 		}

@@ -1,40 +1,19 @@
 package fr.isep.c.projetandroidisep;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import fr.isep.c.projetandroidisep.parseAlim.*;
+import fr.isep.c.projetandroidisep.searchRecipe.*;
+//import fr.isep.c.projetandroidisep.myRecipes.*;
+//import fr.isep.c.projetandroidisep.myShoppingLists.*;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import fr.isep.c.projetandroidisep.login.LoginActivity;
-import fr.isep.c.projetandroidisep.parseRecette.*;
 
 
 public class MainActivity extends AppCompatActivity
