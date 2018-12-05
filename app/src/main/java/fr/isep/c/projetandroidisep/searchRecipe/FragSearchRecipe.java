@@ -4,7 +4,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,24 +35,27 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
     protected final static String URL_SEARCH = "/recettes/recherche.aspx?aqt=" ;
 
     private SearchView search_bar ;
-    private ListView results_list ;
+    private RecyclerView results_list ;
     private FloatingActionButton add_recipe ;
 
     private final int deepness = 0 ; // creuse 2 fois, càd cherche 3 fois.
     private int current_deepness = 0 ;
     private static ArrayList<Recette> all_results = new ArrayList<>();
 
-    View view ;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_search_recipe, container, false);
 
-        results_list = view.findViewById(R.id.results);
-        search_bar = view.findViewById(R.id.search);
+        View view = inflater.inflate(R.layout.fragment_search_recipe, container, false);
 
+        results_list = view.findViewById(R.id.results_list);
+        results_list.setHasFixedSize(false);
+        //results_list.setLayoutManager(new LinearLayoutManager
+        //        (getActivity().getApplicationContext()));
+        //results_list.setAdapter(new Adapter_SearchRecipe());
+
+        search_bar = view.findViewById(R.id.search_bar);
         initSearchBar();
 
         return view ;
@@ -149,8 +156,6 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
         AsyncTask_SearchRecipe task_searchRecipe = new AsyncTask_SearchRecipe();
         task_searchRecipe.setDelegate(this);
         task_searchRecipe.execute(first_url, String.valueOf(current_deepness));
-
-
     }
 
 

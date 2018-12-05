@@ -6,7 +6,9 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.MenuItem;
 
 import fr.isep.c.projetandroidisep.parseAlim.*;
@@ -34,7 +36,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         setBottomNavigationDrawer();
-
 
 /*
         Intent intent_from_login_activity = getIntent();
