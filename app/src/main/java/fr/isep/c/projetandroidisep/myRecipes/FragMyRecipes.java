@@ -1,8 +1,6 @@
 package fr.isep.c.projetandroidisep.myRecipes;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.*;
 import fr.isep.c.projetandroidisep.objects.Recette;
-import fr.isep.c.projetandroidisep.searchRecipe.RecyclerViewAdapter_SearchRecipe;
+import fr.isep.c.projetandroidisep.searchRecipe.Adapter_SearchRecipe;
 
 
 public class FragMyRecipes extends Fragment implements View.OnClickListener
@@ -60,7 +58,7 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
         favorites_list.addItemDecoration(itemDecor);
 
         // custom adapter
-        RecyclerViewAdapter_SearchRecipe adapter = new RecyclerViewAdapter_SearchRecipe
+        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe
                 (getContext(), favorite_recipes);
         favorites_list.setAdapter(adapter);
     }

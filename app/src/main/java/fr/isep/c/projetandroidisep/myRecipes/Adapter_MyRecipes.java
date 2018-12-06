@@ -1,7 +1,6 @@
 package fr.isep.c.projetandroidisep.myRecipes;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -18,13 +17,14 @@ import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.objects.Recette;
 
 
-public class RecyclerViewAdapter_FavoriteRecipes
+public class Adapter_MyRecipes
         extends RecyclerView.Adapter
-            <RecyclerViewAdapter_FavoriteRecipes
+            <Adapter_MyRecipes
                 .RecyclerViewHolder_SearchRecipe>
 {
 
-    static class RecyclerViewHolder_SearchRecipe extends RecyclerView.ViewHolder {
+    static class RecyclerViewHolder_SearchRecipe extends RecyclerView.ViewHolder
+        implements View.OnClickListener {
 
 
         private TextView recipe_name ;
@@ -38,6 +38,15 @@ public class RecyclerViewAdapter_FavoriteRecipes
             recipe_name = view.findViewById(R.id.recipe_name);
             checkbox_delete_from_favorites = view.findViewById(R.id.checkbox_delete_from_favorites);
         }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId())
+            {
+                case R.id.checkbox_delete_from_favorites:
+                    Log.d("test", "my_recipes");
+            }
+        }
     }
 
     private Context context ;
@@ -45,7 +54,7 @@ public class RecyclerViewAdapter_FavoriteRecipes
     private SparseBooleanArray mSelectedItemsIds;
 
 
-    public RecyclerViewAdapter_FavoriteRecipes(Context context, ArrayList<Recette> al)
+    public Adapter_MyRecipes(Context context, ArrayList<Recette> al)
     {
         this.al = al;
         this.context = context;
@@ -68,7 +77,7 @@ public class RecyclerViewAdapter_FavoriteRecipes
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addOrRemoveFromFavoriteRecipes(i, !mSelectedItemsIds.get(i));
+
             }
         });
 
@@ -95,10 +104,13 @@ public class RecyclerViewAdapter_FavoriteRecipes
                     // change icon : delete
 
                 }
+
+                //notifyDataSetChanged();
             }
         });
-
     }
+
+
 
     public Recette getRecetteAtPosition(int position) {
         return al.get(position);

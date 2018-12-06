@@ -18,12 +18,14 @@ import fr.isep.c.projetandroidisep.myRecipes.FragMyRecipes;
 import fr.isep.c.projetandroidisep.objects.Recette;
 
 
-public class RecyclerViewAdapter_SearchRecipe
+public class Adapter_SearchRecipe
         extends RecyclerView.Adapter
-            <RecyclerViewAdapter_SearchRecipe
+            <Adapter_SearchRecipe
                 .RecyclerViewHolder_SearchRecipe>
 {
-    static class RecyclerViewHolder_SearchRecipe extends RecyclerView.ViewHolder {
+    static class RecyclerViewHolder_SearchRecipe extends RecyclerView.ViewHolder
+        implements View.OnClickListener
+    {
 
         private TextView recipe_name ;
         private CheckBox checkbox_add_to_favorites ;
@@ -35,6 +37,16 @@ public class RecyclerViewAdapter_SearchRecipe
             recipe_name = view.findViewById(R.id.recipe_name);
             checkbox_add_to_favorites = view.findViewById(R.id.checkbox_add_to_favorites);
         }
+
+        @Override
+        public void onClick(View view)
+        {
+            switch (view.getId())
+            {
+                case R.id.checkbox_add_to_favorites:
+                    Log.d("test", "search_recipe");
+            }
+        }
     }
 
     private Context context ;
@@ -42,7 +54,7 @@ public class RecyclerViewAdapter_SearchRecipe
     private SparseBooleanArray bool_arr;
 
 
-    public RecyclerViewAdapter_SearchRecipe(Context context, ArrayList<Recette> al)
+    public Adapter_SearchRecipe(Context context, ArrayList<Recette> al)
     {
         this.al = al;
         this.context = context;
@@ -100,9 +112,10 @@ public class RecyclerViewAdapter_SearchRecipe
                     // remove from my favorite recipes
                     FragMyRecipes.performDelete(rec);
                 }
+
+                //notifyDataSetChanged();
             }
         });
-
     }
 
     public Recette getRecetteAtPosition(int position) {

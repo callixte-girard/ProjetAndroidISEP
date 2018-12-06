@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -42,6 +41,7 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
     private static ArrayList<Recette> all_results = new ArrayList<>();
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
@@ -51,8 +51,10 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
         results_list = view.findViewById(R.id.results_list);
         results_number = view.findViewById(R.id.results_number);
 
-        initResultsList();
         initSearchBar();
+        initResultsList();
+        if (all_results.size() > 0) updateResultsCount(all_results.size());
+
 
         return view ;
     }
@@ -133,7 +135,10 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
 
                 // reset old recycler view first
                 all_results.clear();
-                //results_list.getAdapter().notifyDataSetChanged();
+                results_list.getAdapter().notifyDataSetChanged();
+
+                // update the reuslts counter to display that searching is occuring
+                results_number.setText("Searching...");
 
                 //// PERFORM SEARCH HERE
                 performSearchFromKeywordsAndDeepness(query);
@@ -167,7 +172,7 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
         results_list.addItemDecoration(itemDecor);
 
         // custom adapter
-        RecyclerViewAdapter_SearchRecipe adapter = new RecyclerViewAdapter_SearchRecipe
+        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe
                 (getContext(), all_results);
         results_list.setAdapter(adapter);
     }
