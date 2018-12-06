@@ -1,6 +1,7 @@
 package fr.isep.c.projetandroidisep.myRecipes;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -22,17 +23,20 @@ public class RecyclerViewAdapter_FavoriteRecipes
             <RecyclerViewAdapter_FavoriteRecipes
                 .RecyclerViewHolder_SearchRecipe>
 {
+
     static class RecyclerViewHolder_SearchRecipe extends RecyclerView.ViewHolder {
 
+
         private TextView recipe_name ;
-        private CheckBox add_to_favorites ;
+        private CheckBox checkbox_delete_from_favorites ;
+
 
         RecyclerViewHolder_SearchRecipe(View view)
         {
             super(view);
 
             recipe_name = view.findViewById(R.id.recipe_name);
-            add_to_favorites = view.findViewById(R.id.add_to_favorites);
+            checkbox_delete_from_favorites = view.findViewById(R.id.checkbox_delete_from_favorites);
         }
     }
 
@@ -68,26 +72,28 @@ public class RecyclerViewAdapter_FavoriteRecipes
             }
         });
 
-        holder.add_to_favorites.setChecked(mSelectedItemsIds.get(i));
-        /*
-        holder.add_to_favorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addOrRemoveFromFavoriteRecipes(i, !mSelectedItemsIds.get(i));
-            }
-        });
-        */
-        holder.add_to_favorites.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.checkbox_delete_from_favorites.setChecked(mSelectedItemsIds.get(i));
+        holder.checkbox_delete_from_favorites.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d(getRecetteAtPosition(i).getNom(), String.valueOf(isChecked));
+
+                Recette rec = getRecetteAtPosition(i);
+
+                Log.d("is_checked",
+                        rec.getNom() + " | " + String.valueOf(isChecked));
 
                 if (isChecked) {
-                    // add to favorite recipes
-                    FragMyRecipes.addToFavorites(getRecetteAtPosition(i));
+
+                    FragMyRecipes.performDelete(rec);
+
+                    // change icon : possibility to revert
+
                 } else {
-                    // remove from my favorite recipes
-                    FragMyRecipes.removeFromFavorites(getRecetteAtPosition(i));
+                    // adds back recipe (revert deletion)
+                    FragMyRecipes.performAdd(rec);
+
+                    // change icon : delete
+
                 }
             }
         });

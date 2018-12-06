@@ -131,7 +131,9 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
             public boolean onQueryTextSubmit(String query) {
                 //Log.d("query_submit", query);
 
+                // reset old recycler view first
                 all_results.clear();
+                //results_list.getAdapter().notifyDataSetChanged();
 
                 //// PERFORM SEARCH HERE
                 performSearchFromKeywordsAndDeepness(query);

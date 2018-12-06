@@ -26,27 +26,27 @@ public class RecyclerViewAdapter_SearchRecipe
     static class RecyclerViewHolder_SearchRecipe extends RecyclerView.ViewHolder {
 
         private TextView recipe_name ;
-        private CheckBox add_to_favorites ;
+        private CheckBox checkbox_add_to_favorites ;
 
         RecyclerViewHolder_SearchRecipe(View view)
         {
             super(view);
 
             recipe_name = view.findViewById(R.id.recipe_name);
-            add_to_favorites = view.findViewById(R.id.add_to_favorites);
+            checkbox_add_to_favorites = view.findViewById(R.id.checkbox_add_to_favorites);
         }
     }
 
     private Context context ;
     private ArrayList<Recette> al ;
-    private SparseBooleanArray mSelectedItemsIds;
+    private SparseBooleanArray bool_arr;
 
 
     public RecyclerViewAdapter_SearchRecipe(Context context, ArrayList<Recette> al)
     {
         this.al = al;
         this.context = context;
-        mSelectedItemsIds = new SparseBooleanArray();
+        bool_arr = new SparseBooleanArray();
     }
 
     @Override
@@ -55,8 +55,22 @@ public class RecyclerViewAdapter_SearchRecipe
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.list_row_search_layout, viewGroup, false);
 
+        // pre-checks recipes that are already present in favorites
+        bool_arr = preCheckAlreadyFavoriteRecipes(bool_arr);
+
         return new RecyclerViewHolder_SearchRecipe(v);
     }
+
+    private SparseBooleanArray preCheckAlreadyFavoriteRecipes(SparseBooleanArray bool_arr)
+    {
+        for (int i=0 ; i < getItemCount() ; i++)
+        {
+            Recette rec = getRecetteAtPosition(i);
+            bool_arr.put(i, rec.alreadyExists(FragMyRecipes.getFavoriteRecipes()));
+        }
+        return bool_arr ;
+    }
+
 
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_SearchRecipe holder, final int i)
@@ -65,30 +79,26 @@ public class RecyclerViewAdapter_SearchRecipe
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addOrRemoveFromFavoriteRecipes(i, !mSelectedItemsIds.get(i));
+                /////// action that happens when the NAME is pressed (not the checkbox)
             }
         });
 
-        holder.add_to_favorites.setChecked(mSelectedItemsIds.get(i));
-        /*
-        holder.add_to_favorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addOrRemoveFromFavoriteRecipes(i, !mSelectedItemsIds.get(i));
-            }
-        });
-        */
-        holder.add_to_favorites.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.checkbox_add_to_favorites.setChecked(bool_arr.get(i));
+        holder.checkbox_add_to_favorites.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d(getRecetteAtPosition(i).getNom(), String.valueOf(isChecked));
+
+                Recette rec = getRecetteAtPosition(i);
+
+                Log.d("is_checked",
+                        rec.getNom() + " | " + String.valueOf(isChecked));
 
                 if (isChecked) {
                     // add to favorite recipes
-                    FragMyRecipes.addToFavorites(getRecetteAtPosition(i));
+                    FragMyRecipes.performAdd(rec);
                 } else {
                     // remove from my favorite recipes
-                    FragMyRecipes.removeFromFavorites(getRecetteAtPosition(i));
+                    FragMyRecipes.performDelete(rec);
                 }
             }
         });
@@ -107,21 +117,21 @@ public class RecyclerViewAdapter_SearchRecipe
     /**
      * Check the Checkbox if not checked
      **/
-    public void addOrRemoveFromFavoriteRecipes(int position, boolean already_favorite)
+    private void addOrRemoveFromFavoriteRecipes(int position, boolean already_favorite)
     {
         Recette rec_to_add_or_remove = getRecetteAtPosition(position);
 
         if (already_favorite) {
-            mSelectedItemsIds.put(position, true);
+            bool_arr.put(position, true);
             // add recipe to favorites
 
         } else {
-            mSelectedItemsIds.delete(position);
+            bool_arr.delete(position);
             // remove recipe from favorites
             ////
         }
 
-        //Log.d("add_to_recipes", String.valueOf(mSelectedItemsIds.get(position)));
+        //Log.d("add_to_recipes", String.valueOf(bool_arr.get(position)));
         notifyDataSetChanged();
     }
 
@@ -129,6 +139,6 @@ public class RecyclerViewAdapter_SearchRecipe
      * Return the selected Checkbox IDs
      **/
     public SparseBooleanArray getSelectedIds() {
-        return mSelectedItemsIds;
+        return bool_arr;
     }
 }

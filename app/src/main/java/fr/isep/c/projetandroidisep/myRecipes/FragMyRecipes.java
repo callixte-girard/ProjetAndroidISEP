@@ -2,6 +2,7 @@ package fr.isep.c.projetandroidisep.myRecipes;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,9 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
 
 
     private static ArrayList<Recette> favorite_recipes = new ArrayList<>();
+    private static ArrayList<Recette> deleted_recipes_history = new ArrayList<>();
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
@@ -62,31 +66,59 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
     }
 
 
+    public static void performAdd(Recette rec_to_add)
+    {
+        boolean success = addToFavorites(rec_to_add);
 
-    public static boolean addToFavorites(Recette rec)
+        if (success) {
+            Log.d("favorites_add", rec_to_add.getNom() + " : " + "success");
+        } else  {
+            Log.d("favorites_add", rec_to_add.getNom() + " : " + "fail");
+        }
+    }
+
+    public static void performDelete(Recette rec_to_delete)
+    {
+        // first records it into history
+        //deleted_recipes_history.add(rec_to_delete);
+
+        // remove from my favorite recipes
+        boolean success = removeFromFavorites(rec_to_delete);
+
+        if (success) {
+            Log.d("favorites_remove", rec_to_delete.getNom() + " : " + "success");
+        } else  {
+            Log.d("favorites_remove", rec_to_delete.getNom() + " : " + "fail");
+        }
+    }
+
+
+    private static boolean addToFavorites(Recette rec)
     {
         // returns result state.
         if (!rec.alreadyExists(favorite_recipes)) {
             favorite_recipes.add(rec);
-            Log.d("favorites_add", rec.getNom() + " : " + "success");
             return true;
         } else {
-            Log.d("favorites_add", rec.getNom() + " : " + "fail");
             return false;
         }
     }
 
-    public static boolean removeFromFavorites(Recette rec)
+    private static boolean removeFromFavorites(Recette rec)
     {
         // returns result state.
         if (rec.alreadyExists(favorite_recipes)) {
             favorite_recipes.remove(rec);
-            Log.d("favorites_remove", rec.getNom() + " : " + "success");
             return true ;
         } else {
-            Log.d("favorites_remove", rec.getNom() + " : " + "fail");
             return false ;
         }
+
+    }
+
+
+    public static ArrayList<Recette> getFavoriteRecipes() {
+        return favorite_recipes ;
     }
 
 

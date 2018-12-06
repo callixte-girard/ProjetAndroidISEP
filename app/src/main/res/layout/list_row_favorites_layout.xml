@@ -15,8 +15,8 @@
         android:padding="0dp"
         android:textColor="@android:color/black" />
 
-    <Button
-        android:id="@+id/button_delete_from_favorites"
+    <CheckBox
+        android:id="@+id/checkbox_delete_from_favorites"
         android:layout_width="20pt"
         android:layout_height="20pt" />
 
