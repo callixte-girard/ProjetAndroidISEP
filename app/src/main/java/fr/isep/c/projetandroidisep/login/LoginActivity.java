@@ -1,5 +1,6 @@
 package fr.isep.c.projetandroidisep.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,18 +11,24 @@ import android.util.Log;
 
 //import butterknife.*;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import fr.isep.c.projetandroidisep.*;
 
 
 public class LoginActivity extends AppCompatActivity
 {
-    private FragmentManager frag_manager = getSupportFragmentManager();
 
     protected final static String INVALID_NAME = "Your name or pseudo cannot be empty";
     protected final static String INVALID_EMAIL = "Invalid email, please check";
     protected final static String INVALID_PASSWORD = "Password must be longer than 3 characters";
 
     // ## Keeps the same fragments
+    private FragmentManager frag_manager = getSupportFragmentManager();
     private static Fragment frag_login = new FragLogin();
     private static Fragment frag_register = new FragRegister();
     private static Fragment frag_forgot_password = new FragForgotPassword();
@@ -39,7 +46,7 @@ public class LoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences("pipou", Context.MODE_PRIVATE);
         boolean logged = sp.getBoolean("logged", false);
         Log.d("logged", String.valueOf(logged));
 
@@ -72,16 +79,13 @@ public class LoginActivity extends AppCompatActivity
 
     protected void transferToMainActivity()
     {
+        // save logged in status in sharedprefs
+        SharedPreferences sp = getSharedPreferences("pipou", Context.MODE_PRIVATE);
+        sp.edit().remove("logged").putBoolean("logged", true).apply();
+
         ///////// perform transfer to main activity
         Intent intent_to_main_activity = new Intent(this, MainActivity.class);
         startActivity(intent_to_main_activity);
-
-        // save logged in status in sharedprefs
-        SharedPreferences sp = getPreferences(MODE_PRIVATE);
-        sp.edit()
-                .putBoolean("logged", true)
-        //        .putString("user_name", u.getName())
-        .apply();
 
         // kill process for it not to come back after login completed
         finish();

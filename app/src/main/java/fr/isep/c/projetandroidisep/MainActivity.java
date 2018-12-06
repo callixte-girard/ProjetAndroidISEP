@@ -1,5 +1,8 @@
 package fr.isep.c.projetandroidisep;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
 
+import fr.isep.c.projetandroidisep.login.LoginActivity;
 import fr.isep.c.projetandroidisep.parseAlim.*;
 import fr.isep.c.projetandroidisep.searchRecipe.*;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
@@ -37,6 +41,11 @@ public class MainActivity extends AppCompatActivity
 
         setBottomNavigationDrawer();
 
+        SharedPreferences sp = getSharedPreferences("db", Context.MODE_PRIVATE);
+        boolean logged = sp.getBoolean("logged", false);
+        Log.d("logged_main_activity", String.valueOf(logged));
+
+
 /*
         Intent intent_from_login_activity = getIntent();
         Bundle extras = intent_from_login_activity.getExtras();
@@ -49,6 +58,20 @@ public class MainActivity extends AppCompatActivity
         ///
     }
 
+
+    protected void transferToLoginActivity()
+    {
+        // save logged in status in sharedprefs
+        SharedPreferences sp = getSharedPreferences("pipou", Context.MODE_PRIVATE);
+        sp.edit().remove("logged").putBoolean("logged", false).apply();
+
+        ///////// perform transfer to login activity
+        Intent intent_to_login_activity = new Intent(this, LoginActivity.class);
+        startActivity(intent_to_login_activity);
+
+        // kill process for it not to come back after login completed
+        finish();
+    }
 
 
     private void setBottomNavigationDrawer() {
