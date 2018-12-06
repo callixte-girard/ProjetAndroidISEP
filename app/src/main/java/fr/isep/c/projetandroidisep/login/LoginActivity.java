@@ -11,13 +11,17 @@ import android.util.Log;
 
 //import butterknife.*;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import fr.isep.c.projetandroidisep.*;
+import fr.isep.c.projetandroidisep.R;
 
 
 public class LoginActivity extends AppCompatActivity
@@ -26,6 +30,8 @@ public class LoginActivity extends AppCompatActivity
     protected final static String INVALID_NAME = "Your name or pseudo cannot be empty";
     protected final static String INVALID_EMAIL = "Invalid email, please check";
     protected final static String INVALID_PASSWORD = "Password must be longer than 3 characters";
+
+    protected final static String DATAPATH_USERS = "users/";
 
     // ## Keeps the same fragments
     private FragmentManager frag_manager = getSupportFragmentManager();
@@ -46,6 +52,8 @@ public class LoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //firebaseDBTest();
+
         SharedPreferences sp = getSharedPreferences("pipou", Context.MODE_PRIVATE);
         boolean logged = sp.getBoolean("logged", false);
         Log.d("logged", String.valueOf(logged));
@@ -55,6 +63,8 @@ public class LoginActivity extends AppCompatActivity
         } else {
             this.toFragLogin();
         }
+
+
     }
 
 /*
@@ -76,6 +86,33 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 */
+    private void firebaseDBTest()
+    {
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(DATAPATH_USERS + "user0");
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Log.d("value_event", "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("value_event", "Failed to read value...", error.toException());
+            }
+        });
+
+        //myRef.setValue("Hello, World!");
+
+    }
+
 
     protected void transferToMainActivity()
     {

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.objects.Recette;
+import fr.isep.c.projetandroidisep.objects.User;
 
 
 public class RecyclerViewAdapter_SearchRecipe
@@ -97,7 +98,7 @@ public class RecyclerViewAdapter_SearchRecipe
         if (already_favorite) {
             mSelectedItemsIds.put(position, true);
             // add recipe to favorites
-            ////
+
         } else {
             mSelectedItemsIds.delete(position);
             // remove recipe from favorites

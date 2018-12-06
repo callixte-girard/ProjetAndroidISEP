@@ -29,6 +29,7 @@
         android:id="@+id/results_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_container"
         android:layout_below="@id/results_number"/>
 
     <include

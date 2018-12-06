@@ -41,19 +41,16 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
     private static ArrayList<Recette> all_results = new ArrayList<>();
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
-
         View view = inflater.inflate(R.layout.fragment_search_recipe, container, false);
 
+        search_bar = view.findViewById(R.id.search_bar);
         results_list = view.findViewById(R.id.results_list);
-        results_list.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
-
         results_number = view.findViewById(R.id.results_number);
 
-        search_bar = view.findViewById(R.id.search_bar);
+        initResultsList();
         initSearchBar();
 
         return view ;
@@ -73,9 +70,8 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
             ex.getMessage();
         }
 
-        // update views
+        // update textview that counts results
         updateResultsCount(all_results.size());
-        updateResultsList();
 
         // refait une nouvelle task
         if (current_deepness < deepness)  // ne le fait qu'une fois si deepness = 1
@@ -154,12 +150,15 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
     }
 
 
-    protected void updateResultsList()
+    private void initResultsList()
     {
+        results_list.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
+
         // layout
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         results_list.setLayoutManager(linearLayoutManager);
 
+        // add a line to divide them more clearly
         DividerItemDecoration itemDecor = new DividerItemDecoration
                 (getContext(), linearLayoutManager.getOrientation());
         results_list.addItemDecoration(itemDecor);
@@ -169,6 +168,7 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
                 (getContext(), all_results);
         results_list.setAdapter(adapter);
     }
+
 
 
     protected void updateResultsCount(int number)
