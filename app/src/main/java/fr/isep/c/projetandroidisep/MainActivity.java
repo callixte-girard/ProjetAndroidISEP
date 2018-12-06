@@ -9,12 +9,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.MenuItem;
 
 import fr.isep.c.projetandroidisep.login.LoginActivity;
+import fr.isep.c.projetandroidisep.myRecipes.FragMyRecipes;
 import fr.isep.c.projetandroidisep.searchRecipe.*;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
 //import fr.isep.c.projetandroidisep.myShoppingLists.*;

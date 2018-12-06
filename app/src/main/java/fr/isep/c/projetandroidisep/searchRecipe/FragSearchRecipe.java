@@ -38,6 +38,7 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
 
     private final int deepness = 2 ; // creuse 2 fois, càd cherche 3 fois.
     private int current_deepness = 0 ;
+
     private static ArrayList<Recette> all_results = new ArrayList<>();
 
 

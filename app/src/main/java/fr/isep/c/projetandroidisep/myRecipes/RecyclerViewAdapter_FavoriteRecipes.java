@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.searchRecipe;
+package fr.isep.c.projetandroidisep.myRecipes;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -14,13 +14,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.myRecipes.FragMyRecipes;
 import fr.isep.c.projetandroidisep.objects.Recette;
 
 
-public class RecyclerViewAdapter_SearchRecipe
+public class RecyclerViewAdapter_FavoriteRecipes
         extends RecyclerView.Adapter
-            <RecyclerViewAdapter_SearchRecipe
+            <RecyclerViewAdapter_FavoriteRecipes
                 .RecyclerViewHolder_SearchRecipe>
 {
     static class RecyclerViewHolder_SearchRecipe extends RecyclerView.ViewHolder {
@@ -42,18 +41,18 @@ public class RecyclerViewAdapter_SearchRecipe
     private SparseBooleanArray mSelectedItemsIds;
 
 
-    public RecyclerViewAdapter_SearchRecipe(Context context, ArrayList<Recette> al)
+    public RecyclerViewAdapter_FavoriteRecipes(Context context, ArrayList<Recette> al)
     {
         this.al = al;
         this.context = context;
-        mSelectedItemsIds = new SparseBooleanArray();
+        //mSelectedItemsIds = new SparseBooleanArray();
     }
 
     @Override
     public RecyclerViewHolder_SearchRecipe onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.list_row_search_layout, viewGroup, false);
+                .inflate(R.layout.list_row_favorites_layout, viewGroup, false);
 
         return new RecyclerViewHolder_SearchRecipe(v);
     }

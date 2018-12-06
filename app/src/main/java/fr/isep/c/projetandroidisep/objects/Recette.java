@@ -75,6 +75,15 @@ public class Recette implements Serializable
 			////System.out.println(Disp.star);
 		}
 	}
+
+	public boolean alreadyExists(ArrayList<Recette> al_scan)
+	{
+		for (Recette rec : al_scan) {
+			if (rec.getUrl().equals(this.url)) return true ;
+		}
+		return false ;
+ 	}
+
 	
 	public String getNom()
 	{

@@ -12,9 +12,7 @@
         android:queryHint="Search by ingredients"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/results_list"/>
+        android:layout_alignParentTop="true"/>
 
     <TextView
         android:id="@+id/results_number"
