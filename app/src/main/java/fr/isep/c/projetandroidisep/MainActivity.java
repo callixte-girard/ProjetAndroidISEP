@@ -15,7 +15,6 @@ import android.view.Display;
 import android.view.MenuItem;
 
 import fr.isep.c.projetandroidisep.login.LoginActivity;
-import fr.isep.c.projetandroidisep.parseAlim.*;
 import fr.isep.c.projetandroidisep.searchRecipe.*;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
 //import fr.isep.c.projetandroidisep.myShoppingLists.*;

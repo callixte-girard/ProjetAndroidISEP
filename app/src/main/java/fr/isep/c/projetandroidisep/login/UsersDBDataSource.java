@@ -11,6 +11,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.isep.c.projetandroidisep.objects.User;
+
 public class UsersDBDataSource
 {
     // Champs de la base de données

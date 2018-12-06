@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import fr.isep.c.projetandroidisep.*;
+import fr.isep.c.projetandroidisep.objects.User;
 
 
 public class FragRegister extends Fragment implements View.OnClickListener

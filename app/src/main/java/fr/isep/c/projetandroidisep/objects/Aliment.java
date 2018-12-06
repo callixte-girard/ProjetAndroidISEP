@@ -1,15 +1,9 @@
-package fr.isep.c.projetandroidisep.parseAlim;
+package fr.isep.c.projetandroidisep.objects;
 
 import fr.isep.c.projetandroidisep.myClasses.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.io.Serializable;
-import java.time.LocalDate;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
 
 
 public class Aliment implements Serializable

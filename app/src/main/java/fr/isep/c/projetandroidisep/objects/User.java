@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.login;
+package fr.isep.c.projetandroidisep.objects;
 
 public class User
 {

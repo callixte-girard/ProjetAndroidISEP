@@ -1,31 +1,28 @@
 package fr.isep.c.projetandroidisep.searchRecipe;
 
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
-import fr.isep.c.projetandroidisep.parseAlim.*;
+import fr.isep.c.projetandroidisep.objects.Recette;
 
 
 
@@ -36,11 +33,13 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
 
     private SearchView search_bar ;
     private RecyclerView results_list ;
+    private TextView results_number ;
     private FloatingActionButton add_recipe ;
 
-    private final int deepness = 0 ; // creuse 2 fois, càd cherche 3 fois.
+    private final int deepness = 2 ; // creuse 2 fois, càd cherche 3 fois.
     private int current_deepness = 0 ;
     private static ArrayList<Recette> all_results = new ArrayList<>();
+
 
 
     @Override
@@ -50,10 +49,9 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
         View view = inflater.inflate(R.layout.fragment_search_recipe, container, false);
 
         results_list = view.findViewById(R.id.results_list);
-        results_list.setHasFixedSize(false);
-        //results_list.setLayoutManager(new LinearLayoutManager
-        //        (getActivity().getApplicationContext()));
-        //results_list.setAdapter(new Adapter_SearchRecipe());
+        results_list.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
+
+        results_number = view.findViewById(R.id.results_number);
 
         search_bar = view.findViewById(R.id.search_bar);
         initSearchBar();
@@ -66,11 +64,18 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
     public void processFinish(Document doc)
     {
         // parse et ajoute les recettes aux résultats
-        all_results.addAll(fetchRecetteFromURLAsDocument(doc));
-        Log.d("results", String.valueOf(all_results.size()));
+        try
+        {
+            all_results.addAll(fetchRecetteFromURLAsDocument(doc));
+            Log.d("results", String.valueOf(all_results.size()));
+        }
+        catch (Exception ex) {
+            ex.getMessage();
+        }
 
         // update views
-        updateList();
+        updateResultsCount(all_results.size());
+        updateResultsList();
 
         // refait une nouvelle task
         if (current_deepness < deepness)  // ne le fait qu'une fois si deepness = 1
@@ -113,8 +118,17 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
 
     private void initSearchBar()
     {
+        // make it fully visible
         search_bar.setIconifiedByDefault(false);
 
+        // change text color to white
+        int id = search_bar.getContext()
+                .getResources()
+                .getIdentifier("android:id/search_src_text", null, null);
+        TextView query_field = search_bar.findViewById(id);
+        query_field.setTextColor(Color.WHITE);
+
+        // set method when search pressed
         search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -140,9 +154,27 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
     }
 
 
-    protected void updateList()
+    protected void updateResultsList()
     {
+        // layout
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        results_list.setLayoutManager(linearLayoutManager);
 
+        DividerItemDecoration itemDecor = new DividerItemDecoration
+                (getContext(), linearLayoutManager.getOrientation());
+        results_list.addItemDecoration(itemDecor);
+
+        // custom adapter
+        RecyclerViewAdapter_SearchRecipe adapter = new RecyclerViewAdapter_SearchRecipe
+                (getContext(), all_results);
+        results_list.setAdapter(adapter);
+    }
+
+
+    protected void updateResultsCount(int number)
+    {
+        String nb_res = String.valueOf(number) + " results";
+        results_number.setText(nb_res);
     }
 
 

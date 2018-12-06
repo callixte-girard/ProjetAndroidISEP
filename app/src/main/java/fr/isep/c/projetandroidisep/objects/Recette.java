@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.searchRecipe;
+package fr.isep.c.projetandroidisep.objects;
 
 
 import java.io.Serializable;
@@ -6,9 +6,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 
-import fr.isep.c.projetandroidisep.myClasses.*;
-import fr.isep.c.projetandroidisep.parseAlim.*;
-import fr.isep.c.projetandroidisep.searchRecipe.*;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
 //import fr.isep.c.projetandroidisep.myShoppingLists.*;
 
@@ -33,7 +30,7 @@ public class Recette implements Serializable
 	private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>() ;
 
 
-	protected Recette(String nom
+	public Recette(String nom
 			, String url
 			)
 	{

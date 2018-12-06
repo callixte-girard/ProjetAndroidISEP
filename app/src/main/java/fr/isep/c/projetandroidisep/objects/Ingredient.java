@@ -1,14 +1,11 @@
-package fr.isep.c.projetandroidisep.searchRecipe;
+package fr.isep.c.projetandroidisep.objects;
 
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
 import fr.isep.c.projetandroidisep.myClasses.*;
-import fr.isep.c.projetandroidisep.parseAlim.*;
-import fr.isep.c.projetandroidisep.searchRecipe.*;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
 //import fr.isep.c.projetandroidisep.myShoppingLists.*;
 
