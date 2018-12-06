@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,18 +128,24 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
         TextView query_field = search_bar.findViewById(id);
         query_field.setTextColor(Color.WHITE);
 
+        search_bar.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                // reset all results list
+                return false;
+            }
+        });
+
         // set method when search pressed
         search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 //Log.d("query_submit", query);
 
-                // reset old recycler view first
+                // reset all results list
                 all_results.clear();
-                results_list.getAdapter().notifyDataSetChanged();
-
-                // update the reuslts counter to display that searching is occuring
                 results_number.setText("Searching...");
+                results_list.getAdapter().notifyDataSetChanged();
 
                 //// PERFORM SEARCH HERE
                 performSearchFromKeywordsAndDeepness(query);
@@ -152,6 +159,14 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
             @Override
             public boolean onQueryTextChange(String newText) {
                 //Log.d("query_change", newText);
+
+                if (TextUtils.isEmpty(newText)) {
+                    //Text is cleared, do your thing
+                    all_results.clear();
+                    results_number.setText("");
+                    results_list.getAdapter().notifyDataSetChanged();
+                }
+
                 return false;
             }
         });
@@ -244,6 +259,10 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
         }
 
         return result;
+    }
+
+    public static ArrayList<Recette> getSearchResults() {
+        return all_results ;
     }
 
 }

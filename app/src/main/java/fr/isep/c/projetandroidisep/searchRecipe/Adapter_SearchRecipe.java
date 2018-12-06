@@ -18,8 +18,7 @@ import fr.isep.c.projetandroidisep.myRecipes.FragMyRecipes;
 import fr.isep.c.projetandroidisep.objects.Recette;
 
 
-public class Adapter_SearchRecipe
-        extends RecyclerView.Adapter
+public class Adapter_SearchRecipe extends RecyclerView.Adapter
             <Adapter_SearchRecipe
                 .RecyclerViewHolder_SearchRecipe>
 {
@@ -68,7 +67,7 @@ public class Adapter_SearchRecipe
                 .inflate(R.layout.list_row_search_layout, viewGroup, false);
 
         // pre-checks recipes that are already present in favorites
-        bool_arr = preCheckAlreadyFavoriteRecipes(bool_arr);
+        //bool_arr = preCheckAlreadyFavoriteRecipes(bool_arr);
 
         return new RecyclerViewHolder_SearchRecipe(v);
     }
@@ -95,8 +94,13 @@ public class Adapter_SearchRecipe
             }
         });
 
-        holder.checkbox_add_to_favorites.setChecked(bool_arr.get(i));
-        holder.checkbox_add_to_favorites.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Recette rec = FragSearchRecipe.getSearchResults().get(i);
+        boolean already_favorite = rec.alreadyExists(FragMyRecipes.getFavoriteRecipes()) ;
+        Log.d(rec.getUrl(), String.valueOf(already_favorite));
+
+        holder.checkbox_add_to_favorites.setChecked(already_favorite);
+        holder.checkbox_add_to_favorites.setOnCheckedChangeListener
+                (new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 

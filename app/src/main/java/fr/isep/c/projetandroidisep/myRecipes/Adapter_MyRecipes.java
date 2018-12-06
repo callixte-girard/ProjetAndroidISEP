@@ -15,15 +15,15 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.objects.Recette;
+import fr.isep.c.projetandroidisep.searchRecipe.FragSearchRecipe;
 
 
-public class Adapter_MyRecipes
-        extends RecyclerView.Adapter
+public class Adapter_MyRecipes extends RecyclerView.Adapter
             <Adapter_MyRecipes
-                .RecyclerViewHolder_SearchRecipe>
+                .RecyclerViewHolder_MyRecipes>
 {
 
-    static class RecyclerViewHolder_SearchRecipe extends RecyclerView.ViewHolder
+    static class RecyclerViewHolder_MyRecipes extends RecyclerView.ViewHolder
         implements View.OnClickListener {
 
 
@@ -31,7 +31,7 @@ public class Adapter_MyRecipes
         private CheckBox checkbox_delete_from_favorites ;
 
 
-        RecyclerViewHolder_SearchRecipe(View view)
+        RecyclerViewHolder_MyRecipes(View view)
         {
             super(view);
 
@@ -51,27 +51,25 @@ public class Adapter_MyRecipes
 
     private Context context ;
     private ArrayList<Recette> al ;
-    private SparseBooleanArray mSelectedItemsIds;
 
 
     public Adapter_MyRecipes(Context context, ArrayList<Recette> al)
     {
         this.al = al;
         this.context = context;
-        //mSelectedItemsIds = new SparseBooleanArray();
     }
 
     @Override
-    public RecyclerViewHolder_SearchRecipe onCreateViewHolder(ViewGroup viewGroup, int i)
+    public RecyclerViewHolder_MyRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.list_row_favorites_layout, viewGroup, false);
 
-        return new RecyclerViewHolder_SearchRecipe(v);
+        return new RecyclerViewHolder_MyRecipes(v);
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder_SearchRecipe holder, final int i)
+    public void onBindViewHolder(final RecyclerViewHolder_MyRecipes holder, final int i)
     {
         holder.recipe_name.setText(al.get(i).getNom());
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
@@ -81,17 +79,22 @@ public class Adapter_MyRecipes
             }
         });
 
-        holder.checkbox_delete_from_favorites.setChecked(mSelectedItemsIds.get(i));
-        holder.checkbox_delete_from_favorites.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Recette rec = FragMyRecipes.getFavoriteRecipes().get(i);
+        boolean already_favorite = rec.alreadyExists(FragMyRecipes.getFavoriteRecipes()) ;
+        //Log.d(rec.getUrl(), String.valueOf(already_favorite));
+
+        holder.checkbox_delete_from_favorites.setChecked(already_favorite);
+        holder.checkbox_delete_from_favorites.setOnCheckedChangeListener
+                (new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                Recette rec = getRecetteAtPosition(i);
+                Recette rec = FragMyRecipes.getFavoriteRecipes().get(i);
 
                 Log.d("is_checked",
                         rec.getNom() + " | " + String.valueOf(isChecked));
 
-                if (isChecked) {
+                if (!isChecked) {
 
                     FragMyRecipes.performDelete(rec);
 
@@ -121,31 +124,4 @@ public class Adapter_MyRecipes
         return (null != al ? al.size() : 0);
     }
 
-    /**
-     * Check the Checkbox if not checked
-     **/
-    public void addOrRemoveFromFavoriteRecipes(int position, boolean already_favorite)
-    {
-        Recette rec_to_add_or_remove = getRecetteAtPosition(position);
-
-        if (already_favorite) {
-            mSelectedItemsIds.put(position, true);
-            // add recipe to favorites
-
-        } else {
-            mSelectedItemsIds.delete(position);
-            // remove recipe from favorites
-            ////
-        }
-
-        //Log.d("add_to_recipes", String.valueOf(mSelectedItemsIds.get(position)));
-        notifyDataSetChanged();
-    }
-
-    /**
-     * Return the selected Checkbox IDs
-     **/
-    public SparseBooleanArray getSelectedIds() {
-        return mSelectedItemsIds;
-    }
 }
