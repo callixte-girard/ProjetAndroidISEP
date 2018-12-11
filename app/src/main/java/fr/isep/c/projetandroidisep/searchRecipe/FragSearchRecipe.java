@@ -22,6 +22,7 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
 import fr.isep.c.projetandroidisep.objects.Recette;
 
 

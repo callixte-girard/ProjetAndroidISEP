@@ -4,6 +4,7 @@ package fr.isep.c.projetandroidisep.objects;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 //import fr.isep.c.projetandroidisep.myRecipes.*;
@@ -40,6 +41,15 @@ public class Recette implements Serializable
 		this.nom = nom ;
 		this.url = url ;
 		//this.date_ajout = LocalDateTime.now() ;
+	}
+
+
+	public static void addToFavorites(Recette rec) {
+		al.add(rec);
+	}
+
+	public static void removeFromFavorites(Recette rec) {
+		al.remove(rec);
 	}
 	
 

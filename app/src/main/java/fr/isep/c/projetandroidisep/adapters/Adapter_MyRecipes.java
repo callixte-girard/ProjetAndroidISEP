@@ -1,9 +1,8 @@
-package fr.isep.c.projetandroidisep.myRecipes;
+package fr.isep.c.projetandroidisep.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.myRecipes.FragMyRecipes;
 import fr.isep.c.projetandroidisep.objects.Recette;
-import fr.isep.c.projetandroidisep.searchRecipe.FragSearchRecipe;
 
 
 public class Adapter_MyRecipes extends RecyclerView.Adapter
@@ -96,13 +95,15 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
 
                 if (!isChecked) {
 
-                    FragMyRecipes.performDelete(rec);
+                    //FragMyRecipes.performDelete(rec);
+                    Recette.addToFavorites(rec);
 
                     // change icon : possibility to revert
 
                 } else {
                     // adds back recipe (revert deletion)
-                    FragMyRecipes.performAdd(rec);
+                    //FragMyRecipes.performAdd(rec);
+                    Recette.removeFromFavorites(rec);
 
                     // change icon : delete
 

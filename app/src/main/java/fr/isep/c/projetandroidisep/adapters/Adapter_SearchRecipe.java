@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.searchRecipe;
+package fr.isep.c.projetandroidisep.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.myRecipes.FragMyRecipes;
 import fr.isep.c.projetandroidisep.objects.Recette;
+import fr.isep.c.projetandroidisep.searchRecipe.FragSearchRecipe;
 
 
 public class Adapter_SearchRecipe extends RecyclerView.Adapter
-            <Adapter_SearchRecipe
-                .RecyclerViewHolder_SearchRecipe>
+            <Adapter_SearchRecipe.RecyclerViewHolder_SearchRecipe>
 {
     static class RecyclerViewHolder_SearchRecipe extends RecyclerView.ViewHolder
         implements View.OnClickListener

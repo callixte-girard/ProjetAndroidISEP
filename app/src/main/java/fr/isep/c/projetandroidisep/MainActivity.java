@@ -14,10 +14,14 @@ import android.view.MenuItem;
 
 import fr.isep.c.projetandroidisep.login.LoginActivity;
 import fr.isep.c.projetandroidisep.myRecipes.FragMyRecipes;
+import fr.isep.c.projetandroidisep.profile.FragUser;
 import fr.isep.c.projetandroidisep.searchRecipe.*;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
 //import fr.isep.c.projetandroidisep.myShoppingLists.*;
 
+//import com.facebook.AccessToken;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity
@@ -31,33 +35,48 @@ public class MainActivity extends AppCompatActivity
     private Fragment frag_my_shopping_lists = new FragMyShoppingLists();
     private Fragment frag_user = new FragUser();
 
+    private FirebaseUser current_user ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setBottomNavigationDrawer();
+        /*
+        Intent intent_from_firebase_auth_activity = getIntent();
+        Bundle extras = intent_from_firebase_auth_activity.getExtras();
+        String mail = extras.getString("user_mail");
+        String name = extras.getString("user_name");
+        */
 
-        SharedPreferences sp = getSharedPreferences("db", Context.MODE_PRIVATE);
-        boolean logged = sp.getBoolean("logged", false);
-        Log.d("logged_main_activity", String.valueOf(logged));
+        current_user = FirebaseAuth.getInstance().getCurrentUser();
 
+        if (current_user != null) {
+            setBottomNavigationDrawer();
+        } else {
+            transferToFirebaseAuthActivity(false);
+        }
 
-/*
-        Intent intent_from_login_activity = getIntent();
-        Bundle extras = intent_from_login_activity.getExtras();
-        String name = extras.getString("name");
-
-        Toast.makeText(getApplicationContext(),
-                "Welcome back " + name + " ! :)", Toast.LENGTH_SHORT).show();
-*/
-
-        ///
     }
 
 
-    protected void transferToLoginActivity()
+
+
+    public void transferToFirebaseAuthActivity(boolean sign_out)
+    {
+        ///////// perform transfer to login activity
+        Intent intent_to_firebase_auth_activity = new Intent(this, FirebaseUIActivity.class);
+
+        intent_to_firebase_auth_activity.putExtra("sign_out", sign_out);
+
+        startActivity(intent_to_firebase_auth_activity);
+
+        // kill process for it not to come back after login completed
+        finish();
+    }
+
+
+    public void transferToLoginActivity()
     {
         // save logged in status in sharedprefs
         SharedPreferences sp = getSharedPreferences("pipou", Context.MODE_PRIVATE);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.util.Log;
 
 //import butterknife.*;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,12 +61,28 @@ public class LoginActivity extends AppCompatActivity
         boolean logged = sp.getBoolean("logged", false);
         Log.d("logged", String.valueOf(logged));
 
-        if (logged) {
+        /*if (logged) {
             this.transferToMainActivity();
         } else {
             this.toFragLogin();
-        }
+        } */
 
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        //Log.d("user", user.getEmail());
+
+        auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                try {
+                    Log.d("auth_state", firebaseAuth.getCurrentUser().getEmail());
+                    transferToMainActivity();
+
+                } catch (NullPointerException npe) {
+
+                }
+            }
+        });
 
     }
 
@@ -117,8 +136,8 @@ public class LoginActivity extends AppCompatActivity
     protected void transferToMainActivity()
     {
         // save logged in status in sharedprefs
-        SharedPreferences sp = getSharedPreferences("pipou", Context.MODE_PRIVATE);
-        sp.edit().remove("logged").putBoolean("logged", true).apply();
+        //SharedPreferences sp = getSharedPreferences("pipou", Context.MODE_PRIVATE);
+        //sp.edit().remove("logged").putBoolean("logged", true).apply();
 
         ///////// perform transfer to main activity
         Intent intent_to_main_activity = new Intent(this, MainActivity.class);

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.*;
 import fr.isep.c.projetandroidisep.objects.Recette;
-import fr.isep.c.projetandroidisep.searchRecipe.Adapter_SearchRecipe;
+import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
 
 
 public class FragMyRecipes extends Fragment implements View.OnClickListener
