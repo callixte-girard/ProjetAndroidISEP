@@ -12,14 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import fr.isep.c.projetandroidisep.fragments.FragMyShoppingLists;
+import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
 import fr.isep.c.projetandroidisep.login.LoginActivity;
-import fr.isep.c.projetandroidisep.myRecipes.FragMyRecipes;
-import fr.isep.c.projetandroidisep.profile.FragUser;
-import fr.isep.c.projetandroidisep.searchRecipe.*;
+import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
+import fr.isep.c.projetandroidisep.fragments.FragUser;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
 //import fr.isep.c.projetandroidisep.myShoppingLists.*;
 
 //import com.facebook.AccessToken;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment frag_user = new FragUser();
 
     private FirebaseUser current_user ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,31 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+
+    }
+
+
+    public void signOut() {
+        // [START auth_fui_signout]
+        AuthUI.getInstance()
+                .signOut(getApplicationContext())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                        Log.d("sign_out", "complete");
+
+                        transferToFirebaseAuthActivity(true);
+
+                        //FirebaseAuth auth = FirebaseAuth.getInstance();
+                        //auth.removeAuthStateListener(listener);
+                    }
+                });
+        // [END auth_fui_signout]
+    }
 
 
 
@@ -74,6 +104,7 @@ public class MainActivity extends AppCompatActivity
         // kill process for it not to come back after login completed
         finish();
     }
+
 
 
     public void transferToLoginActivity()

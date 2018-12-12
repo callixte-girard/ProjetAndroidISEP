@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep;
+package fr.isep.c.projetandroidisep.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

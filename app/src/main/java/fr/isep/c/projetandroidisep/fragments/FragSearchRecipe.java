@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.searchRecipe;
+package fr.isep.c.projetandroidisep.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
+import fr.isep.c.projetandroidisep.asyncTask.AsyncResponse_SearchRecipe;
+import fr.isep.c.projetandroidisep.asyncTask.AsyncTask_SearchRecipe;
 import fr.isep.c.projetandroidisep.objects.Recette;
 
 

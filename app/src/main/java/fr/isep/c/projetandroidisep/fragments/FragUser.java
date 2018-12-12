@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.profile;
+package fr.isep.c.projetandroidisep.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -53,8 +53,11 @@ public class FragUser extends Fragment
                     //Log.d("logout", user.getEmail());
 
                     MainActivity mother_activity = (MainActivity) getActivity();
+                    /*
                     mother_activity.transferToFirebaseAuthActivity(true);
                     mother_activity.finish();
+                    */
+                    mother_activity.signOut();
 
                 } catch (Exception e) {
                     Log.d("log_out_button", e.getMessage());

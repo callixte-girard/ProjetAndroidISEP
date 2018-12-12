@@ -14,9 +14,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.myRecipes.FragMyRecipes;
+import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
 import fr.isep.c.projetandroidisep.objects.Recette;
-import fr.isep.c.projetandroidisep.searchRecipe.FragSearchRecipe;
+import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
 
 
 public class Adapter_SearchRecipe extends RecyclerView.Adapter

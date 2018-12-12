@@ -1,14 +1,8 @@
-package fr.isep.c.projetandroidisep.searchRecipe;
+package fr.isep.c.projetandroidisep.asyncTask;
 
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
-import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 

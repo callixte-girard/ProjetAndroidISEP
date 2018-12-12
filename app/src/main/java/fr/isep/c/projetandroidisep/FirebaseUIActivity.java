@@ -33,82 +33,51 @@ public class FirebaseUIActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 123;
 
+    private FirebaseAuth.AuthStateListener listener = new FirebaseAuth.AuthStateListener() {
+        @Override
+        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            FirebaseUser current_user = firebaseAuth.getCurrentUser();
+
+            if (current_user != null) {
+                Log.d("auth_state_changed", firebaseAuth.getCurrentUser().getEmail());
+
+                transferToMainActivity(current_user);
+                finish();
+
+            } else {
+                Log.d("auth_state_changed", "no user");
+
+                createSignInIntent();
+
+            }
+
+        }
+    };
+
+    //private boolean already_listener = false ;
+
+    ///////////////////////////////////////////////////////////////
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_ui);
 
+        /*
         // is logout or no ?
         Intent intent_from_main_activity = getIntent();
         boolean sign_out = intent_from_main_activity.getBooleanExtra("sign_out", false);
 
-        if (sign_out) {
+        if (sign_out)
             signOut();
-        } else {
+        */
 
-        }
+        //setPipou();
 
-        FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
-            {
-                FirebaseUser current_user = firebaseAuth.getCurrentUser();
-
-                if (current_user != null) {
-                    Log.d("auth_state_changed", firebaseAuth.getCurrentUser().getEmail());
-
-                    transferToMainActivity(current_user);
-                    finish();
-
-                } else {
-                    Log.d("auth_state_changed", "no user");
-
-                    createSignInIntent();
-
-                }
-
-            }
-        });
+        FirebaseAuth.getInstance().addAuthStateListener(listener);
 
     }
 
-
-    public void signOut() {
-        // [START auth_fui_signout]
-        AuthUI.getInstance()
-                .signOut(getApplicationContext())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // ...
-                        Log.d("sign_out", "complete");
-
-
-                    }
-                });
-        // [END auth_fui_signout]
-    }
-
-
-    public void createSignInIntent() {
-        // [START auth_fui_create_intent]
-        // Choose authentication providers
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.PhoneBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build()
-        //        new AuthUI.IdpConfig.FacebookBuilder().build(),
-        //        new AuthUI.IdpConfig.TwitterBuilder().build())
-        );
-
-        // Create and launch sign-in intent
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .build(),
-                RC_SIGN_IN);
-        // [END auth_fui_create_intent]
-    }
 
     // [START auth_fui_result]
     @Override
@@ -137,6 +106,59 @@ public class FirebaseUIActivity extends AppCompatActivity {
     }
     // [END auth_fui_result]
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        FirebaseAuth.getInstance().removeAuthStateListener(listener);
+    }
+
+
+/*
+    public void signOut() {
+        // [START auth_fui_signout]
+        AuthUI.getInstance()
+                .signOut(getApplicationContext())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                        Log.d("sign_out", "complete");
+
+                        createSignInIntent();
+
+                        //FirebaseAuth auth = FirebaseAuth.getInstance();
+                        //auth.removeAuthStateListener(listener);
+                    }
+                });
+        // [END auth_fui_signout]
+    }
+*/
+
+    public void createSignInIntent() {
+        // [START auth_fui_create_intent]
+        // Choose authentication providers
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                //        new AuthUI.IdpConfig.PhoneBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build()
+                //        new AuthUI.IdpConfig.FacebookBuilder().build(),
+                //        new AuthUI.IdpConfig.TwitterBuilder().build())
+        );
+
+        // Create and launch sign-in intent
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .build(),
+                RC_SIGN_IN);
+        // [END auth_fui_create_intent]
+
+        // remove the listener to prevent duplicate
+        //FirebaseAuth.getInstance().removeAuthStateListener(listener);
+    }
+
+
     protected void transferToMainActivity(FirebaseUser user)
     {
         // save logged in status in sharedprefs
@@ -150,9 +172,11 @@ public class FirebaseUIActivity extends AppCompatActivity {
 
         startActivity(intent_to_main_activity);
 
+        // remove the listener to prevent duplicate
+        //FirebaseAuth.getInstance().removeAuthStateListener(listener);
+
         // kill process for it not to come back after login completed
         finish();
-
     }
 
 
@@ -200,4 +224,29 @@ public class FirebaseUIActivity extends AppCompatActivity {
                 RC_SIGN_IN);
         // [END auth_fui_pp_tos]
     }
+
+    public void setPipou() {
+        listener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser current_user = firebaseAuth.getCurrentUser();
+
+                if (current_user != null) {
+                    Log.d("auth_state_changed", firebaseAuth.getCurrentUser().getEmail());
+
+                    transferToMainActivity(current_user);
+                    finish();
+
+                } else {
+                    Log.d("auth_state_changed", "no user");
+
+                    createSignInIntent();
+
+                }
+
+            }
+        };
+    }
+
+
 }

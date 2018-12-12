@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.myRecipes.FragMyRecipes;
+import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
 import fr.isep.c.projetandroidisep.objects.Recette;
 
 

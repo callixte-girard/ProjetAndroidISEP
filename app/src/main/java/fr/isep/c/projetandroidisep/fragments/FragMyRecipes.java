@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.myRecipes;
+package fr.isep.c.projetandroidisep.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

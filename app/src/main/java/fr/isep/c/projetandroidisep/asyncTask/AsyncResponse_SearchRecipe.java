@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.searchRecipe;
+package fr.isep.c.projetandroidisep.asyncTask;
 
 import org.jsoup.nodes.Document;
 
