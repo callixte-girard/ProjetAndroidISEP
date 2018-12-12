@@ -11,14 +11,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseReference;
-
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
-import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 import fr.isep.c.projetandroidisep.objects.Recette;
 import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
 
@@ -38,7 +35,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
             super(view);
 
             recipe_name = view.findViewById(R.id.recipe_name);
-            checkbox_add_to_favorites = view.findViewById(R.id.checkbox_add_to_favorites);
+            checkbox_add_to_favorites = view.findViewById(R.id.checkbox_favorite);
         }
 
         @Override
@@ -64,7 +61,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     public RecyclerViewHolder_SearchRecipe onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.list_row_search_layout, viewGroup, false);
+                .inflate(R.layout.list_row_recipes_layout, viewGroup, false);
 
         // pre-checks recipes that are already present in favorites
         //bool_arr = preCheckAlreadyFavoriteRecipes(bool_arr);

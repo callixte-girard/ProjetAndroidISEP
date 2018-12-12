@@ -36,14 +36,14 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
             super(view);
 
             recipe_name = view.findViewById(R.id.recipe_name);
-            checkbox_delete_from_favorites = view.findViewById(R.id.checkbox_delete_from_favorites);
+            checkbox_delete_from_favorites = view.findViewById(R.id.checkbox_favorite);
         }
 
         @Override
         public void onClick(View view) {
             switch (view.getId())
             {
-                case R.id.checkbox_delete_from_favorites:
+                case R.id.checkbox_favorite:
                     Log.d("test", "my_recipes");
             }
         }
@@ -63,7 +63,7 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
     public RecyclerViewHolder_MyRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.list_row_favorites_layout, viewGroup, false);
+                .inflate(R.layout.list_row_recipes_layout, viewGroup, false);
 
         return new RecyclerViewHolder_MyRecipes(v);
     }
