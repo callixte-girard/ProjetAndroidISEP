@@ -4,5 +4,8 @@
     <string name="title_my_recipes">My Recipes</string>
     <string name="title_my_shopping_lists">My Shopping Lists</string>
     <string name="title_user">User</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_main2">Main2Activity</string>*
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fbYOUR_APP_ID</string>
 </resources>

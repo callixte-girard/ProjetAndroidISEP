@@ -26,6 +26,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class MainActivity extends AppCompatActivity
@@ -39,7 +41,10 @@ public class MainActivity extends AppCompatActivity
     private Fragment frag_my_shopping_lists = new FragMyShoppingLists();
     private Fragment frag_user = new FragUser();
 
-    private FirebaseUser current_user ;
+    private static FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+
+    public static DatabaseReference main_ref = FirebaseDatabase.getInstance().getReference();
+    public static DatabaseReference current_user_ref = main_ref.child(current_user.getUid());
 
 
     @Override
@@ -47,27 +52,11 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
-        Intent intent_from_firebase_auth_activity = getIntent();
-        Bundle extras = intent_from_firebase_auth_activity.getExtras();
-        String mail = extras.getString("user_mail");
-        String name = extras.getString("user_name");
-        */
-
-        current_user = FirebaseAuth.getInstance().getCurrentUser();
-
         if (current_user != null) {
             setBottomNavigationDrawer();
         } else {
-            transferToFirebaseAuthActivity(false);
+            transferToFirebaseAuthActivity();
         }
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
 
     }
 
@@ -81,10 +70,8 @@ public class MainActivity extends AppCompatActivity
                         // ...
                         Log.d("sign_out", "complete");
 
-                        transferToFirebaseAuthActivity(true);
+                        transferToFirebaseAuthActivity();
 
-                        //FirebaseAuth auth = FirebaseAuth.getInstance();
-                        //auth.removeAuthStateListener(listener);
                     }
                 });
         // [END auth_fui_signout]
@@ -92,30 +79,14 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    public void transferToFirebaseAuthActivity(boolean sign_out)
+    public void transferToFirebaseAuthActivity()
     {
         ///////// perform transfer to login activity
-        Intent intent_to_firebase_auth_activity = new Intent(this, FirebaseUIActivity.class);
+        Intent intent_to_firebase_auth_activity = new Intent
+                (this, FirebaseUIActivity.class);
 
-        intent_to_firebase_auth_activity.putExtra("sign_out", sign_out);
 
         startActivity(intent_to_firebase_auth_activity);
-
-        // kill process for it not to come back after login completed
-        finish();
-    }
-
-
-
-    public void transferToLoginActivity()
-    {
-        // save logged in status in sharedprefs
-        SharedPreferences sp = getSharedPreferences("pipou", Context.MODE_PRIVATE);
-        sp.edit().remove("logged").putBoolean("logged", false).apply();
-
-        ///////// perform transfer to login activity
-        Intent intent_to_login_activity = new Intent(this, LoginActivity.class);
-        startActivity(intent_to_login_activity);
 
         // kill process for it not to come back after login completed
         finish();
@@ -170,8 +141,6 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_search_recipe)
                 .commit();
-        
-        
     }
 
 
@@ -181,8 +150,6 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_my_recipes)
                 .commit();
-
-
     }
 
     private void displayFrag_myShoppingLists()
@@ -191,8 +158,6 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_my_shopping_lists)
                 .commit();
-
-
     }
 
     private void displayFrag_user()
@@ -201,7 +166,11 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_user)
                 .commit();
+    }
 
+    public FirebaseUser getCurrentUser()
+    {
+        return this.current_user ;
     }
 
 }

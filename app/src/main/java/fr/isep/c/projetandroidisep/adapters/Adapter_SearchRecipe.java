@@ -40,11 +40,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
         @Override
         public void onClick(View view)
         {
-            switch (view.getId())
-            {
-                case R.id.checkbox_add_to_favorites:
-                    Log.d("test", "search_recipe");
-            }
+
         }
     }
 

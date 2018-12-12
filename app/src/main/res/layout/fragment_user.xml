@@ -17,10 +17,10 @@
         android:layout_alignParentTop="true"/>
 
     <Button
-        android:id="@+id/button_logout"
+        android:id="@+id/button_sign_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log out"
+        android:text="Sign out"
         android:layout_below="@id/user_name"/>
 
 </RelativeLayout>

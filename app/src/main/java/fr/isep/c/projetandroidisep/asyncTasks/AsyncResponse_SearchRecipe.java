@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.asyncTask;
+package fr.isep.c.projetandroidisep.asyncTasks;
 
 import org.jsoup.nodes.Document;
 

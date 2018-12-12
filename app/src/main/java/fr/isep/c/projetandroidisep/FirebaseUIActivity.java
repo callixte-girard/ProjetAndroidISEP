@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,8 +30,8 @@ import java.util.List;
 public class FirebaseUIActivity extends AppCompatActivity {
 
     // TO-DO :
-    // - make google sign in work
-    // - make fb ___
+    // - [DONE] make google sign in work
+    // - make fb sign in work
 
     private static final int RC_SIGN_IN = 123;
 
@@ -41,6 +43,21 @@ public class FirebaseUIActivity extends AppCompatActivity {
             if (current_user != null) {
                 Log.d("auth_state_changed", firebaseAuth.getCurrentUser().getEmail());
 
+                // checks if user path exists in nosql db + creates it if not
+                String auth_uid = firebaseAuth.getInstance().getUid();
+                //String auth_uid = "oiuhjuih";
+
+                try {
+                    DatabaseReference current_user_ref = FirebaseDatabase.getInstance()
+                            .getReference().child(auth_uid);
+                    Log.d("current_user_ref", current_user_ref.toString());
+
+
+                } catch (Exception e) {
+                    Log.d("current_user_ref", e.getMessage());
+                }
+
+
                 transferToMainActivity(current_user);
                 finish();
 
@@ -48,8 +65,8 @@ public class FirebaseUIActivity extends AppCompatActivity {
                 Log.d("auth_state_changed", "no user");
 
                 createSignInIntent();
-                themeAndLogo();
-                privacyAndTerms();
+                //themeAndLogo();
+                //privacyAndTerms();
 
             }
 
@@ -64,8 +81,14 @@ public class FirebaseUIActivity extends AppCompatActivity {
         setContentView(R.layout.activity_firebase_ui);
 
         FirebaseAuth.getInstance().addAuthStateListener(listener);
+    }
 
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        FirebaseAuth.getInstance().removeAuthStateListener(listener);
     }
 
 
@@ -82,7 +105,10 @@ public class FirebaseUIActivity extends AppCompatActivity {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 FirebaseUser user = auth.getCurrentUser();
                 Log.d("login_success", user.getEmail());
-                // ...
+
+
+                transferToMainActivity(user);
+                finish();
 
             } else {
                 Log.d("login_fail", "sorry bro :(");
@@ -94,13 +120,6 @@ public class FirebaseUIActivity extends AppCompatActivity {
         }
     }
     // [END auth_fui_result]
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        FirebaseAuth.getInstance().removeAuthStateListener(listener);
-    }
 
 
     public void createSignInIntent() {
@@ -131,6 +150,7 @@ public class FirebaseUIActivity extends AppCompatActivity {
         Intent intent_to_main_activity = new Intent(getApplicationContext(), MainActivity.class);
         intent_to_main_activity.putExtra("user_mail", user.getEmail());
         intent_to_main_activity.putExtra("user_name", user.getDisplayName());
+        intent_to_main_activity.putExtra("user_uid", user.getUid());
 
         startActivity(intent_to_main_activity);
         finish();

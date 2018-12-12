@@ -26,7 +26,7 @@ import fr.isep.c.projetandroidisep.login.LoginActivity;
 
 public class FragUser extends Fragment
 {
-    Button button_logout ;
+    Button button_sign_out ;
     TextView user_name ;
 
     @Override
@@ -43,20 +43,15 @@ public class FragUser extends Fragment
         user_name = view.findViewById(R.id.user_name);
         user_name.setText(user_mail);
 
-        button_logout = view.findViewById(R.id.button_logout);
-        button_logout.setOnClickListener(new View.OnClickListener() {
+        button_sign_out = view.findViewById(R.id.button_sign_out);
+        button_sign_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
 
                 try {
-                    //Log.d("logout", user.getEmail());
-
                     MainActivity mother_activity = (MainActivity) getActivity();
-                    /*
-                    mother_activity.transferToFirebaseAuthActivity(true);
-                    mother_activity.finish();
-                    */
+
                     mother_activity.signOut();
 
                 } catch (Exception e) {

@@ -1,14 +1,24 @@
 package fr.isep.c.projetandroidisep.fragments;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -20,12 +30,11 @@ import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
 public class FragMyRecipes extends Fragment implements View.OnClickListener
 {
     private RecyclerView favorites_list ;
-
+    private SearchView favorites_filter ;
+    private TextView favorites_number ;
 
     private static ArrayList<Recette> favorite_recipes = new ArrayList<>();
-    private static ArrayList<Recette> deleted_recipes_history = new ArrayList<>();
-
-
+    //private static ArrayList<Recette> deleted_recipes_history = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
@@ -33,6 +42,12 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_my_recipes, container, false);
 
         favorites_list = view.findViewById(R.id.favorites_list);
+        //favorites_filter = view.findViewById(R.id.favorites_filter);
+        favorites_number = view.findViewById(R.id.favorites_number);
+
+        // initialises the arraylist with favorite recipes
+        fetchFavoriteRecipes();
+        // creates recyclerview
         initFavoritesList();
 
         return view ;
@@ -41,6 +56,17 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
+    }
+
+
+    private void fetchFavoriteRecipes()
+            // #### fetches from firebase and populates al
+    {
+        MainActivity mother_activity = (MainActivity) getActivity();
+        String db_uid = mother_activity.getCurrentUser().getUid();
+        //Log.d("uid", uid);
+
+        MainActivity.current_user_ref.child("favorites").setValue("coucou pipou");
     }
 
 
@@ -66,12 +92,14 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
 
     public static void performAdd(Recette rec_to_add)
     {
-        boolean success = addToFavorites(rec_to_add);
-
-        if (success) {
+        // returns result state.
+        if (!rec_to_add.alreadyExists(favorite_recipes)) {
+            favorite_recipes.add(rec_to_add);
             Log.d("favorites_add", rec_to_add.getNom() + " : " + "success");
-        } else  {
+
+        } else {
             Log.d("favorites_add", rec_to_add.getNom() + " : " + "fail");
+
         }
     }
 
@@ -81,38 +109,16 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
         //deleted_recipes_history.add(rec_to_delete);
 
         // remove from my favorite recipes
-        boolean success = removeFromFavorites(rec_to_delete);
-
-        if (success) {
+        if (rec_to_delete.alreadyExists(favorite_recipes)) {
+            favorite_recipes.remove(rec_to_delete);
             Log.d("favorites_remove", rec_to_delete.getNom() + " : " + "success");
-        } else  {
+
+        } else {
             Log.d("favorites_remove", rec_to_delete.getNom() + " : " + "fail");
+
         }
     }
 
-
-    private static boolean addToFavorites(Recette rec)
-    {
-        // returns result state.
-        if (!rec.alreadyExists(favorite_recipes)) {
-            favorite_recipes.add(rec);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private static boolean removeFromFavorites(Recette rec)
-    {
-        // returns result state.
-        if (rec.alreadyExists(favorite_recipes)) {
-            favorite_recipes.remove(rec);
-            return true ;
-        } else {
-            return false ;
-        }
-
-    }
 
 
     public static ArrayList<Recette> getFavoriteRecipes() {

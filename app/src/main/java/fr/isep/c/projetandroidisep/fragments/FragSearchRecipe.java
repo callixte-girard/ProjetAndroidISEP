@@ -23,8 +23,8 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
-import fr.isep.c.projetandroidisep.asyncTask.AsyncResponse_SearchRecipe;
-import fr.isep.c.projetandroidisep.asyncTask.AsyncTask_SearchRecipe;
+import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_SearchRecipe;
+import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_SearchRecipe;
 import fr.isep.c.projetandroidisep.objects.Recette;
 
 
@@ -37,9 +37,9 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
     private SearchView search_bar ;
     private RecyclerView results_list ;
     private TextView results_number ;
-    private FloatingActionButton add_recipe ;
+    //private FloatingActionButton add_recipe ;
 
-    private final int deepness = 2 ; // creuse 2 fois, càd cherche 3 fois.
+    private final int deepness = 2 ; // creuse 2 fois, càd cherche 3 x 15 résultats maximum.
     private int current_deepness = 0 ;
 
     private static ArrayList<Recette> all_results = new ArrayList<>();
