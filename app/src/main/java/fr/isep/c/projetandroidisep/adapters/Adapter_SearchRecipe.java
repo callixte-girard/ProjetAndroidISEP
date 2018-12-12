@@ -11,8 +11,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.ArrayList;
 
+import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
 import fr.isep.c.projetandroidisep.objects.Recette;
@@ -106,11 +109,10 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
                         rec.getNom() + " | " + String.valueOf(isChecked));
 
                 if (isChecked) {
-                    // add to favorite recipes
-                    FragMyRecipes.performAdd(rec);
+                    saveRecipeInFavorites(rec);
+
                 } else {
-                    // remove from my favorite recipes
-                    FragMyRecipes.performDelete(rec);
+                    removeRecipeFromFavorites(rec);
                 }
 
                 //notifyDataSetChanged();
@@ -127,26 +129,25 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
         return (null != al ? al.size() : 0);
     }
 
-    /**
-     * Check the Checkbox if not checked
-     **/
-    private void addOrRemoveFromFavoriteRecipes(int position, boolean already_favorite)
-    {
-        Recette rec_to_add_or_remove = getRecetteAtPosition(position);
+    protected void saveRecipeInFavorites(Recette rec) {
 
-        if (already_favorite) {
-            bool_arr.put(position, true);
-            // add recipe to favorites
+        // quickly splits url to get only the short
+        String[] spl_slash = rec.getUrl().split("/");
+        int index_dot = spl_slash[4].indexOf(".");
+        String short_url = spl_slash[4].substring(0, index_dot);
 
-        } else {
-            bool_arr.delete(position);
-            // remove recipe from favorites
-            ////
-        }
+        //Log.d("short_url", spl_slash[4]);
+        Log.d("short_url", short_url);
 
-        //Log.d("add_to_recipes", String.valueOf(bool_arr.get(position)));
-        notifyDataSetChanged();
+        MainActivity.current_user_ref.child("favorite_recipes")
+                .child(short_url)
+                .setValue(rec);
     }
+
+    protected void removeRecipeFromFavorites(Recette rec) {
+        //MainActivity.current_user_ref.child("favorite_recipes");
+    }
+
 
     /**
      * Return the selected Checkbox IDs
@@ -154,4 +155,6 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     public SparseBooleanArray getSelectedIds() {
         return bool_arr;
     }
+
+
 }

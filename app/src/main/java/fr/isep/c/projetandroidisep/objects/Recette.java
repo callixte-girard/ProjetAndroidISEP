@@ -24,7 +24,7 @@ public class Recette implements Serializable
 	private String url ;
 	private String instructions ;
 	private String img_url ;
-	private LocalDateTime date_ajout ;
+	//private LocalDateTime date_ajout ;
 	private double rating = 0 ;
 	private String duration = "?" ;
 	private String type = "" ; // dépend de l'user
@@ -127,10 +127,7 @@ public class Recette implements Serializable
 		this.type = type ;
 	}
 
-	public LocalDateTime getDate()
-	{
-		return this.date_ajout ;
-	}
+	//public LocalDateTime getDate() {return this.date_ajout ;}
 
 	public ArrayList<Ingredient> getIngredients()
 	{

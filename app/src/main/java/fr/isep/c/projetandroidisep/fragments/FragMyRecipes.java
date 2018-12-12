@@ -64,9 +64,9 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
     {
         MainActivity mother_activity = (MainActivity) getActivity();
         String db_uid = mother_activity.getCurrentUser().getUid();
-        //Log.d("uid", uid);
+        Log.d("uid", db_uid);
 
-        MainActivity.current_user_ref.child("favorites").setValue("coucou pipou");
+
     }
 
 
@@ -89,7 +89,7 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
         favorites_list.setAdapter(adapter);
     }
 
-
+/*
     public static void performAdd(Recette rec_to_add)
     {
         // returns result state.
@@ -118,7 +118,7 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
 
         }
     }
-
+*/
 
 
     public static ArrayList<Recette> getFavoriteRecipes() {

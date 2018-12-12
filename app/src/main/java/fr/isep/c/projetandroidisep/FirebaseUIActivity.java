@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -50,6 +51,7 @@ public class FirebaseUIActivity extends AppCompatActivity {
                 try {
                     DatabaseReference current_user_ref = FirebaseDatabase.getInstance()
                             .getReference().child(auth_uid);
+
                     Log.d("current_user_ref", current_user_ref.toString());
 
 
