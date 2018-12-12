@@ -48,13 +48,13 @@ public class FirebaseUIActivity extends AppCompatActivity {
                 Log.d("auth_state_changed", "no user");
 
                 createSignInIntent();
+                themeAndLogo();
+                privacyAndTerms();
 
             }
 
         }
     };
-
-    //private boolean already_listener = false ;
 
     ///////////////////////////////////////////////////////////////
 
@@ -63,18 +63,8 @@ public class FirebaseUIActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_ui);
 
-        /*
-        // is logout or no ?
-        Intent intent_from_main_activity = getIntent();
-        boolean sign_out = intent_from_main_activity.getBooleanExtra("sign_out", false);
-
-        if (sign_out)
-            signOut();
-        */
-
-        //setPipou();
-
         FirebaseAuth.getInstance().addAuthStateListener(listener);
+
 
     }
 
@@ -93,7 +83,6 @@ public class FirebaseUIActivity extends AppCompatActivity {
                 FirebaseUser user = auth.getCurrentUser();
                 Log.d("login_success", user.getEmail());
                 // ...
-                //transferToMainActivity();
 
             } else {
                 Log.d("login_fail", "sorry bro :(");
@@ -114,26 +103,6 @@ public class FirebaseUIActivity extends AppCompatActivity {
     }
 
 
-/*
-    public void signOut() {
-        // [START auth_fui_signout]
-        AuthUI.getInstance()
-                .signOut(getApplicationContext())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // ...
-                        Log.d("sign_out", "complete");
-
-                        createSignInIntent();
-
-                        //FirebaseAuth auth = FirebaseAuth.getInstance();
-                        //auth.removeAuthStateListener(listener);
-                    }
-                });
-        // [END auth_fui_signout]
-    }
-*/
-
     public void createSignInIntent() {
         // [START auth_fui_create_intent]
         // Choose authentication providers
@@ -153,29 +122,17 @@ public class FirebaseUIActivity extends AppCompatActivity {
                         .build(),
                 RC_SIGN_IN);
         // [END auth_fui_create_intent]
-
-        // remove the listener to prevent duplicate
-        //FirebaseAuth.getInstance().removeAuthStateListener(listener);
     }
 
 
     protected void transferToMainActivity(FirebaseUser user)
     {
-        // save logged in status in sharedprefs
-        //SharedPreferences sp = getSharedPreferences("pipou", Context.MODE_PRIVATE);
-        //sp.edit().remove("logged").putBoolean("logged", true).apply();
-
-        ///////// perform transfer to main activity
+         ///////// perform transfer to main activity
         Intent intent_to_main_activity = new Intent(getApplicationContext(), MainActivity.class);
         intent_to_main_activity.putExtra("user_mail", user.getEmail());
         intent_to_main_activity.putExtra("user_name", user.getDisplayName());
 
         startActivity(intent_to_main_activity);
-
-        // remove the listener to prevent duplicate
-        //FirebaseAuth.getInstance().removeAuthStateListener(listener);
-
-        // kill process for it not to come back after login completed
         finish();
     }
 
@@ -224,29 +181,5 @@ public class FirebaseUIActivity extends AppCompatActivity {
                 RC_SIGN_IN);
         // [END auth_fui_pp_tos]
     }
-
-    public void setPipou() {
-        listener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser current_user = firebaseAuth.getCurrentUser();
-
-                if (current_user != null) {
-                    Log.d("auth_state_changed", firebaseAuth.getCurrentUser().getEmail());
-
-                    transferToMainActivity(current_user);
-                    finish();
-
-                } else {
-                    Log.d("auth_state_changed", "no user");
-
-                    createSignInIntent();
-
-                }
-
-            }
-        };
-    }
-
 
 }
