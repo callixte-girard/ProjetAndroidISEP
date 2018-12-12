@@ -65,6 +65,10 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
                     favorite_recipes.add(rec);
                 }
 
+                // number of favorites
+                int nb = favorite_recipes.size();
+                favorites_number.setText(String.valueOf(nb) + " favorite recipes");
+
                 // creates recyclerview
                 initFavoritesList();
             }
@@ -89,6 +93,9 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
         favorites_list = view.findViewById(R.id.favorites_list);
         //favorites_filter = view.findViewById(R.id.favorites_filter);
         favorites_number = view.findViewById(R.id.favorites_number);
+
+        // waiting label
+        favorites_number.setText("Fetching your favorite recipes...");
 
         // initialises the arraylist with favorite recipes
         // ### INCLUDES CREATING RECYCLERVIEW
