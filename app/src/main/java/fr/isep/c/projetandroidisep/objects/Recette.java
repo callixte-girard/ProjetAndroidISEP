@@ -20,7 +20,7 @@ public class Recette implements Serializable
 
 	private int id ;
 	private boolean select = true ; // can be deactivated to remove an aliment from the parsed recipe
-	private String nom ;
+	private String name ;
 	private String url ;
 	private String instructions ;
 	private String img_url ;
@@ -30,15 +30,19 @@ public class Recette implements Serializable
 	private String type = "" ; // dépend de l'user
 	private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>() ;
 
+	// it's just for google firebase
+	public Recette() {}
 
-	public Recette(String nom
+	public Recette(String name
+			, String type
 			, String url
 			)
 	{
 		counter ++ ;
 		this.id = counter ;
 
-		this.nom = nom ;
+		this.name = name ;
+		this.type = type ;
 		this.url = url ;
 		//this.date_ajout = LocalDateTime.now() ;
 	}
@@ -70,7 +74,7 @@ public class Recette implements Serializable
 			////System.out.print(" | " + this.rating);
 		}
 
-		//System.out.print(" | " + this.nom);
+		//System.out.print(" | " + this.name);
 		//System.out.print(" | " + this.url);
 
 		////System.out.println();
@@ -94,38 +98,37 @@ public class Recette implements Serializable
 		return false ;
  	}
 
-	
-	public String getNom()
-	{
-		return this.nom ;
+	// needed for creation
+	public String getName() {
+		return this.name ;
 	}
-
+	public void setName(String name) { this.name = name ; }
 	public String getUrl()
 	{
 		return this.url ;
 	}
-
+	public void setUrl(String url) { this.url = url ; }
 	public String getType()
 	{
 		return this.type ;
 	}
+	public void setType(String type) {
+		this.type = type ;
+	}
 
+	// possible after creation
+	public double getRating() { return this.rating ; }
 	public void setRating(double rating)
 	{
 		this.rating = rating ;
 	}
-
-	public void setDuration(String duration)
-	{
+	public String getDuration() { return this.duration ; }
+	public void setDuration(String duration) {
 		if (!duration.isEmpty())
-		{
 			this.duration = duration ;
-		}
 	}
 
-	public void setType(String type) {
-		this.type = type ;
-	}
+
 
 	//public LocalDateTime getDate() {return this.date_ajout ;}
 

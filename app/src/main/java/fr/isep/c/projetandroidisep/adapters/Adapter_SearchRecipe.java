@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
+import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 import fr.isep.c.projetandroidisep.objects.Recette;
 import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
 
@@ -85,7 +86,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_SearchRecipe holder, final int i)
     {
-        holder.recipe_name.setText(al.get(i).getNom());
+        holder.recipe_name.setText(al.get(i).getName());
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +107,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
                 Recette rec = getRecetteAtPosition(i);
 
                 Log.d("is_checked",
-                        rec.getNom() + " | " + String.valueOf(isChecked));
+                        rec.getName() + " | " + String.valueOf(isChecked));
 
                 if (isChecked) {
                     saveRecipeInFavorites(rec);
@@ -131,21 +132,17 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
 
     protected void saveRecipeInFavorites(Recette rec) {
 
-        // quickly splits url to get only the short
-        String[] spl_slash = rec.getUrl().split("/");
-        int index_dot = spl_slash[4].indexOf(".");
-        String short_url = spl_slash[4].substring(0, index_dot);
-
-        //Log.d("short_url", spl_slash[4]);
-        Log.d("short_url", short_url);
-
         MainActivity.current_user_ref.child("favorite_recipes")
-                .child(short_url)
+                .child(ParseHtml.shortifyUrl_marmiton(rec.getUrl()))
                 .setValue(rec);
     }
 
     protected void removeRecipeFromFavorites(Recette rec) {
-        //MainActivity.current_user_ref.child("favorite_recipes");
+
+        MainActivity.current_user_ref.child("favorite_recipes")
+                .child(ParseHtml.shortifyUrl_marmiton(rec.getUrl()))
+                .removeValue();
+
     }
 
 

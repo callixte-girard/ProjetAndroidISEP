@@ -70,7 +70,7 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_MyRecipes holder, final int i)
     {
-        holder.recipe_name.setText(al.get(i).getNom());
+        holder.recipe_name.setText(al.get(i).getName());
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +91,7 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
                 Recette rec = FragMyRecipes.getFavoriteRecipes().get(i);
 
                 Log.d("is_checked",
-                        rec.getNom() + " | " + String.valueOf(isChecked));
+                        rec.getName() + " | " + String.valueOf(isChecked));
 
                 if (!isChecked) {
 

@@ -253,10 +253,10 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
 
             url = URL_BASE + url; // pour rendre l'url complète et pas partielle comme dans le html
 
-            Recette rec = new Recette(nom, url);
+            Recette rec = new Recette(nom, type, url);
             rec.setRating(rating);
             rec.setDuration(duration);
-            rec.setType(type);
+            //rec.setType(type);
 
             result.add(rec);
         }
