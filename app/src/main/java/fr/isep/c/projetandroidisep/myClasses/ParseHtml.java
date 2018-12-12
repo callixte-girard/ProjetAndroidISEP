@@ -42,12 +42,12 @@ public class ParseHtml extends ParseText
 		}
 	}
 
-	public static String shortifyUrl_marmiton(String url)
+	public static String shortifyUrl(String url)
 	{
 		// quickly splits url to get only the short
 		String[] spl_slash = url.split("/");
-		int index_dot = spl_slash[4].indexOf(".");
-		String short_url = spl_slash[4].substring(0, index_dot);
+		int index_dot = spl_slash[spl_slash.length - 1].indexOf(".");
+		String short_url = spl_slash[spl_slash.length - 1].substring(0, index_dot);
 
 		return short_url ;
 	}

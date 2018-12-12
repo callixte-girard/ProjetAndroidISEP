@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
 import fr.isep.c.projetandroidisep.objects.Recette;
@@ -93,17 +94,15 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
                 Log.d("is_checked",
                         rec.getName() + " | " + String.valueOf(isChecked));
 
-                if (!isChecked) {
+                if (isChecked) {
 
-                    //FragMyRecipes.performDelete(rec);
-                    Recette.addToFavorites(rec);
+                    //MainActivity.saveRecipeInFavorites(rec);
 
                     // change icon : possibility to revert
 
                 } else {
                     // adds back recipe (revert deletion)
-                    //FragMyRecipes.performAdd(rec);
-                    Recette.removeFromFavorites(rec);
+                    MainActivity.removeRecipeFromFavorites(rec);
 
                     // change icon : delete
 

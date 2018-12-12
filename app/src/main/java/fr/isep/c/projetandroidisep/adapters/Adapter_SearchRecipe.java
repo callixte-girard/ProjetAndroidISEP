@@ -110,10 +110,10 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
                         rec.getName() + " | " + String.valueOf(isChecked));
 
                 if (isChecked) {
-                    saveRecipeInFavorites(rec);
+                    MainActivity.saveRecipeInFavorites(rec);
 
                 } else {
-                    removeRecipeFromFavorites(rec);
+                    MainActivity.removeRecipeFromFavorites(rec);
                 }
 
                 //notifyDataSetChanged();
@@ -128,21 +128,6 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     @Override
     public int getItemCount() {
         return (null != al ? al.size() : 0);
-    }
-
-    protected void saveRecipeInFavorites(Recette rec) {
-
-        MainActivity.current_user_ref.child("favorite_recipes")
-                .child(ParseHtml.shortifyUrl_marmiton(rec.getUrl()))
-                .setValue(rec);
-    }
-
-    protected void removeRecipeFromFavorites(Recette rec) {
-
-        MainActivity.current_user_ref.child("favorite_recipes")
-                .child(ParseHtml.shortifyUrl_marmiton(rec.getUrl()))
-                .removeValue();
-
     }
 
 

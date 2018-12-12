@@ -17,6 +17,8 @@ import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
 import fr.isep.c.projetandroidisep.login.LoginActivity;
 import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
 import fr.isep.c.projetandroidisep.fragments.FragUser;
+import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
+import fr.isep.c.projetandroidisep.objects.Recette;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
 //import fr.isep.c.projetandroidisep.myShoppingLists.*;
 
@@ -166,6 +168,20 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_user)
                 .commit();
+    }
+
+    public static void saveRecipeInFavorites(Recette rec) {
+
+        MainActivity.current_user_ref.child("favorite_recipes")
+                .child(ParseHtml.shortifyUrl(rec.getUrl()))
+                .setValue(rec);
+    }
+
+    public static void removeRecipeFromFavorites(Recette rec) {
+
+        MainActivity.current_user_ref.child("favorite_recipes")
+                .child(ParseHtml.shortifyUrl(rec.getUrl()))
+                .removeValue();
     }
 
     public FirebaseUser getCurrentUser()

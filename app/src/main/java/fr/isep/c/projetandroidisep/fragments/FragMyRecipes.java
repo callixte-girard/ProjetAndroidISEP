@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import fr.isep.c.projetandroidisep.*;
+import fr.isep.c.projetandroidisep.adapters.Adapter_MyRecipes;
 import fr.isep.c.projetandroidisep.objects.Recette;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
 
@@ -38,6 +39,11 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
     private RecyclerView favorites_list ;
     private SearchView favorites_filter ;
     private TextView favorites_number ;
+
+
+    private static ArrayList<Recette> favorite_recipes = new ArrayList<>();
+    //private static ArrayList<Recette> deleted_recipes_history = new ArrayList<>();
+
 
     private DatabaseReference ref = MainActivity.current_user_ref.child("favorite_recipes");
 
@@ -49,11 +55,18 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
             {
                 Iterator<DataSnapshot> it = dataSnapshot.getChildren().iterator();
 
+                favorite_recipes.clear();
+
                 while (it.hasNext())
                 {
                     Recette rec = it.next().getValue(Recette.class);
                     Log.d("favorite_recipes", rec.getUrl());
+
+                    favorite_recipes.add(rec);
                 }
+
+                // creates recyclerview
+                initFavoritesList();
             }
             catch (NullPointerException npe) {
                 //////
@@ -67,8 +80,6 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
         }
     };
 
-    private static ArrayList<Recette> favorite_recipes = new ArrayList<>();
-    //private static ArrayList<Recette> deleted_recipes_history = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
@@ -80,9 +91,8 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
         favorites_number = view.findViewById(R.id.favorites_number);
 
         // initialises the arraylist with favorite recipes
-        fetchFavoriteRecipes();
-        // creates recyclerview
-        initFavoritesList();
+        // ### INCLUDES CREATING RECYCLERVIEW
+        ref.addValueEventListener(listener);
 
         return view ;
     }
@@ -96,16 +106,6 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-
-    }
-
-
-    private void fetchFavoriteRecipes()
-            // #### fetches from firebase and populates al
-    {
-        // init listener for favorites
-        ref.addValueEventListener(listener);
-
 
     }
 
@@ -124,7 +124,7 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
         favorites_list.addItemDecoration(itemDecor);
 
         // custom adapter
-        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe
+        Adapter_MyRecipes adapter = new Adapter_MyRecipes
                 (getContext(), favorite_recipes);
         favorites_list.setAdapter(adapter);
     }

@@ -47,7 +47,7 @@ public class Recette implements Serializable
 		//this.date_ajout = LocalDateTime.now() ;
 	}
 
-
+/*
 	public static void addToFavorites(Recette rec) {
 		al.add(rec);
 	}
@@ -55,7 +55,7 @@ public class Recette implements Serializable
 	public static void removeFromFavorites(Recette rec) {
 		al.remove(rec);
 	}
-	
+*/
 
 	public void dispAttr(boolean disp_ingr)
 	{
