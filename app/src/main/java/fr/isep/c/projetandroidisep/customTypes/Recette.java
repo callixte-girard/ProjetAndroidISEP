@@ -1,10 +1,8 @@
-package fr.isep.c.projetandroidisep.objects;
+package fr.isep.c.projetandroidisep.customTypes;
 
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 //import fr.isep.c.projetandroidisep.myRecipes.*;

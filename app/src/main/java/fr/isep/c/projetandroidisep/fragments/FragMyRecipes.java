@@ -1,7 +1,6 @@
 package fr.isep.c.projetandroidisep.fragments;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -22,16 +21,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import fr.isep.c.projetandroidisep.*;
 import fr.isep.c.projetandroidisep.adapters.Adapter_MyRecipes;
-import fr.isep.c.projetandroidisep.objects.Recette;
-import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
+import fr.isep.c.projetandroidisep.customTypes.Recette;
 
 
 public class FragMyRecipes extends Fragment implements View.OnClickListener
@@ -44,8 +39,10 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
     private static ArrayList<Recette> favorite_recipes = new ArrayList<>();
     //private static ArrayList<Recette> deleted_recipes_history = new ArrayList<>();
 
+    private FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+    private DatabaseReference favorite_recipes_ref = FirebaseDatabase.getInstance().getReference()
+            .child(current_user.getUid()).child("favorite_recipes");
 
-    private DatabaseReference ref = MainActivity.current_user_ref.child("favorite_recipes");
 
     private ValueEventListener listener = new ValueEventListener() {
         @Override
@@ -99,7 +96,7 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
 
         // initialises the arraylist with favorite recipes
         // ### INCLUDES CREATING RECYCLERVIEW
-        ref.addValueEventListener(listener);
+        favorite_recipes_ref.addValueEventListener(listener);
 
         return view ;
     }
@@ -108,7 +105,7 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
     public void onStop() {
         super.onStop();
 
-        ref.removeEventListener(listener);
+        favorite_recipes_ref.removeEventListener(listener);
     }
 
     @Override
@@ -135,37 +132,6 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
                 (getContext(), favorite_recipes);
         favorites_list.setAdapter(adapter);
     }
-
-/*
-    public static void performAdd(Recette rec_to_add)
-    {
-        // returns result state.
-        if (!rec_to_add.alreadyExists(favorite_recipes)) {
-            favorite_recipes.add(rec_to_add);
-            Log.d("favorites_add", rec_to_add.getNom() + " : " + "success");
-
-        } else {
-            Log.d("favorites_add", rec_to_add.getNom() + " : " + "fail");
-
-        }
-    }
-
-    public static void performDelete(Recette rec_to_delete)
-    {
-        // first records it into history
-        //deleted_recipes_history.add(rec_to_delete);
-
-        // remove from my favorite recipes
-        if (rec_to_delete.alreadyExists(favorite_recipes)) {
-            favorite_recipes.remove(rec_to_delete);
-            Log.d("favorites_remove", rec_to_delete.getNom() + " : " + "success");
-
-        } else {
-            Log.d("favorites_remove", rec_to_delete.getNom() + " : " + "fail");
-
-        }
-    }
-*/
 
 
     public static ArrayList<Recette> getFavoriteRecipes() {

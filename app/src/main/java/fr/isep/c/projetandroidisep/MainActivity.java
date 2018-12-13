@@ -1,8 +1,6 @@
 package fr.isep.c.projetandroidisep;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,11 +12,10 @@ import android.view.MenuItem;
 
 import fr.isep.c.projetandroidisep.fragments.FragMyShoppingLists;
 import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
-import fr.isep.c.projetandroidisep.login.LoginActivity;
 import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
 import fr.isep.c.projetandroidisep.fragments.FragUser;
 import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
-import fr.isep.c.projetandroidisep.objects.Recette;
+import fr.isep.c.projetandroidisep.customTypes.Recette;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
 //import fr.isep.c.projetandroidisep.myShoppingLists.*;
 
@@ -43,16 +40,13 @@ public class MainActivity extends AppCompatActivity
     private Fragment frag_my_shopping_lists = new FragMyShoppingLists();
     private Fragment frag_user = new FragUser();
 
-    private static FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-
-    public static DatabaseReference main_ref = FirebaseDatabase.getInstance().getReference();
-    public static DatabaseReference current_user_ref = main_ref.child(current_user.getUid());
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (current_user != null) {
             setBottomNavigationDrawer();
@@ -171,22 +165,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     public static void saveRecipeInFavorites(Recette rec) {
+        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
+                .child(current_user.getUid());
 
-        MainActivity.current_user_ref.child("favorite_recipes")
+        current_user_ref.child("favorite_recipes")
                 .child(ParseHtml.shortifyUrl(rec.getUrl()))
                 .setValue(rec);
     }
 
     public static void removeRecipeFromFavorites(Recette rec) {
 
-        MainActivity.current_user_ref.child("favorite_recipes")
+        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
+                .child(current_user.getUid());
+
+        current_user_ref.child("favorite_recipes")
                 .child(ParseHtml.shortifyUrl(rec.getUrl()))
                 .removeValue();
-    }
-
-    public FirebaseUser getCurrentUser()
-    {
-        return this.current_user ;
     }
 
 }

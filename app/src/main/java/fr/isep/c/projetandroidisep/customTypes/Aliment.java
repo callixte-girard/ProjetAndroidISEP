@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.objects;
+package fr.isep.c.projetandroidisep.customTypes;
 
 import fr.isep.c.projetandroidisep.myClasses.*;
 

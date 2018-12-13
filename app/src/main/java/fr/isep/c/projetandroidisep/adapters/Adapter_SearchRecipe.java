@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
-import fr.isep.c.projetandroidisep.objects.Recette;
+import fr.isep.c.projetandroidisep.customTypes.Recette;
 import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
 
 

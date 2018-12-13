@@ -2,7 +2,6 @@ package fr.isep.c.projetandroidisep.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +24,7 @@ import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_SearchRecipe;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_SearchRecipe;
-import fr.isep.c.projetandroidisep.objects.Recette;
+import fr.isep.c.projetandroidisep.customTypes.Recette;
 
 
 

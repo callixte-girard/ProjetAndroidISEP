@@ -11,7 +11,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.isep.c.projetandroidisep.objects.User;
+import fr.isep.c.projetandroidisep.customTypes.User;
 
 public class UsersDBDataSource
 {

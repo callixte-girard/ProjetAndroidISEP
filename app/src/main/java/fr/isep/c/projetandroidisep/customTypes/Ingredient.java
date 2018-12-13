@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.objects;
+package fr.isep.c.projetandroidisep.customTypes;
 
 
 import java.io.Serializable;
