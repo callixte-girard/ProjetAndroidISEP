@@ -15,36 +15,24 @@ import fr.isep.c.projetandroidisep.myClasses.*;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
 //import fr.isep.c.projetandroidisep.myShoppingLists.*;
 
-public class Ingredient extends Aliment implements Serializable
+public class Ingredient
 {
-	public static ArrayList<Ingredient> all_ingr = new ArrayList<Ingredient>();
-
-
-	private boolean select = true ; // can be deactivated to remove an aliment from the parsed recipe
+	private String name ;
+	private boolean selected = true ; // can be deactivated to remove an aliment from the parsed recipe
 	private double qty ;
 	private String unit ;
 
+	public Ingredient() {}
 
-	private Ingredient(Aliment alim, double qty, String unit)
+	private Ingredient(String name, double qty, String unit)
 	{
-		super(alim.getNom(), alim.getCat(), alim.getUrl()); // sets cat & url from alim
-		// NB : alim.getNom() is already lowercased
+		//super(alim.getName(), alim.getCat(), alim.getUrl()); // sets cat & url from alim
+		// NB : alim.getName() is already lowercased
 
 		// association des attributs de l'ingr
+        this.name = name.toLowerCase();
 		this.qty = qty ;
 		this.unit = unit ;
-
-		// ### special alim ;)
-		this.setNutr(alim.getNutr()) ;
-
-		// ajout à la bdd des ingr SEULEMENT SI n'y est pas encore. no doublon
-		Ingredient ingr = Ingredient.getCorresponding
-				(this.getNom(), this.getForme(), this.getUnit(), all_ingr);
-
-		if (ingr == null)
-		{
-			all_ingr.add(this);
-		}
 	}
 
 
@@ -65,6 +53,98 @@ public class Ingredient extends Aliment implements Serializable
 			}
 		}
 		return false ;
+	}
+
+
+	public static ArrayList<Ingredient> fetchAllFromDoc(Document doc)
+	{
+		ArrayList<Ingredient> ingr_list = new ArrayList<>();
+
+		String[] html = ParseHtml.splitStringIntoLinesArray(doc.html());
+
+		// --> extracts only needed lines
+		ArrayList<String> extracted = ParseHtml.extractOnlyNeededLines
+				(html
+						, "Mrtn.recipesData ="
+						, "Mrtn = Mrtn || {};"
+				);
+		//for (String s : extracted) { System.out.println(s); }
+
+		// --> cleans the line with just what we need
+		String subl = ParseHtml.extractOnlyNeededSubline(
+				extracted.get(0),
+				'"' + "ingredients" + '"' + ":[",
+				"]}]};"
+		) ;
+
+		// --> petite correction sur les pbs d'encodage
+		subl = EncodingCorrecter.convertFromU00(subl);
+
+		// --> splits the line into requests.
+		String[] requests = subl.split("\\{");
+
+		// --> ...finally, fetches ingredients
+		for (String s : requests)
+		{
+			String[] attr_list = s.split(",");
+
+			String name = "" ;
+			String forme = "" ;
+			double qty = 0 ;
+			String unit = "" ;
+
+			for (String s2 : attr_list)
+			{
+				s2 = ParseHtml.removeSpecifiedCharFromString(s2, '"');
+
+				try
+				{
+					String[] spl = s2.split(":");
+
+
+					if (spl[0].equals("name"))
+					{
+						name = spl[1] ;
+					}
+					else if (spl[0].equals("qty"))
+					{
+						qty = Double.parseDouble(spl[1]) ;
+					}
+					else if (spl[0].equals("unit"))
+					{
+						unit = spl[1].replaceAll("\\}", "") ;
+					}
+
+					// quand créer l'ingredient ?
+					if (s2.contains("}"))
+					{
+						String name_and_forme = Ingredient.splitsNomIntoNomAndForme(name);
+						String[] split_name = name_and_forme.split(",");
+						name = split_name[0].trim();
+						forme = split_name[1].trim();
+
+						Log.d("name + forme", name_and_forme);
+						Log.d("qty", String.valueOf(qty));
+						Log.d("unit", unit);
+						Log.d("", Disp.line);
+
+						// # MODE 1 : méthode publique, constructeur privé
+						Ingredient ingr = new Ingredient(name, qty, unit);
+						ingr_list.add(ingr);
+					}
+				}
+				catch (ArrayIndexOutOfBoundsException ex)
+				{
+					Log.d("ingr_parse_error", ex.getMessage());
+				}
+				catch (Exception e)
+				{
+					Log.d("ingr_parse_severe_error", e.getMessage());
+				}
+			}
+		}
+
+		return ingr_list ;
 	}
 
 
@@ -119,52 +199,12 @@ public class Ingredient extends Aliment implements Serializable
 		return nom + ", " + forme ;
 	}
 
-	
-	public void dispQty()
-	{
-		System.out.print("- [" + this.getNom());
-
-		if (!this.getForme().isEmpty())
-		{
-			System.out.print(", " + this.getForme());
-		}
-		System.out.print("]");
-		
-		if (this.qty != 0)
-		{
-			System.out.print(" : " + this.qty + " " + this.unit);
-		}
-		else
-		{
-			System.out.print(" : " + "some");
-		}
-		
-		System.out.println();
-	}
-
-
-
-
-
-	public static Ingredient getCorresponding(String nom, String forme, String unit, ArrayList<Ingredient> al) // if returns null, means Ingredient.exists() == false.
-	{
-		for (Ingredient ingr : Ingredient.all_ingr)
-		{
-			if (ingr.getNom().equals(nom) && ingr.getForme().equals(forme) && ingr.getUnit().equals(unit))
-			{
-				return ingr ;
-			}
-		}
-
-		return null ;
-	}
-
 
 	public Aliment returnCorrespAlimEquals(ArrayList<Aliment> al)
 	{
 		for (Aliment alim : al)
 		{			
-			if (alim.getNom().equals(this.getNom()))
+			if (alim.getName().equals(this.getName()))
 			{
 				return alim ;
 			}
@@ -181,7 +221,7 @@ public class Ingredient extends Aliment implements Serializable
 		
 		for (Aliment alim : al)
 		{
-			if (alim.getNom().contains(this.getNom()) || this.getNom().contains(alim.getNom()))
+			if (alim.getName().contains(this.getName()) || this.getName().contains(alim.getName()))
 			{
 				out.add(alim);
 			}
@@ -189,59 +229,37 @@ public class Ingredient extends Aliment implements Serializable
 		return out ;
 	}
 
-	public static Ingredient createNewOrMatchExistingAlim(String nom, String forme, double qty, String unit)
-	{
-		// On passe par cette méthode publique qui utilise le constructeur privé, s'il a envie.
-		// ### includes adding to ingr_al.
+    public void updateQty(Ingredient ingr_to_add)
+    {
+        if (this.unit.equals(ingr_to_add.unit))
+        {
+            this.qty += ingr_to_add.qty ;
+        }
+    }
 
-		// puis récupère l'aliment correspondant, s'il existe
-		Ingredient ingr_out ;
-
-		Ingredient corresp_ingr = Ingredient.getCorresponding(nom, forme, unit, Ingredient.all_ingr) ;
-		Aliment corresp_alim = Aliment.getByNameAndForme(nom, forme, Aliment.al);
-
-		if (corresp_ingr != null) // d'abord check si c'est pas un ingr déjà connu
-			// NB : dans ce sens, on est sûr d'avoir le maximum de renseignements car si l'alim existe,
-			// il fera hériter l'ingr et donc retournera cet ingr à chaque fois
-		{
-			ingr_out = new Ingredient(corresp_ingr, qty, unit);
-		}
-		else if (corresp_alim != null) // s'il ne l'est pas, construit depuis l'aliment.
-		{
-			Aliment alim = corresp_alim ;
-			ingr_out = new Ingredient(corresp_alim, qty, unit);
-		}
-		else // si l'ingr n'existe manifestement pas dans notre bdd
-		{
-			Aliment unknown_alim = new Aliment(nom, "-", "-");
-			Aliment.al.add(unknown_alim);
-
-			ingr_out = new Ingredient(unknown_alim, qty, unit);
-		}
-
-		// ajoute la forme à l'ingr : ne change rien si la forme est vide
-		ingr_out.setForme(forme);
-
-		return ingr_out ;
+    public String getName() {
+	    return  this.name ;
+    }
+    public void setName(String name) {
+	    this.name = name ;
+    }
+    public boolean getSelected() {
+		return this.selected ;
 	}
-
-	public double getQty()
-	{
+	public void setSelected(boolean selected) {
+		this.selected = selected ;
+	}
+	public double getQty() {
 		return this.qty ;
 	}
-
-	public String getUnit()
-	{
+	public void setQty(double qty) {
+	    this.qty = qty ;
+    }
+	public String getUnit() {
 		return this.unit ;
 	}
-
-
-	public void updateQty(Ingredient ingr_to_add)
-	{
-		if (this.unit.equals(ingr_to_add.unit))
-		{
-			this.qty += ingr_to_add.qty ;
-		}
-	}
+	public void setUnit(String unit) {
+	    this.unit = unit ;
+    }
 
 }

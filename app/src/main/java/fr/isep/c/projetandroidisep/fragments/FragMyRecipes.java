@@ -122,88 +122,18 @@ public class FragMyRecipes extends Fragment
 
 
     @Override
-    public void processFinish(Document doc)
+    public void processFinish(Document doc, String url)
     {
-        ArrayList<Ingredient> ingr_list = new ArrayList<>();
+        Log.d("task_results_id", url);
 
-        String[] html = ParseHtml.splitStringIntoLinesArray(doc.html());
+        ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
 
-        // --> extracts only needed lines
-        ArrayList<String> extracted = ParseHtml.extractOnlyNeededLines
-                (html
-                        , "Mrtn.recipesData ="
-                        , "Mrtn = Mrtn || {};"
-                );
-        //for (String s : extracted) { System.out.println(s); }
+        // --> finally adds to appropriate recipe
+        Recette rec_to_update = Recette.getByUrl(favorite_recipes, url);
+        rec_to_update.setIngredients(ingr_list);
 
-        // --> cleans the line with just what we need
-        String subl = ParseHtml.extractOnlyNeededSubline(
-                extracted.get(0),
-                '"' + "ingredients" + '"' + ":[",
-                "]}]};"
-        ) ;
-
-        // --> petite correction sur les pbs d'encodage
-        subl = EncodingCorrecter.convertFromU00(subl);
-
-        // --> splits the line into requests.
-        String[] requests = subl.split("\\{");
-
-        // --> ...finally, fetches ingredients
-        for (String s : requests)
-        {
-            String[] attr_list = s.split(",");
-
-            String name = "" ;
-            String forme = "" ;
-            double qty = 0 ;
-            String unit = "" ;
-
-            for (String s2 : attr_list)
-            {
-                s2 = ParseHtml.removeSpecifiedCharFromString(s2, '"');
-                //System.out.println(s2);
-
-                try
-                {
-                    String[] spl = s2.split(":");
-
-
-                    if (spl[0].equals("name"))
-                    {
-                        name = spl[1] ;
-                    }
-                    else if (spl[0].equals("qty"))
-                    {
-                        qty = Double.parseDouble(spl[1]) ;
-                    }
-                    else if (spl[0].equals("unit"))
-                    {
-                        unit = spl[1].replaceAll("}", "") ;
-                    }
-
-                    // quand créer l'ingredient ?
-                    if (s2.contains("}"))
-                    {
-                        String name_and_forme = Ingredient.splitsNomIntoNomAndForme(name);
-                        String[] split_name = name_and_forme.split(",");
-                        name = split_name[0].trim();
-                        forme = split_name[1].trim();
-
-                        // # MODE 1 : méthode publique, constructeur privé
-                        Ingredient ingr = Ingredient.createNewOrMatchExistingAlim
-                                (name, forme, qty, unit);
-                        ingr_list.add(ingr);
-                    }
-                }
-                catch (ArrayIndexOutOfBoundsException ex)
-                {
-                    Log.d("ingr_parse_error", ex.getMessage());
-                }
-            }
-        }
-
-        // finds corresponding
+        // saves to firebase
+        MainActivity.saveRecipeInFavorites(rec_to_update);
     }
 
 
@@ -231,12 +161,14 @@ public class FragMyRecipes extends Fragment
     {
         for (Recette rec : favorite_recipes)
         {
-            Log.d("ingr_parsing", rec.getUrl());
+            if (rec.getIngredients().isEmpty()) {
+                Log.d("ingr_parsing", rec.getUrl());
 
-            AsyncTask_FetchIngredients task_fetchIngredients = new AsyncTask_FetchIngredients();
-            task_fetchIngredients.setDelegate(this);
-            task_fetchIngredients.execute(rec.getUrl());
-
+                AsyncTask_FetchIngredients task_fetchIngredients = new AsyncTask_FetchIngredients();
+                task_fetchIngredients.setDelegate(this);
+                task_fetchIngredients.setUrl(rec.getUrl());
+                task_fetchIngredients.execute(rec.getUrl()); // ok c'est redondant mais cassez pas les couilles !!!!!
+            }
         }
     }
 

@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 
-public class Aliment implements Serializable
+public class Aliment
 {
-	public static ArrayList<Aliment> al = new ArrayList<>() ;
-	
+	public static ArrayList<Aliment> all_alim = new ArrayList<>();
+
 	// SET-AT-CREATION ATTRIBUTES
-	private String nom ;
+	private String name ;
 	private String cat ; // categorie. Différent de type. On ne prend que le type "Aliment moyen"
-	final private String url ;
+	private String url ;
 	//final private String country_code ;
 
 	// MODIFIABLE ET OPTIONNEL
-	private String forme = "" ;
+	private String form = "" ;
 	
 	// --------------------- NUTRIMENTS ----------------------------
 	private ArrayList<Nutr> nutr = new ArrayList<Nutr>();
@@ -33,7 +33,9 @@ public class Aliment implements Serializable
 
 	// #######################################################################################################
 
-	public Aliment(String nom
+	public Aliment() {}
+	
+	public Aliment(String name
 			,String cat
 			,String url
 		//	,String country_code
@@ -45,15 +47,15 @@ public class Aliment implements Serializable
 	{
 		/*
 		// correcter 3-in-1 pour csv, jsoup et pbs d'encodage
-		this.nom = EncodingCorrecter.normaliseAzertySpecialLetters(nom
+		this.name = EncodingCorrecter.normaliseAzertySpecialLetters(name
 				.replace(",", "")
 				.replace("°", "'")) ;
 		*/
 		// sets to lower case to make it more likely to correspond to an ingredient
-		nom = nom.toLowerCase();
+		name = name.toLowerCase();
 		cat = cat.toLowerCase();
 		
-		this.nom = nom ;			 
+		this.name = name ;			 
 		this.cat = cat ;
 		this.url = url ;
 	//	this.country_code = country_code ;
@@ -62,11 +64,11 @@ public class Aliment implements Serializable
 	}
 	
 	
-	public static boolean existsName(String nom, String forme, ArrayList<Aliment> l)
+	public static boolean existsName(String name, String form, ArrayList<Aliment> l)
 	{
 		for (Aliment a : l)
 		{
-			if (nom.equals(a.nom) && forme.equals(a.forme))
+			if (name.equals(a.name) && form.equals(a.form))
 			{
 				return true ;
 			}
@@ -75,11 +77,11 @@ public class Aliment implements Serializable
 	}
 	
 	
-	public static boolean existsCat(String nom, ArrayList<Aliment> l)
+	public static boolean existsCat(String name, ArrayList<Aliment> l)
 	{
 		for (Aliment a : l)
 		{
-			if (nom.equals(a.cat))
+			if (name.equals(a.cat))
 			{
 				return true ;
 			}
@@ -92,15 +94,15 @@ public class Aliment implements Serializable
 	{
 		for (Aliment a : l) 
 		{
-			if (a.nom.equals(search)) 
+			if (a.name.equals(search)) 
 			{
 				return false ;
 			}
-			else if (a.nom.contains(search)) 
+			else if (a.name.contains(search)) 
 			{
 				return true ;
 			}
-			else if (search.contains(a.nom))
+			else if (search.contains(a.name))
 			{
 				return true ;
 			}
@@ -141,7 +143,7 @@ public class Aliment implements Serializable
 	
 	public void dispBlock(boolean with_nutr)
 	{
-		System.out.println("- nom : " + this.nom);
+		System.out.println("- name : " + this.name);
 		System.out.println("- url : " + this.url);
 		System.out.println("- cat : " + this.cat);
 		System.out.println(Disp.line);
@@ -156,7 +158,7 @@ public class Aliment implements Serializable
 	public void dispCompact() {
 		System.out.println("### "
 						+ this.cat + " | "
-						+ this.nom + " | "
+						+ this.name + " | "
 						+ this.url + " | "
 				//		+ this.country_code + " | "
 		);
@@ -167,13 +169,13 @@ public class Aliment implements Serializable
 
 
 
-	public static Aliment getByNameAndForme(String name, String forme, ArrayList<Aliment> l)
+	public static Aliment getByNameAndForm(String name, String form, ArrayList<Aliment> l)
 	{
-		if (Aliment.existsName(name, forme, l))
+		if (Aliment.existsName(name, form, l))
 		{
 			for (Aliment a : l)
 			{
-				if (a.nom.equals(name) && a.forme.equals(forme))
+				if (a.name.equals(name) && a.form.equals(form))
 				{
 					return a ;
 				}
@@ -259,38 +261,32 @@ public class Aliment implements Serializable
 		return out ;
 	}
 
-	public String getNom()
-	{
-		return this.nom ;
+	public String getName() {
+		return this.name ;
 	}
-
+	public void setName(String name) { this.name = name ; }
 	public String getCat()
 	{
 		return this.cat ;
 	}
-
+	public void setCat(String cat) { this.cat = cat ; }
 	public String getUrl()
 	{
 		return this.url ;
 	}
-
+	public void setUrl(String url) { this.url = url ; }
 	public ArrayList<Nutr> getNutr()
 	{
 		return this.nutr ;
 	}
-
-	public String getForme()
+	public void setNutr(ArrayList<Nutr> nutr) { this.nutr = nutr ; }
+	public String getForm()
 	{
-		return this.forme ;
+		return this.form ;
 	}
-
-	public void setForme(String forme)
+	public void setForm(String form)
 	{
-		this.forme = forme ;
+		this.form = form ;
 	}
-
-	public void setNutr(ArrayList<Nutr> nutr)
-	{
-		this.nutr = nutr ;
-	}
+	
 }

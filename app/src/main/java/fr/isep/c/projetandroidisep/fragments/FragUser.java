@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import fr.isep.c.projetandroidisep.*;
-import fr.isep.c.projetandroidisep.login.LoginActivity;
 
 
 public class FragUser extends Fragment

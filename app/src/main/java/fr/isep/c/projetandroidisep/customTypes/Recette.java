@@ -22,8 +22,6 @@ public class Recette
 	public final static String URL_BASE = "https://www.marmiton.org" ;
 	public final static String URL_SEARCH = "/recettes/recherche.aspx?aqt=" ;
 
-	public static ArrayList<Recette> al = new ArrayList<Recette>();
-
 	public static int counter = 0 ;
 
 	private int id ;
@@ -65,39 +63,6 @@ public class Recette
 	}
 */
 
-	public void dispAttr(boolean disp_ingr)
-	{
-		//System.out.print("# Recette N°" + this.id);
-		//System.out.print(" | " + ParseText.formatLocalDateTime(this.date_ajout));
-
-		if (!this.type.isEmpty())
-		{
-			////System.out.print(" | " + this.type);
-		}
-
-		////System.out.print(" | Durée : " + this.duration);
-
-		if (this.rating != 0)
-		{
-			////System.out.print(" | " + this.rating);
-		}
-
-		//System.out.print(" | " + this.name);
-		//System.out.print(" | " + this.url);
-
-		////System.out.println();
-		////System.out.println(Disp.line);
-
-		if (disp_ingr)
-		{
-			for (Ingredient ing : this.ingredients)
-			{
-				ing.dispQty();
-			}
-			////System.out.println(Disp.star);
-		}
-	}
-
 	public boolean alreadyExists(ArrayList<Recette> al_scan)
 	{
 		for (Recette rec : al_scan) {
@@ -105,6 +70,17 @@ public class Recette
 		}
 		return false ;
  	}
+
+
+ 	public static Recette getByUrl(ArrayList<Recette> al_scan, String url)
+	{
+		for (Recette rec : al_scan) {
+			if (rec.getUrl().equals(url)) return rec ;
+		}
+		return null ;
+	}
+
+	//public static Recette getById(ArrayList<Recette> al_scan, int id)
 
 
 
@@ -186,14 +162,12 @@ public class Recette
 		if (!duration.isEmpty())
 			this.duration = duration ;
 	}
-
-
-
 	//public LocalDateTime getDate() {return this.date_ajout ;}
-
 	public ArrayList<Ingredient> getIngredients()
 	{
 		return this.ingredients ;
 	}
-	
+	public void setIngredients(ArrayList<Ingredient> ingr_list) {
+		this.ingredients = ingr_list ;
+	}
 }

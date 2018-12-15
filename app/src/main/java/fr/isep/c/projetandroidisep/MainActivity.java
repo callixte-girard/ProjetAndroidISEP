@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity
                         Log.d("sign_out", "complete");
 
                         transferToFirebaseAuthActivity();
-
                     }
                 });
         // [END auth_fui_signout]
@@ -80,7 +79,6 @@ public class MainActivity extends AppCompatActivity
         ///////// perform transfer to login activity
         Intent intent_to_firebase_auth_activity = new Intent
                 (this, FirebaseUIActivity.class);
-
 
         startActivity(intent_to_firebase_auth_activity);
 
@@ -164,7 +162,9 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    public static void saveRecipeInFavorites(Recette rec) {
+
+    public static void saveRecipeInFavorites(Recette rec)
+    {
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
                 .child(current_user.getUid());
@@ -174,8 +174,8 @@ public class MainActivity extends AppCompatActivity
                 .setValue(rec);
     }
 
-    public static void removeRecipeFromFavorites(Recette rec) {
-
+    public static void removeRecipeFromFavorites(Recette rec)
+    {
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
                 .child(current_user.getUid());

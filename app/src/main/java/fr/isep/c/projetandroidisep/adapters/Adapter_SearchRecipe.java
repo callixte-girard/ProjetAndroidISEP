@@ -108,6 +108,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
 
                 if (isChecked) {
                     MainActivity.saveRecipeInFavorites(rec);
+
                 } else {
                     MainActivity.removeRecipeFromFavorites(rec);
                 }

@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.login.LoginActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;

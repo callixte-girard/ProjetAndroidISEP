@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Nutr implements Serializable
+public class Nutr
 {
 	private String nom ;
 	private Double val ;
