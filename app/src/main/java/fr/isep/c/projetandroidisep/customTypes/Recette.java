@@ -1,8 +1,15 @@
 package fr.isep.c.projetandroidisep.customTypes;
 
 
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_FetchIngredients;
+import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
 
 
 //import fr.isep.c.projetandroidisep.myRecipes.*;
@@ -10,8 +17,11 @@ import java.util.ArrayList;
 
 
 
-public class Recette implements Serializable
+public class Recette
 {
+	public final static String URL_BASE = "https://www.marmiton.org" ;
+	public final static String URL_SEARCH = "/recettes/recherche.aspx?aqt=" ;
+
 	public static ArrayList<Recette> al = new ArrayList<Recette>();
 
 	public static int counter = 0 ;
@@ -95,6 +105,57 @@ public class Recette implements Serializable
 		}
 		return false ;
  	}
+
+
+
+	public static ArrayList<Recette> fetchPageResultsFromDoc(Document doc)
+	{
+		ArrayList<Recette> result = new ArrayList<>();
+
+		Elements search_results = doc
+				.getElementsByClass("recipe-search__resuts").first()
+				.getElementsByClass("recipe-card");
+
+		// ## parse les recettes contenues dans la page
+		for (Element el : search_results)
+		{
+			String nom ;
+			String url ;
+			double rating ;
+			String description ;
+			String duration ;
+			String img_url ;
+			String type ;
+
+			nom = el.getElementsByClass("recipe-card__title").first()
+					.html().trim();
+			url = el.getElementsByClass("recipe-card-link").first()
+					.attr("href");
+			rating = Double.parseDouble(el.getElementsByClass("recipe-card__rating__value").first()
+					.html());
+			// description = el.getElementsByClass("recipe-card__description").first()
+			// 		.html(); // incomplete
+			duration = el.getElementsByClass("recipe-card__duration__value").first()
+					.html().trim();
+			img_url = el.getElementsByClass("recipe-card__picture").first()
+					.getElementsByTag("img").attr("src");
+			type = el.getElementsByClass("recipe-card__tags").first()
+					.getElementsByTag("li").first().html();
+
+			url = URL_BASE + url; // pour rendre l'url complète et pas partielle comme dans le html
+
+			Recette rec = new Recette(nom, type, url);
+			rec.setRating(rating);
+			rec.setDuration(duration);
+			rec.setType(type);
+
+			result.add(rec);
+		}
+
+		return result;
+	}
+
+
 
 	// needed for creation
 	public String getName() {

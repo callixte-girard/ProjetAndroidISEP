@@ -21,15 +21,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jsoup.nodes.Document;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import fr.isep.c.projetandroidisep.*;
 import fr.isep.c.projetandroidisep.adapters.Adapter_MyRecipes;
+import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_FetchIngredients;
+import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
+import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_SearchRecipe;
+import fr.isep.c.projetandroidisep.customTypes.Ingredient;
 import fr.isep.c.projetandroidisep.customTypes.Recette;
+import fr.isep.c.projetandroidisep.myClasses.EncodingCorrecter;
+import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 
 
-public class FragMyRecipes extends Fragment implements View.OnClickListener
+public class FragMyRecipes extends Fragment
+        implements AsyncResponse_FetchIngredients
 {
     private RecyclerView favorites_list ;
     private SearchView favorites_filter ;
@@ -50,6 +59,7 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
 
             try
             {
+                // 1) GET SAVED DATA
                 Iterator<DataSnapshot> it = dataSnapshot.getChildren().iterator();
 
                 favorite_recipes.clear();
@@ -68,6 +78,9 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
 
                 // creates recyclerview
                 initFavoritesList();
+
+                // launches the method to parse ingredients of all favorite recipes
+                performIngredientParseFavoriteRecipes();
             }
             catch (NullPointerException npe) {
                 //////
@@ -93,7 +106,6 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
 
         // waiting label
         favorites_number.setText("Fetching your favorite recipes...");
-
         // initialises the arraylist with favorite recipes
         // ### INCLUDES CREATING RECYCLERVIEW
         favorite_recipes_ref.addValueEventListener(listener);
@@ -108,9 +120,90 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
         favorite_recipes_ref.removeEventListener(listener);
     }
 
-    @Override
-    public void onClick(View v) {
 
+    @Override
+    public void processFinish(Document doc)
+    {
+        ArrayList<Ingredient> ingr_list = new ArrayList<>();
+
+        String[] html = ParseHtml.splitStringIntoLinesArray(doc.html());
+
+        // --> extracts only needed lines
+        ArrayList<String> extracted = ParseHtml.extractOnlyNeededLines
+                (html
+                        , "Mrtn.recipesData ="
+                        , "Mrtn = Mrtn || {};"
+                );
+        //for (String s : extracted) { System.out.println(s); }
+
+        // --> cleans the line with just what we need
+        String subl = ParseHtml.extractOnlyNeededSubline(
+                extracted.get(0),
+                '"' + "ingredients" + '"' + ":[",
+                "]}]};"
+        ) ;
+
+        // --> petite correction sur les pbs d'encodage
+        subl = EncodingCorrecter.convertFromU00(subl);
+
+        // --> splits the line into requests.
+        String[] requests = subl.split("\\{");
+
+        // --> ...finally, fetches ingredients
+        for (String s : requests)
+        {
+            String[] attr_list = s.split(",");
+
+            String name = "" ;
+            String forme = "" ;
+            double qty = 0 ;
+            String unit = "" ;
+
+            for (String s2 : attr_list)
+            {
+                s2 = ParseHtml.removeSpecifiedCharFromString(s2, '"');
+                //System.out.println(s2);
+
+                try
+                {
+                    String[] spl = s2.split(":");
+
+
+                    if (spl[0].equals("name"))
+                    {
+                        name = spl[1] ;
+                    }
+                    else if (spl[0].equals("qty"))
+                    {
+                        qty = Double.parseDouble(spl[1]) ;
+                    }
+                    else if (spl[0].equals("unit"))
+                    {
+                        unit = spl[1].replaceAll("}", "") ;
+                    }
+
+                    // quand créer l'ingredient ?
+                    if (s2.contains("}"))
+                    {
+                        String name_and_forme = Ingredient.splitsNomIntoNomAndForme(name);
+                        String[] split_name = name_and_forme.split(",");
+                        name = split_name[0].trim();
+                        forme = split_name[1].trim();
+
+                        // # MODE 1 : méthode publique, constructeur privé
+                        Ingredient ingr = Ingredient.createNewOrMatchExistingAlim
+                                (name, forme, qty, unit);
+                        ingr_list.add(ingr);
+                    }
+                }
+                catch (ArrayIndexOutOfBoundsException ex)
+                {
+                    Log.d("ingr_parse_error", ex.getMessage());
+                }
+            }
+        }
+
+        // finds corresponding
     }
 
 
@@ -131,6 +224,20 @@ public class FragMyRecipes extends Fragment implements View.OnClickListener
         Adapter_MyRecipes adapter = new Adapter_MyRecipes
                 (getContext(), favorite_recipes);
         favorites_list.setAdapter(adapter);
+    }
+
+
+    protected void performIngredientParseFavoriteRecipes()
+    {
+        for (Recette rec : favorite_recipes)
+        {
+            Log.d("ingr_parsing", rec.getUrl());
+
+            AsyncTask_FetchIngredients task_fetchIngredients = new AsyncTask_FetchIngredients();
+            task_fetchIngredients.setDelegate(this);
+            task_fetchIngredients.execute(rec.getUrl());
+
+        }
     }
 
 

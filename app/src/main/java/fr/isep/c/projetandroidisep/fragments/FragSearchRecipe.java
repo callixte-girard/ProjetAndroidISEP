@@ -28,11 +28,9 @@ import fr.isep.c.projetandroidisep.customTypes.Recette;
 
 
 
-public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRecipe
+public class FragSearchRecipe extends Fragment
+        implements AsyncResponse_SearchRecipe
 {
-    protected final static String URL_BASE = "https://www.marmiton.org" ;
-    protected final static String URL_SEARCH = "/recettes/recherche.aspx?aqt=" ;
-
     private SearchView search_bar ;
     private RecyclerView results_list ;
     private TextView results_number ;
@@ -69,7 +67,7 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
         // parse et ajoute les recettes aux résultats
         try
         {
-            all_results.addAll(fetchRecetteFromURLAsDocument(doc));
+            all_results.addAll(Recette.fetchPageResultsFromDoc(doc));
             Log.d("results", String.valueOf(all_results.size()));
         }
         catch (Exception ex) {
@@ -95,7 +93,7 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
                         .getElementsByTag("a").first()
                         .attr("href");
 
-                String next_page_url = FragSearchRecipe.URL_BASE + next_page_link ;
+                String next_page_url = Recette.URL_BASE + next_page_link ;
                 Log.d("next_page_url", next_page_url);
 
                 // lance la nouvelle task pour le deepness suivant
@@ -207,7 +205,7 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
     {
         search = search.replaceAll(" ", "-");
 
-        String first_url = URL_BASE + URL_SEARCH + search ;
+        String first_url = Recette.URL_BASE + Recette.URL_SEARCH + search ;
         Log.d("first_page_url", first_url);
 
         AsyncTask_SearchRecipe task_searchRecipe = new AsyncTask_SearchRecipe();
@@ -215,53 +213,6 @@ public class FragSearchRecipe extends Fragment implements AsyncResponse_SearchRe
         task_searchRecipe.execute(first_url, String.valueOf(current_deepness));
     }
 
-
-    private static ArrayList<Recette> fetchRecetteFromURLAsDocument(Document doc)
-    {
-        ArrayList<Recette> result = new ArrayList<>();
-
-        Elements search_results = doc
-                .getElementsByClass("recipe-search__resuts").first()
-                .getElementsByClass("recipe-card");
-
-        // ## parse les recettes contenues dans la page
-        for (Element el : search_results)
-        {
-            String nom ;
-            String url ;
-            double rating ;
-            String description ;
-            String duration ;
-            String img_url ;
-            String type ;
-
-            nom = el.getElementsByClass("recipe-card__title").first()
-                    .html().trim();
-            url = el.getElementsByClass("recipe-card-link").first()
-                    .attr("href");
-            rating = Double.parseDouble(el.getElementsByClass("recipe-card__rating__value").first()
-                    .html());
-            // description = el.getElementsByClass("recipe-card__description").first()
-            // 		.html(); // incomplete
-            duration = el.getElementsByClass("recipe-card__duration__value").first()
-                    .html().trim();
-            img_url = el.getElementsByClass("recipe-card__picture").first()
-                    .getElementsByTag("img").attr("src");
-            type = el.getElementsByClass("recipe-card__tags").first()
-                    .getElementsByTag("li").first().html();
-
-            url = URL_BASE + url; // pour rendre l'url complète et pas partielle comme dans le html
-
-            Recette rec = new Recette(nom, type, url);
-            rec.setRating(rating);
-            rec.setDuration(duration);
-            //rec.setType(type);
-
-            result.add(rec);
-        }
-
-        return result;
-    }
 
     public static ArrayList<Recette> getSearchResults() {
         return all_results ;
