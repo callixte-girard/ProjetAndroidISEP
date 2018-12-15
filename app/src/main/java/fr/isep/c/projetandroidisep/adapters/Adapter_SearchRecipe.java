@@ -63,20 +63,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.list_row_recipes_layout, viewGroup, false);
 
-        // pre-checks recipes that are already present in favorites
-        //bool_arr = preCheckAlreadyFavoriteRecipes(bool_arr);
-
         return new RecyclerViewHolder_SearchRecipe(v);
-    }
-
-    private SparseBooleanArray preCheckAlreadyFavoriteRecipes(SparseBooleanArray bool_arr)
-    {
-        for (int i=0 ; i < getItemCount() ; i++)
-        {
-            Recette rec = getRecetteAtPosition(i);
-            bool_arr.put(i, rec.alreadyExists(FragMyRecipes.getFavoriteRecipes()));
-        }
-        return bool_arr ;
     }
 
 
