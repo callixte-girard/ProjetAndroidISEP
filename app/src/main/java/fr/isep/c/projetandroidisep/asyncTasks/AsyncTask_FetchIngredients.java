@@ -17,6 +17,7 @@ public class AsyncTask_FetchIngredients extends AsyncTask<String, Void, Document
         return this ;
     }
 
+    public String getUrl() { return this.url ; }
     public void setUrl(String url) {
         this.url = url ;
     }
@@ -35,6 +36,6 @@ public class AsyncTask_FetchIngredients extends AsyncTask<String, Void, Document
     public void onPostExecute(Document doc)
     {
         // and then return
-        this.delegate_fetch_ingredients.processFinish(doc, this.url);
+        this.delegate_fetch_ingredients.processFinish_fetchIngredients(doc, this.url);
     }
 }

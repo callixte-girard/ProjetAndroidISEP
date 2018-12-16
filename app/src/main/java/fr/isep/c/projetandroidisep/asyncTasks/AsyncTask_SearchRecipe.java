@@ -33,6 +33,6 @@ public class AsyncTask_SearchRecipe extends AsyncTask<String, Void, Document>
 
 
         // and then return
-        this.delegate_search_recipe.processFinish(doc);
+        this.delegate_search_recipe.processFinish_searchRecipe(doc);
     }
 }

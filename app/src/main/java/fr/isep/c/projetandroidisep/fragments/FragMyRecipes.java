@@ -38,7 +38,6 @@ import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 
 
 public class FragMyRecipes extends Fragment
-        implements AsyncResponse_FetchIngredients
 {
     private RecyclerView favorites_list ;
     private SearchView favorites_filter ;
@@ -78,9 +77,6 @@ public class FragMyRecipes extends Fragment
 
                 // creates recyclerview
                 initFavoritesList();
-
-                // launches the method to parse ingredients of all favorite recipes
-                performIngredientParseFavoriteRecipes();
             }
             catch (NullPointerException npe) {
                 //////
@@ -121,20 +117,6 @@ public class FragMyRecipes extends Fragment
     }
 
 
-    @Override
-    public void processFinish(Document doc, String url)
-    {
-        Log.d("task_results_id", url);
-
-        ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
-
-        // --> finally adds to appropriate recipe
-        Recette rec_to_update = Recette.getByUrl(favorite_recipes, url);
-        rec_to_update.setIngredients(ingr_list);
-
-        // saves to firebase
-        MainActivity.saveRecipeInFavorites(rec_to_update);
-    }
 
 
     private void initFavoritesList()
@@ -157,20 +139,7 @@ public class FragMyRecipes extends Fragment
     }
 
 
-    protected void performIngredientParseFavoriteRecipes()
-    {
-        for (Recette rec : favorite_recipes)
-        {
-            if (rec.getIngredients().isEmpty()) {
-                Log.d("ingr_parsing", rec.getUrl());
 
-                AsyncTask_FetchIngredients task_fetchIngredients = new AsyncTask_FetchIngredients();
-                task_fetchIngredients.setDelegate(this);
-                task_fetchIngredients.setUrl(rec.getUrl());
-                task_fetchIngredients.execute(rec.getUrl()); // ok c'est redondant mais cassez pas les couilles !!!!!
-            }
-        }
-    }
 
 
     public static ArrayList<Recette> getFavoriteRecipes() {

@@ -4,5 +4,5 @@ import org.jsoup.nodes.Document;
 
 public interface AsyncResponse_FetchIngredients
 {
-    void processFinish(Document doc, String url);
+    void processFinish_fetchIngredients(Document doc, String url);
 }
