@@ -72,11 +72,8 @@ public class FragMyRecipes extends Fragment
                 }
 
                 // number of favorites
-                int nb = favorite_recipes.size();
-                favorites_number.setText(String.valueOf(nb) + " favorite recipes");
+                updateFavoritesList();
 
-                // creates recyclerview
-                initFavoritesList();
             }
             catch (NullPointerException npe) {
                 //////
@@ -91,6 +88,18 @@ public class FragMyRecipes extends Fragment
     };
 
 
+    protected void updateFavoritesList() {
+        // favorites count
+        int count = favorite_recipes.size();
+        favorites_number.setText(String.valueOf(count) + " favorite recipes");
+
+        // custom adapter
+        Adapter_MyRecipes adapter = new Adapter_MyRecipes
+                (getContext(), favorite_recipes);
+        favorites_list.setAdapter(adapter);
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
@@ -102,9 +111,12 @@ public class FragMyRecipes extends Fragment
 
         // waiting label
         favorites_number.setText("Fetching your favorite recipes...");
+
         // initialises the arraylist with favorite recipes
-        // ### INCLUDES CREATING RECYCLERVIEW
         favorite_recipes_ref.addValueEventListener(listener);
+
+        initFavoritesList(); // to set decoration and layout
+        updateFavoritesList(); // to fill it
 
         return view ;
     }
@@ -115,8 +127,6 @@ public class FragMyRecipes extends Fragment
 
         favorite_recipes_ref.removeEventListener(listener);
     }
-
-
 
 
     private void initFavoritesList()
@@ -132,10 +142,7 @@ public class FragMyRecipes extends Fragment
                 (getContext(), linearLayoutManager.getOrientation());
         favorites_list.addItemDecoration(itemDecor);
 
-        // custom adapter
-        Adapter_MyRecipes adapter = new Adapter_MyRecipes
-                (getContext(), favorite_recipes);
-        favorites_list.setAdapter(adapter);
+
     }
 
 
