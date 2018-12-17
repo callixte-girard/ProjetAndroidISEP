@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
-import fr.isep.c.projetandroidisep.customTypes.Recette;
+import fr.isep.c.projetandroidisep.customTypes.Recipe;
 import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
 
 
@@ -46,11 +46,11 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     }
 
     private Context context ;
-    private ArrayList<Recette> al ;
+    private ArrayList<Recipe> al ;
     private SparseBooleanArray bool_arr;
 
 
-    public Adapter_SearchRecipe(Context context, ArrayList<Recette> al)
+    public Adapter_SearchRecipe(Context context, ArrayList<Recipe> al)
     {
         this.al = al;
         this.context = context;
@@ -78,7 +78,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
             }
         });
 
-        Recette rec = FragSearchRecipe.getSearchResults().get(i);
+        Recipe rec = FragSearchRecipe.getSearchResults().get(i);
         boolean already_favorite = rec.alreadyExists(FragMyRecipes.getFavoriteRecipes()) ;
         Log.d(rec.getUrl(), String.valueOf(already_favorite));
 
@@ -88,7 +88,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                Recette rec = getRecetteAtPosition(i);
+                Recipe rec = getRecipeAtPosition(i);
 
                 Log.d("is_checked",
                         rec.getName() + " | " + String.valueOf(isChecked));
@@ -105,7 +105,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
         });
     }
 
-    public Recette getRecetteAtPosition(int position) {
+    public Recipe getRecipeAtPosition(int position) {
         return al.get(position);
     }
 

@@ -1,6 +1,7 @@
 package fr.isep.c.projetandroidisep.fragments;
 
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -28,7 +29,7 @@ import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_SearchRecipe;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_SearchRecipe;
 import fr.isep.c.projetandroidisep.customTypes.Ingredient;
-import fr.isep.c.projetandroidisep.customTypes.Recette;
+import fr.isep.c.projetandroidisep.customTypes.Recipe;
 
 
 
@@ -43,9 +44,9 @@ public class FragSearchRecipe extends Fragment
     private final int deepness = 2 ; // creuse 2 fois, càd cherche 3 x 15 résultats maximum.
     private int current_deepness = 0 ;
 
-    private static ArrayList<Recette> search_results = new ArrayList<>();
+    private static ArrayList<Recipe> search_results = new ArrayList<>();
 
-
+    private ArrayList<AsyncTask> async_tasks_list  = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
@@ -69,36 +70,33 @@ public class FragSearchRecipe extends Fragment
     @Override
     public void processFinish_fetchIngredients(Document doc, String url)
     {
-        Log.d("task_results_id", url);
+        try
+        {
+            Log.d("task_results_id", url);
 
-        ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
+            ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
 
-        // --> finally adds to appropriate recipe
-        Recette rec_to_update = Recette.getByUrl(search_results, url);
-        rec_to_update.setIngredients(ingr_list);
+            // --> finally adds to appropriate recipe
+            Recipe rec_to_update = Recipe.getByUrl(search_results, url);
+            rec_to_update.setIngredients(ingr_list);
 
-        Log.d("test", rec_to_update.getIngredients().toString());
-
-        // saves to firebase
-        //MainActivity.saveRecipeInFavorites(rec_to_update);
+        } catch (Exception e) {}
     }
 
 
     @Override
     public void processFinish_searchRecipe(Document doc)
     {
-        // parse et ajoute les recettes aux résultats
+        // parse et ajoute les recipes aux résultats
         try
         {
-            search_results.addAll(Recette.fetchPageResultsFromDoc(doc));
+            search_results.addAll(Recipe.fetchPageResultsFromDoc(doc));
             Log.d("results", String.valueOf(search_results.size()));
 
             // to get the 15-recipe block's ingredients one by one
             performFetchRecipeIngredients(search_results);
         }
-        catch (Exception ex) {
-            ex.getMessage();
-        }
+        catch (Exception ex) {}
 
         // update textview that counts results
         updateResultsCount(search_results.size());
@@ -119,7 +117,7 @@ public class FragSearchRecipe extends Fragment
                         .getElementsByTag("a").first()
                         .attr("href");
 
-                String next_page_url = Recette.URL_BASE + next_page_link ;
+                String next_page_url = Recipe.URL_BASE + next_page_link ;
                 Log.d("next_page_url", next_page_url);
 
                 // lance la nouvelle task pour le deepness suivant
@@ -154,24 +152,19 @@ public class FragSearchRecipe extends Fragment
         TextView query_field = search_bar.findViewById(id);
         query_field.setTextColor(Color.WHITE);
 
-        search_bar.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                // reset all results list
-                return false;
-            }
-        });
 
         // set method when search pressed
         search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                //Log.d("query_submit", query);
+            public boolean onQueryTextSubmit(String query)
+            {
+                Log.d("onQueryTextSubmit", query);
+
 
                 // reset all results list
-                search_results.clear();
                 results_number.setText("Searching...");
-                results_list.getAdapter().notifyDataSetChanged();
+
+                resetResultsList();
 
                 //// PERFORM SEARCH HERE
                 performSearchFromKeywordsAndDeepness(query);
@@ -179,23 +172,41 @@ public class FragSearchRecipe extends Fragment
                 // then resets deepness counter
                 current_deepness = 0 ;
 
-                return false;
+                return true;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                //Log.d("query_change", newText);
+            public boolean onQueryTextChange(String newText)
+            {
+                String optional = "";
 
-                if (TextUtils.isEmpty(newText)) {
+                if (newText.isEmpty()) {
+                    optional = "_clear";
                     //Text is cleared, do your thing
-                    search_results.clear();
+                    resetResultsList();
                     results_number.setText("");
-                    results_list.getAdapter().notifyDataSetChanged();
                 }
 
-                return false;
+                Log.d("onQueryTextChange" + optional, newText);
+
+
+                return true;
             }
         });
+    }
+
+
+    private void resetResultsList()
+    {
+        // cancels eventual new callings
+        current_deepness = deepness ;
+
+        for (AsyncTask task : async_tasks_list) {
+            task.cancel(true);
+        }
+
+        search_results.clear();
+        results_list.getAdapter().notifyDataSetChanged();
     }
 
 
@@ -231,18 +242,20 @@ public class FragSearchRecipe extends Fragment
     {
         search = search.replaceAll(" ", "-");
 
-        String first_url = Recette.URL_BASE + Recette.URL_SEARCH + search ;
+        String first_url = Recipe.URL_BASE + Recipe.URL_SEARCH + search ;
         Log.d("first_page_url", first_url);
 
         AsyncTask_SearchRecipe task_searchRecipe = new AsyncTask_SearchRecipe();
         task_searchRecipe.setDelegate(this);
         task_searchRecipe.execute(first_url, String.valueOf(current_deepness));
+
+        async_tasks_list.add(task_searchRecipe);
     }
 
 
-    protected void performFetchRecipeIngredients(ArrayList<Recette> al)
+    protected void performFetchRecipeIngredients(ArrayList<Recipe> al)
     {
-        for (Recette rec : al)
+        for (Recipe rec : al)
         {
             if (rec.getIngredients().isEmpty())
             {
@@ -250,12 +263,14 @@ public class FragSearchRecipe extends Fragment
                 task_fetchIngredients.setDelegate(this);
                 task_fetchIngredients.setUrl(rec.getUrl());
                 task_fetchIngredients.execute(task_fetchIngredients.getUrl());
+
+                async_tasks_list.add(task_fetchIngredients);
             }
         }
     }
 
 
-    public static ArrayList<Recette> getSearchResults() {
+    public static ArrayList<Recipe> getSearchResults() {
         return search_results ;
     }
 

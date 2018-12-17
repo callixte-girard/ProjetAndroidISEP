@@ -32,7 +32,7 @@ import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_FetchIngredients;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_SearchRecipe;
 import fr.isep.c.projetandroidisep.customTypes.Ingredient;
-import fr.isep.c.projetandroidisep.customTypes.Recette;
+import fr.isep.c.projetandroidisep.customTypes.Recipe;
 import fr.isep.c.projetandroidisep.myClasses.EncodingCorrecter;
 import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 
@@ -44,8 +44,8 @@ public class FragMyRecipes extends Fragment
     private TextView favorites_number ;
 
 
-    private static ArrayList<Recette> favorite_recipes = new ArrayList<>();
-    //private static ArrayList<Recette> deleted_recipes_history = new ArrayList<>();
+    private static ArrayList<Recipe> favorite_recipes = new ArrayList<>();
+    //private static ArrayList<Recipe> deleted_recipes_history = new ArrayList<>();
 
     private FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference favorite_recipes_ref = FirebaseDatabase.getInstance().getReference()
@@ -65,7 +65,7 @@ public class FragMyRecipes extends Fragment
 
                 while (it.hasNext())
                 {
-                    Recette rec = it.next().getValue(Recette.class);
+                    Recipe rec = it.next().getValue(Recipe.class);
                     Log.d("favorite_recipes", rec.getUrl());
 
                     favorite_recipes.add(rec);
@@ -149,7 +149,7 @@ public class FragMyRecipes extends Fragment
 
 
 
-    public static ArrayList<Recette> getFavoriteRecipes() {
+    public static ArrayList<Recipe> getFavoriteRecipes() {
         return favorite_recipes ;
     }
 

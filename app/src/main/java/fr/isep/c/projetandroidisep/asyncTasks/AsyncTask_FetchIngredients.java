@@ -26,10 +26,12 @@ public class AsyncTask_FetchIngredients extends AsyncTask<String, Void, Document
     @Override
     public Document doInBackground(String... param)
     {
-        String requested_url = param[0];
-
-        return ParseHtml.fetchHtmlAsDocumentFromUrl(requested_url);
-
+        if (!this.isCancelled()) {
+            String requested_url = param[0];
+            return ParseHtml.fetchHtmlAsDocumentFromUrl(requested_url);
+        } else {
+            return null ;
+        }
     }
 
     @Override

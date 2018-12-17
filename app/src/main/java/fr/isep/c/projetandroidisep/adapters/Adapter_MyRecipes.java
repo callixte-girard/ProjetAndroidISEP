@@ -16,7 +16,7 @@ import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
 import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
-import fr.isep.c.projetandroidisep.customTypes.Recette;
+import fr.isep.c.projetandroidisep.customTypes.Recipe;
 
 
 public class Adapter_MyRecipes extends RecyclerView.Adapter
@@ -51,10 +51,10 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
     }
 
     private Context context ;
-    private ArrayList<Recette> al ;
+    private ArrayList<Recipe> al ;
 
 
-    public Adapter_MyRecipes(Context context, ArrayList<Recette> al)
+    public Adapter_MyRecipes(Context context, ArrayList<Recipe> al)
     {
         this.al = al;
         this.context = context;
@@ -81,7 +81,7 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
             }
         });
 
-        Recette rec = FragMyRecipes.getFavoriteRecipes().get(i);
+        Recipe rec = FragMyRecipes.getFavoriteRecipes().get(i);
         boolean already_favorite = rec.alreadyExists(FragMyRecipes.getFavoriteRecipes()) ;
         //Log.d(rec.getUrl(), String.valueOf(already_favorite));
 
@@ -91,7 +91,7 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                Recette rec = FragMyRecipes.getFavoriteRecipes().get(i);
+                Recipe rec = FragMyRecipes.getFavoriteRecipes().get(i);
 
                 Log.d("is_checked",
                         rec.getName() + " | " + String.valueOf(isChecked));
@@ -117,7 +117,7 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
 
 
 
-    public Recette getRecetteAtPosition(int position) {
+    public Recipe getRecipeAtPosition(int position) {
         return al.get(position);
     }
 

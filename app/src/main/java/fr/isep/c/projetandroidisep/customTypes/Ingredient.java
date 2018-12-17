@@ -15,7 +15,7 @@ import fr.isep.c.projetandroidisep.myClasses.*;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
 //import fr.isep.c.projetandroidisep.myShoppingLists.*;
 
-public class Ingredient
+public class Ingredient extends Aliment
 {
 	private String name ;
 	private boolean selected = true ; // can be deactivated to remove an aliment from the parsed recipe
@@ -24,15 +24,24 @@ public class Ingredient
 
 	public Ingredient() {}
 
-	private Ingredient(String name, double qty, String unit)
+	private Ingredient(Aliment alim, double qty, String unit)
 	{
-		//super(alim.getName(), alim.getCat(), alim.getUrl()); // sets cat & url from alim
-		// NB : alim.getName() is already lowercased
+		super(alim.getName(), alim.getCat(), alim.getUrl()); // sets cat & url from alim
+		// NB : alim.getNom() is already lowercased
 
 		// association des attributs de l'ingr
-        this.name = name.toLowerCase();
 		this.qty = qty ;
 		this.unit = unit ;
+
+	}
+
+	public Ingredient(String name, String form, double qty, String unit)
+	{
+		this.name = name ;
+		this.setForm(form);
+		this.qty =  qty ;
+		this.unit = unit ;
+
 	}
 
 
@@ -89,7 +98,7 @@ public class Ingredient
 			String[] attr_list = s.split(",");
 
 			String name = "" ;
-			String forme = "" ;
+			String form = "" ;
 			double qty = 0 ;
 			String unit = "" ;
 
@@ -121,21 +130,23 @@ public class Ingredient
 						String name_and_forme = Ingredient.splitsNomIntoNomAndForme(name);
 						String[] split_name = name_and_forme.split(",");
 						name = split_name[0].trim();
-						forme = split_name[1].trim();
+						form = split_name[1].trim();
 
+						/*
 						Log.d("name + forme", name_and_forme);
 						Log.d("qty", String.valueOf(qty));
 						Log.d("unit", unit);
 						Log.d("", Disp.line);
+						*/
 
 						// # MODE 1 : méthode publique, constructeur privé
-						Ingredient ingr = new Ingredient(name, qty, unit);
+						Ingredient ingr = new Ingredient(name, form, qty, unit);
 						ingr_list.add(ingr);
 					}
 				}
 				catch (ArrayIndexOutOfBoundsException ex)
 				{
-					Log.d("ingr_parse_error", ex.getMessage());
+					//Log.d("ingr_parse_error", ex.getMessage());
 				}
 				catch (Exception e)
 				{

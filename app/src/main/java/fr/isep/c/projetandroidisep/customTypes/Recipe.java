@@ -17,10 +17,10 @@ import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
 
 
 
-public class Recette
+public class Recipe
 {
 	public final static String URL_BASE = "https://www.marmiton.org" ;
-	public final static String URL_SEARCH = "/recettes/recherche.aspx?aqt=" ;
+	public final static String URL_SEARCH = "/recipes/recherche.aspx?aqt=" ;
 
 	public static int counter = 0 ;
 
@@ -37,9 +37,9 @@ public class Recette
 	private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>() ;
 
 	// it's just for google firebase
-	public Recette() {}
+	public Recipe() {}
 
-	public Recette(String name
+	public Recipe(String name
 			, String type
 			, String url
 			)
@@ -54,45 +54,45 @@ public class Recette
 	}
 
 /*
-	public static void addToFavorites(Recette rec) {
+	public static void addToFavorites(Recipe rec) {
 		al.add(rec);
 	}
 
-	public static void removeFromFavorites(Recette rec) {
+	public static void removeFromFavorites(Recipe rec) {
 		al.remove(rec);
 	}
 */
 
-	public boolean alreadyExists(ArrayList<Recette> al_scan)
+	public boolean alreadyExists(ArrayList<Recipe> al_scan)
 	{
-		for (Recette rec : al_scan) {
+		for (Recipe rec : al_scan) {
 			if (rec.getUrl().equals(this.url)) return true ;
 		}
 		return false ;
  	}
 
 
- 	public static Recette getByUrl(ArrayList<Recette> al_scan, String url)
+ 	public static Recipe getByUrl(ArrayList<Recipe> al_scan, String url)
 	{
-		for (Recette rec : al_scan) {
+		for (Recipe rec : al_scan) {
 			if (rec.getUrl().equals(url)) return rec ;
 		}
 		return null ;
 	}
 
-	//public static Recette getById(ArrayList<Recette> al_scan, int id)
+	//public static Recipe getById(ArrayList<Recipe> al_scan, int id)
 
 
 
-	public static ArrayList<Recette> fetchPageResultsFromDoc(Document doc)
+	public static ArrayList<Recipe> fetchPageResultsFromDoc(Document doc)
 	{
-		ArrayList<Recette> result = new ArrayList<>();
+		ArrayList<Recipe> result = new ArrayList<>();
 
 		Elements search_results = doc
 				.getElementsByClass("recipe-search__resuts").first()
 				.getElementsByClass("recipe-card");
 
-		// ## parse les recettes contenues dans la page
+		// ## parse les recipes contenues dans la page
 		for (Element el : search_results)
 		{
 			String nom ;
@@ -120,7 +120,7 @@ public class Recette
 
 			url = URL_BASE + url; // pour rendre l'url complète et pas partielle comme dans le html
 
-			Recette rec = new Recette(nom, type, url);
+			Recipe rec = new Recipe(nom, type, url);
 			rec.setRating(rating);
 			rec.setDuration(duration);
 			rec.setType(type);
