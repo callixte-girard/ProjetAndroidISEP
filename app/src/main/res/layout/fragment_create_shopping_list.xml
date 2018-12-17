@@ -3,41 +3,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center_horizontal"
     android:padding="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SearchView
-        android:id="@+id/filter_shopping_lists"
-        android:queryHint="Filter shopping lists"
+        android:id="@+id/filter_recipe_selection"
+        android:queryHint="Filter recipes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"/>
 
     <TextView
-        android:id="@+id/number_shopping_lists"
+        android:id="@+id/label"
+        android:text="Choose your recipes for this shopping list :"
         android:textSize="12sp"
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_below="@id/filter_shopping_lists"/>
+        android:layout_below="@id/filter_recipe_selection"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_shopping_lists"
+        android:id="@+id/select_favorite_recipes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/number_shopping_lists"/>
+        android:layout_below="@id/label"
+        android:layout_above="@id/button_container"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/create_shopping_list"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/button_container"
+        layout="@layout/bottom_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:padding="@dimen/fab_margin"
-        android:src="@drawable/ic_add"
-        android:tint="@color/white"/>
+        android:layout_alignParentBottom="true"/>
 
 
 </RelativeLayout>

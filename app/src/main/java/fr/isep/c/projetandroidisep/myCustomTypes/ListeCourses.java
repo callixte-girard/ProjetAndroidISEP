@@ -1,18 +1,9 @@
-package fr.isep.c.projetandroidisep.customTypes;
+package fr.isep.c.projetandroidisep.myCustomTypes;
 
-import fr.isep.c.projetandroidisep.myClasses.*;
-
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 import java.util.Calendar;
 

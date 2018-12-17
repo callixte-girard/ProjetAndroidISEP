@@ -1,16 +1,13 @@
-package fr.isep.c.projetandroidisep.customTypes;
+package fr.isep.c.projetandroidisep.myCustomTypes;
 
 
 import android.util.Log;
 
 import org.jsoup.nodes.Document;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
-import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_FetchIngredients;
 import fr.isep.c.projetandroidisep.myClasses.*;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
 //import fr.isep.c.projetandroidisep.myShoppingLists.*;

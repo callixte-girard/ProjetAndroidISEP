@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,19 +16,17 @@ import android.widget.TextView;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
-import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_FetchIngredients;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_SearchRecipe;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_SearchRecipe;
-import fr.isep.c.projetandroidisep.customTypes.Ingredient;
-import fr.isep.c.projetandroidisep.customTypes.Recipe;
+import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
+import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 
@@ -196,20 +193,6 @@ public class FragSearchRecipe extends Fragment
     }
 
 
-    private void resetResultsList()
-    {
-        // cancels eventual new callings
-        current_deepness = deepness ;
-
-        for (AsyncTask task : async_tasks_list) {
-            task.cancel(true);
-        }
-
-        search_results.clear();
-        results_list.getAdapter().notifyDataSetChanged();
-    }
-
-
     private void initResultsList()
     {
         results_list.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
@@ -229,9 +212,21 @@ public class FragSearchRecipe extends Fragment
         results_list.setAdapter(adapter);
     }
 
+    private void resetResultsList()
+    {
+        // cancels eventual new callings
+        current_deepness = deepness ;
+
+        for (AsyncTask task : async_tasks_list) {
+            task.cancel(true);
+        }
+
+        search_results.clear();
+        results_list.getAdapter().notifyDataSetChanged();
+    }
 
 
-    protected void updateResultsCount(int number)
+    private void updateResultsCount(int number)
     {
         String nb_res = String.valueOf(number) + " results";
         results_number.setText(nb_res);

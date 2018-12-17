@@ -1,4 +1,11 @@
-Icon made by Smashicons from www.flaticon.com
+from www.flaticon.com
+Icon made by :
+
+Smashicons
+Egor Rumyantsev
+
 
 TO-DO :
-- réparer pbs arret asynctasks en mode recherche
+- réparer pbs arret asynctasks en mode recherche :
+    - trouver comment activer onQueryTextChange() quand le texte est vide
+- implémenter onBackPressed pour chaque fragment

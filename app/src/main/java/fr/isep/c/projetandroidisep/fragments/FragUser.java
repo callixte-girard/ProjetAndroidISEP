@@ -32,14 +32,9 @@ public class FragUser extends Fragment
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-        /*
-        MainActivity main_activity = (MainActivity) getActivity();
-        Intent intent = main_activity.getIntent();
-        boolean sign_out = intent.getBooleanExtra("sign_out", false);
-        */
-        String user_mail = FirebaseAuth.getInstance().getCurrentUser().getEmail() ;
 
         user_name = view.findViewById(R.id.user_name);
+        String user_mail = FirebaseAuth.getInstance().getCurrentUser().getEmail() ;
         user_name.setText(user_mail);
 
         button_sign_out = view.findViewById(R.id.button_sign_out);

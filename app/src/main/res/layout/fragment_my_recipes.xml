@@ -7,25 +7,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SearchView
-        android:id="@+id/favorites_filter"
+        android:id="@+id/filter_favorite_recipes"
         android:queryHint="Filter recipes"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"/>
 
     <TextView
-        android:id="@+id/favorites_number"
+        android:id="@+id/number_favorite_recipes"
         android:textSize="12sp"
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_below="@id/favorites_filter"/>
+        android:layout_below="@id/filter_favorite_recipes"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/favorites_list"
+        android:id="@+id/my_favorite_recipes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/favorites_number"/>
+        android:layout_below="@id/number_favorite_recipes"/>
 
 </RelativeLayout>

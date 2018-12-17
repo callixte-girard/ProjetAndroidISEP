@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 import fr.isep.c.projetandroidisep.*;
 
 
-public class FragMyShoppingLists extends Fragment implements View.OnClickListener
+public class FragMyShoppingLists extends Fragment
 {
     SearchView filter_shopping_lists ;
     TextView number_shopping_lists ;
@@ -31,7 +32,7 @@ public class FragMyShoppingLists extends Fragment implements View.OnClickListene
         filter_shopping_lists = view.findViewById(R.id.filter_shopping_lists);
 
         number_shopping_lists = view.findViewById(R.id.number_shopping_lists);
-        number_shopping_lists.setText("test");
+        number_shopping_lists.setText("? shopping lists");
 
         my_shopping_lists = view.findViewById(R.id.my_shopping_lists);
 
@@ -39,8 +40,13 @@ public class FragMyShoppingLists extends Fragment implements View.OnClickListene
         create_shopping_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
+
+                Log.d("number_favorites", String.valueOf(
+                        MainActivity.getFavoriteRecipes().size()));
+
+                MainActivity.displayFrag_createShoppingList(getFragmentManager());
             }
         });
 
@@ -48,8 +54,5 @@ public class FragMyShoppingLists extends Fragment implements View.OnClickListene
         return view ;
     }
 
-    @Override
-    public void onClick(View v) {
 
-    }
 }

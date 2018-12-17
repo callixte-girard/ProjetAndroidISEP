@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.customTypes;
+package fr.isep.c.projetandroidisep.myCustomTypes;
 
 public class User
 {

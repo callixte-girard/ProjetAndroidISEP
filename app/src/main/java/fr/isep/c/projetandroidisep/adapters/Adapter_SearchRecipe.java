@@ -15,8 +15,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
-import fr.isep.c.projetandroidisep.customTypes.Recipe;
+import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
 
 
@@ -79,8 +78,8 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
         });
 
         Recipe rec = FragSearchRecipe.getSearchResults().get(i);
-        boolean already_favorite = rec.alreadyExists(FragMyRecipes.getFavoriteRecipes()) ;
-        Log.d(rec.getUrl(), String.valueOf(already_favorite));
+        boolean already_favorite = rec.alreadyExists(MainActivity.getFavoriteRecipes()) ;
+        //Log.d(rec.getUrl(), String.valueOf(already_favorite));
 
         holder.checkbox_add_to_favorites.setChecked(already_favorite);
         holder.checkbox_add_to_favorites.setOnCheckedChangeListener

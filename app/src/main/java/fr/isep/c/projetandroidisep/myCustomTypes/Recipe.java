@@ -1,15 +1,11 @@
-package fr.isep.c.projetandroidisep.customTypes;
+package fr.isep.c.projetandroidisep.myCustomTypes;
 
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-
-import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_FetchIngredients;
-import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
 
 
 //import fr.isep.c.projetandroidisep.myRecipes.*;
@@ -20,12 +16,12 @@ import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
 public class Recipe
 {
 	public final static String URL_BASE = "https://www.marmiton.org" ;
-	public final static String URL_SEARCH = "/recipes/recherche.aspx?aqt=" ;
+	public final static String URL_SEARCH = "/recettes/recherche.aspx?aqt=" ;
 
 	public static int counter = 0 ;
 
 	private int id ;
-	private boolean select = true ; // can be deactivated to remove an aliment from the parsed recipe
+	private boolean selected = false ; // can be deactivated to remove an aliment from the parsed recipe
 	private String name ;
 	private String url ;
 	private String instructions ;
@@ -152,6 +148,8 @@ public class Recipe
 	}
 
 	// possible after creation
+	public boolean getSelected() { return this.selected ; }
+	public void setSelected(boolean selected) {this.selected = selected ; }
 	public double getRating() { return this.rating ; }
 	public void setRating(double rating)
 	{

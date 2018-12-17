@@ -1,9 +1,8 @@
-package fr.isep.c.projetandroidisep.customTypes;
+package fr.isep.c.projetandroidisep.myCustomTypes;
 
 import fr.isep.c.projetandroidisep.myClasses.*;
 
 import java.util.ArrayList;
-import java.io.Serializable;
 
 
 public class Aliment

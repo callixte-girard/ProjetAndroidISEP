@@ -8,29 +8,37 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
-import fr.isep.c.projetandroidisep.*;
+import fr.isep.c.projetandroidisep.MainActivity;
+import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_MyRecipes;
+import fr.isep.c.projetandroidisep.adapters.Adapter_SelectRecipes;
 
 
-public class FragMyRecipes extends Fragment
+public class FragCreateShoppingList extends Fragment
 {
-    private RecyclerView my_favorite_recipes ;
+    private RecyclerView select_favorite_recipes ;
     //private SearchView filter_favorite_recipes ;
-    private TextView number_favorite_recipes ;
+    private Button button_create_shopping_list , button_back ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_my_recipes, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_shopping_list, container, false);
 
         //filter_favorite_recipes = view.findViewById(R.id.filter_favorite_recipes);
 
-        number_favorite_recipes = view.findViewById(R.id.number_favorite_recipes);
-        number_favorite_recipes.setText("Fetching your favorite recipes...");
+        select_favorite_recipes = view.findViewById(R.id.select_favorite_recipes);
 
-        my_favorite_recipes = view.findViewById(R.id.my_favorite_recipes);
+        button_create_shopping_list = view.findViewById(R.id.button_create_shopping_list);
+        button_create_shopping_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         initFavoritesList(); // to set decoration and layout
         updateFavoritesList(); // to fill it
@@ -47,30 +55,26 @@ public class FragMyRecipes extends Fragment
 
     private void initFavoritesList()
     {
-        my_favorite_recipes.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
+        select_favorite_recipes.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
 
         // layout
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        my_favorite_recipes.setLayoutManager(linearLayoutManager);
+        select_favorite_recipes.setLayoutManager(linearLayoutManager);
 
         // add a line to divide them more clearly
         DividerItemDecoration itemDecor = new DividerItemDecoration
                 (getContext(), linearLayoutManager.getOrientation());
-        my_favorite_recipes.addItemDecoration(itemDecor);
+        select_favorite_recipes.addItemDecoration(itemDecor);
 
 
     }
 
     public void updateFavoritesList()
     {
-        // favorites count
-        int count = MainActivity.getFavoriteRecipes().size();
-        number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
-
         // custom adapter
-        Adapter_MyRecipes adapter = new Adapter_MyRecipes
+        Adapter_SelectRecipes adapter = new Adapter_SelectRecipes
                 (getContext(), MainActivity.getFavoriteRecipes());
-        my_favorite_recipes.setAdapter(adapter);
+        select_favorite_recipes.setAdapter(adapter);
     }
 
 
