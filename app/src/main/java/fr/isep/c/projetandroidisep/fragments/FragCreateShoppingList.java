@@ -60,8 +60,8 @@ public class FragCreateShoppingList extends Fragment
                 // checks validity
                 if (!lc_recipes.isEmpty())
                 {
+                    // saves shopping list on the db
                     ListeCourses lc = new ListeCourses(lc_recipes);
-
                     MainActivity.saveListeCourses(lc);
 
                     // removes actual fragment and restores my shopping lists one
@@ -69,7 +69,7 @@ public class FragCreateShoppingList extends Fragment
                     MainActivity.displayFrag_myShoppingLists(getFragmentManager());
                 }
                 else {
-                    Snackbar.make(v, NOTHING_SELECTED, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v, NOTHING_SELECTED, Snackbar.LENGTH_SHORT).show();
                 }
 
             }

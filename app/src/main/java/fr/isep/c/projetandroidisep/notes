@@ -9,3 +9,4 @@ TO-DO :
 - réparer pbs arret asynctasks en mode recherche :
     - trouver comment activer onQueryTextChange() quand le texte est vide
 - implémenter onBackPressed pour chaque fragment
+- backup delete with snackbar

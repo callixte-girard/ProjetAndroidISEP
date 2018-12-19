@@ -60,7 +60,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     public RecyclerViewHolder_SearchRecipe onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_simple_checklist, viewGroup, false);
+                .inflate(R.layout.row_recipe, viewGroup, false);
 
         return new RecyclerViewHolder_SearchRecipe(v);
     }
@@ -87,7 +87,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                Recipe rec = getRecipeAtPosition(i);
+                Recipe rec = al.get(i);
 
                 Log.d("is_checked",
                         rec.getName() + " | " + String.valueOf(isChecked));
@@ -104,22 +104,8 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
         });
     }
 
-    public Recipe getRecipeAtPosition(int position) {
-        return al.get(position);
-    }
-
     @Override
     public int getItemCount() {
         return (null != al ? al.size() : 0);
     }
-
-
-    /**
-     * Return the selected Checkbox IDs
-     **/
-    public SparseBooleanArray getSelectedIds() {
-        return bool_arr;
-    }
-
-
 }

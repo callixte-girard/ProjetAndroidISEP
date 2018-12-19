@@ -25,7 +25,7 @@ public class FragFavoriteRecipes extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_my_recipes, container, false);
+        View view = inflater.inflate(R.layout.fragment_favorite_recipes, container, false);
 
         //filter_favorite_recipes = view.findViewById(R.id.filter_favorite_recipes);
 

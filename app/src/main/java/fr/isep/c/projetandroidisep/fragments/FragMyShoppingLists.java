@@ -53,7 +53,7 @@ public class FragMyShoppingLists extends Fragment
 
                 if (MainActivity.getFavoriteRecipes().isEmpty())
                 {
-                    Snackbar.make(view, FAVORITES_EMPTY, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, FAVORITES_EMPTY, Snackbar.LENGTH_SHORT).show();
                 }
                 else {
                     MainActivity.displayFrag_createShoppingList(getFragmentManager());

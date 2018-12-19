@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,23 +19,25 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
-            <Adapter_FavoriteRecipes
-                .RecyclerViewHolder_MyRecipes>
+            <Adapter_FavoriteRecipes.RecyclerViewHolder_FavoriteRecipes>
 {
 
-    static class RecyclerViewHolder_MyRecipes extends RecyclerView.ViewHolder
+    static class RecyclerViewHolder_FavoriteRecipes extends RecyclerView.ViewHolder
         implements View.OnClickListener {
 
-
-        private TextView recipe_name ;
+        private TextView recipe_name, recipe_duration, recipe_rating ;
+        private ImageView recipe_img ;
         private CheckBox checkbox_delete_from_favorites ;
 
 
-        RecyclerViewHolder_MyRecipes(View view)
+        RecyclerViewHolder_FavoriteRecipes(View view)
         {
             super(view);
 
             recipe_name = view.findViewById(R.id.title);
+            recipe_img = view.findViewById(R.id.recipe_img);
+            recipe_duration = view.findViewById(R.id.recipe_duration);
+            recipe_rating = view.findViewById(R.id.recipe_rating);
             checkbox_delete_from_favorites = view.findViewById(R.id.checkbox);
         }
 
@@ -59,16 +62,16 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
     }
 
     @Override
-    public RecyclerViewHolder_MyRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
+    public RecyclerViewHolder_FavoriteRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_simple_checklist, viewGroup, false);
-
-        return new RecyclerViewHolder_MyRecipes(v);
+                .inflate(R.layout.row_recipe, viewGroup, false);
+        
+        return new RecyclerViewHolder_FavoriteRecipes(v);
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder_MyRecipes holder, final int i)
+    public void onBindViewHolder(final RecyclerViewHolder_FavoriteRecipes holder, final int i)
     {
         holder.recipe_name.setText(al.get(i).getName());
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +81,10 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
 
             }
         });
+        
+        holder.recipe_duration.setText("00 min");
+
+        //holder.recipe_rating.setText("0/0");
 
         Recipe rec = MainActivity.getFavoriteRecipes().get(i);
         boolean already_favorite = rec.alreadyExists(MainActivity.getFavoriteRecipes()) ;
@@ -107,11 +114,6 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
         });
     }
 
-
-
-    public Recipe getRecipeAtPosition(int position) {
-        return al.get(position);
-    }
 
     @Override
     public int getItemCount() {

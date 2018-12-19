@@ -62,7 +62,7 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
     public RecyclerViewHolder_SelectRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_simple_checklist, viewGroup, false);
+                .inflate(R.layout.row_checklist_basic, viewGroup, false);
 
         return new RecyclerViewHolder_SelectRecipes(v);
     }
