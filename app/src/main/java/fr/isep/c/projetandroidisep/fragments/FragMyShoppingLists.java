@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,6 +17,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.*;
+import fr.isep.c.projetandroidisep.adapters.Adapter_FavoriteRecipes;
+import fr.isep.c.projetandroidisep.adapters.Adapter_MyShoppingLists;
 
 
 public class FragMyShoppingLists extends Fragment
@@ -24,6 +28,7 @@ public class FragMyShoppingLists extends Fragment
     RecyclerView my_shopping_lists ;
     FloatingActionButton create_shopping_list ;
 
+    private static final String DEFAULT_COUNTER = "Fetching your shopping lists...";
     private static final String FAVORITES_EMPTY = "You must add recipes in your favorites first ;)" ;
 
     @Override
@@ -34,7 +39,7 @@ public class FragMyShoppingLists extends Fragment
         filter_shopping_lists = view.findViewById(R.id.filter_shopping_lists);
 
         number_shopping_lists = view.findViewById(R.id.number_shopping_lists);
-        number_shopping_lists.setText("? shopping lists");
+        number_shopping_lists.setText(DEFAULT_COUNTER);
 
         my_shopping_lists = view.findViewById(R.id.my_shopping_lists);
 
@@ -56,9 +61,39 @@ public class FragMyShoppingLists extends Fragment
             }
         });
 
+        initShoppingLists();
+        updateShoppingLists();
 
         return view ;
     }
 
+
+    private void initShoppingLists()
+    {
+        my_shopping_lists.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
+
+        // layout
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        my_shopping_lists.setLayoutManager(linearLayoutManager);
+
+        // add a line to divide them more clearly
+        DividerItemDecoration itemDecor = new DividerItemDecoration
+                (getContext(), linearLayoutManager.getOrientation());
+        my_shopping_lists.addItemDecoration(itemDecor);
+
+    }
+
+
+    public void updateShoppingLists()
+    {
+        // favorites count
+        int count = MainActivity.getMyShoppingLists().size();
+        number_shopping_lists.setText(String.valueOf(count) + " shopping lists");
+
+        // custom adapter
+        Adapter_MyShoppingLists adapter = new Adapter_MyShoppingLists
+                (getContext(), MainActivity.getMyShoppingLists());
+        my_shopping_lists.setAdapter(adapter);
+    }
 
 }

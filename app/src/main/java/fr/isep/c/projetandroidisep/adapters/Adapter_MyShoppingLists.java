@@ -14,15 +14,17 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.myClasses.ParseText;
+import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Adapter_MyShoppingLists extends RecyclerView.Adapter
             <Adapter_MyShoppingLists
-                .RecyclerViewHolder_MyRecipes>
+                .RecyclerViewHolder_MyShoppingLists>
 {
 
-    static class RecyclerViewHolder_MyRecipes extends RecyclerView.ViewHolder
+    static class RecyclerViewHolder_MyShoppingLists extends RecyclerView.ViewHolder
         implements View.OnClickListener {
 
 
@@ -30,7 +32,7 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
         private CheckBox checkbox_delete_shopping_list ;
 
 
-        RecyclerViewHolder_MyRecipes(View view)
+        RecyclerViewHolder_MyShoppingLists(View view)
         {
             super(view);
 
@@ -49,28 +51,31 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
     }
 
     private Context context ;
-    private ArrayList<Recipe> al ;
+    private ArrayList<ListeCourses> al ;
 
 
-    public Adapter_MyShoppingLists(Context context, ArrayList<Recipe> al)
+    public Adapter_MyShoppingLists(Context context, ArrayList<ListeCourses> al)
     {
         this.al = al;
         this.context = context;
     }
 
     @Override
-    public RecyclerViewHolder_MyRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
+    public RecyclerViewHolder_MyShoppingLists onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.row_simple_checklist, viewGroup, false);
 
-        return new RecyclerViewHolder_MyRecipes(v);
+        return new RecyclerViewHolder_MyShoppingLists(v);
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder_MyRecipes holder, final int i)
+    public void onBindViewHolder(final RecyclerViewHolder_MyShoppingLists holder, final int i)
     {
-        holder.lc_date_creation.setText(al.get(i).getName());
+        String clean_date_str = al.get(i).getDateCreation()
+                .replace("_", " ");
+
+        holder.lc_date_creation.setText(clean_date_str);
         holder.lc_date_creation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,17 +94,17 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                Recipe rec = MainActivity.getFavoriteRecipes().get(i);
+                ListeCourses lc = MainActivity.getMyShoppingLists().get(i);
 
                 Log.d("is_checked",
-                        rec.getName() + " | " + String.valueOf(isChecked));
+                        lc.getDateCreation() + " | " + String.valueOf(isChecked));
 
                 if (isChecked) {
                     //MainActivity.saveRecipeInFavorites(rec);
 
                 } else {
                     // adds back recipe (revert deletion)
-                    MainActivity.removeRecipeFromFavorites(rec);
+                    MainActivity.removeShoppingList(lc);
                 }
 
                 //notifyDataSetChanged();
@@ -109,7 +114,7 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
 
 
 
-    public Recipe getRecipeAtPosition(int position) {
+    public ListeCourses getShoppingListAtPosition(int position) {
         return al.get(position);
     }
 

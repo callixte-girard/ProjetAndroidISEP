@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import fr.isep.c.projetandroidisep.fragments.FragCreateShoppingList;
 import fr.isep.c.projetandroidisep.fragments.FragMyShoppingLists;
 import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
-import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
+import fr.isep.c.projetandroidisep.fragments.FragFavoriteRecipes;
 import fr.isep.c.projetandroidisep.fragments.FragUser;
 import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 import fr.isep.c.projetandroidisep.myClasses.ParseText;
@@ -41,17 +41,18 @@ public class MainActivity extends AppCompatActivity
     private BottomNavigationView bnv ;
 
     private static FragSearchRecipe frag_search_recipe = new FragSearchRecipe();
-    private static FragMyRecipes frag_my_recipes = new FragMyRecipes();
+    private static FragFavoriteRecipes frag_my_recipes = new FragFavoriteRecipes();
     private static FragMyShoppingLists frag_my_shopping_lists = new FragMyShoppingLists();
     private static FragCreateShoppingList frag_create_shopping_list = new FragCreateShoppingList();
     private static FragUser frag_user = new FragUser();
 
 
     private FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-    private DatabaseReference favorite_recipes_ref = FirebaseDatabase.getInstance().getReference()
-            .child(current_user.getUid()).child("favorite_recipes");
+    private DatabaseReference ref_current_user = FirebaseDatabase.getInstance().getReference().child(current_user.getUid());
+    private DatabaseReference ref_favorite_recipes = ref_current_user.child("favorite_recipes");
+    private DatabaseReference ref_my_shopping_lists = ref_current_user.child("my_shopping_lists");
 
-    private ValueEventListener listener = new ValueEventListener() {
+    private ValueEventListener listener_favorite_recipes = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -85,9 +86,45 @@ public class MainActivity extends AppCompatActivity
             Log.d("onCancelled", databaseError.getMessage());
         }
     };
+    private ValueEventListener listener_my_shopping_lists = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            try
+            {
+                // 1) GET SAVED DATA
+                Iterator<DataSnapshot> it = dataSnapshot.getChildren().iterator();
+
+                getMyShoppingLists().clear();
+
+                while (it.hasNext())
+                {
+                    ListeCourses lc = it.next().getValue(ListeCourses.class);
+                    Log.d("my_shopping_lists", lc.getDateCreation());
+
+                    getMyShoppingLists().add(lc);
+                }
+
+                // update fragment's number of favorites
+                frag_my_shopping_lists.updateShoppingLists();
+
+            }
+            catch (NullPointerException npe) {
+                //////
+            }
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.d("onCancelled", databaseError.getMessage());
+        }
+    };
+
 
     private static ArrayList<Recipe> favorite_recipes = new ArrayList<>();
     //private static ArrayList<Recipe> deleted_recipes_history = new ArrayList<>();
+    private static ArrayList<ListeCourses> my_shopping_lists = new ArrayList<>();
 
     /////////////////////////////////////////////////////////////////////////////////
 
@@ -97,7 +134,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         // initialises the arraylist with favorite recipes
-        favorite_recipes_ref.addValueEventListener(listener);
+        ref_favorite_recipes.addValueEventListener(listener_favorite_recipes);
+        ref_my_shopping_lists.addValueEventListener(listener_my_shopping_lists);
 
         if (current_user != null) {
             setBottomNavigationDrawer();
@@ -111,7 +149,8 @@ public class MainActivity extends AppCompatActivity
     public void onStop() {
         super.onStop();
 
-        favorite_recipes_ref.removeEventListener(listener);
+        ref_favorite_recipes.removeEventListener(listener_favorite_recipes);
+        ref_my_shopping_lists.removeEventListener(listener_my_shopping_lists);
     }
 
 
@@ -235,7 +274,7 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    public static void hideFrag_createShoppingList(FragmentManager frag_manager)
+    public static void destroyFrag_createShoppingList(FragmentManager frag_manager)
     {
         frag_manager
                 .beginTransaction()
@@ -289,9 +328,21 @@ public class MainActivity extends AppCompatActivity
                 .removeValue();
     }
 
+    public static void removeShoppingList(ListeCourses lc)
+    {
+        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
+                .child(current_user.getUid());
+
+        current_user_ref.child("my_shopping_lists")
+                .child(lc.getDateCreation())
+                .removeValue();
+    }
+
     public static ArrayList<Recipe> getFavoriteRecipes() {
         return favorite_recipes ;
     }
-
-
+    public static ArrayList<ListeCourses> getMyShoppingLists() {
+        return my_shopping_lists ;
+    }
 }

@@ -14,11 +14,13 @@ import fr.isep.c.projetandroidisep.*;
 import fr.isep.c.projetandroidisep.adapters.Adapter_FavoriteRecipes;
 
 
-public class FragMyRecipes extends Fragment
+public class FragFavoriteRecipes extends Fragment
 {
     private RecyclerView my_favorite_recipes ;
     //private SearchView filter_favorite_recipes ;
     private TextView number_favorite_recipes ;
+
+    private static final String DEFAULT_COUNTER = "Fetching your favorite recipes...";
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
@@ -28,7 +30,7 @@ public class FragMyRecipes extends Fragment
         //filter_favorite_recipes = view.findViewById(R.id.filter_favorite_recipes);
 
         number_favorite_recipes = view.findViewById(R.id.number_favorite_recipes);
-        number_favorite_recipes.setText("Fetching your favorite recipes...");
+        number_favorite_recipes.setText(DEFAULT_COUNTER);
 
         my_favorite_recipes = view.findViewById(R.id.my_favorite_recipes);
 

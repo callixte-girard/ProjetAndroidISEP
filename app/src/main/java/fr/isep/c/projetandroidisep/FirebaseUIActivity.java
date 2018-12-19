@@ -33,7 +33,7 @@ public class FirebaseUIActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 123;
 
-    private FirebaseAuth.AuthStateListener listener = new FirebaseAuth.AuthStateListener() {
+    private FirebaseAuth.AuthStateListener listener_auth = new FirebaseAuth.AuthStateListener() {
         @Override
         public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
             FirebaseUser current_user = firebaseAuth.getCurrentUser();
@@ -79,7 +79,7 @@ public class FirebaseUIActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_ui);
 
-        FirebaseAuth.getInstance().addAuthStateListener(listener);
+        FirebaseAuth.getInstance().addAuthStateListener(listener_auth);
     }
 
 
@@ -87,7 +87,7 @@ public class FirebaseUIActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        FirebaseAuth.getInstance().removeAuthStateListener(listener);
+        FirebaseAuth.getInstance().removeAuthStateListener(listener_auth);
     }
 
 

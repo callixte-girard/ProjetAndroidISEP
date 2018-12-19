@@ -58,13 +58,17 @@ public class FragCreateShoppingList extends Fragment
                 }
 
                 // checks validity
-                if (!lc_recipes.isEmpty()) {
+                if (!lc_recipes.isEmpty())
+                {
                     ListeCourses lc = new ListeCourses(lc_recipes);
 
                     MainActivity.saveListeCourses(lc);
 
-                    MainActivity.hideFrag_createShoppingList(getFragmentManager());
-                } else {
+                    // removes actual fragment and restores my shopping lists one
+                    MainActivity.destroyFrag_createShoppingList(getFragmentManager());
+                    MainActivity.displayFrag_myShoppingLists(getFragmentManager());
+                }
+                else {
                     Snackbar.make(v, NOTHING_SELECTED, Snackbar.LENGTH_LONG).show();
                 }
 
