@@ -24,6 +24,8 @@ public class FragMyShoppingLists extends Fragment
     RecyclerView my_shopping_lists ;
     FloatingActionButton create_shopping_list ;
 
+    private static final String FAVORITES_EMPTY = "You must add recipes in your favorites first ;)" ;
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
@@ -40,13 +42,17 @@ public class FragMyShoppingLists extends Fragment
         create_shopping_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //        .setAction("Action", null).show();
 
                 Log.d("number_favorites", String.valueOf(
                         MainActivity.getFavoriteRecipes().size()));
 
-                MainActivity.displayFrag_createShoppingList(getFragmentManager());
+                if (MainActivity.getFavoriteRecipes().isEmpty())
+                {
+                    Snackbar.make(view, FAVORITES_EMPTY, Snackbar.LENGTH_LONG).show();
+                }
+                else {
+                    MainActivity.displayFrag_createShoppingList(getFragmentManager());
+                }
             }
         });
 

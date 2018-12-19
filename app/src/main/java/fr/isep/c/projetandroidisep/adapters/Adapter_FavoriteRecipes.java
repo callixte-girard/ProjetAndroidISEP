@@ -17,12 +17,12 @@ import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
-public class Adapter_SelectRecipes extends RecyclerView.Adapter
-            <Adapter_SelectRecipes
-                .RecyclerViewHolder_SelectRecipes>
+public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
+            <Adapter_FavoriteRecipes
+                .RecyclerViewHolder_MyRecipes>
 {
 
-    static class RecyclerViewHolder_SelectRecipes extends RecyclerView.ViewHolder
+    static class RecyclerViewHolder_MyRecipes extends RecyclerView.ViewHolder
         implements View.OnClickListener {
 
 
@@ -30,7 +30,7 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
         private CheckBox checkbox_delete_from_favorites ;
 
 
-        RecyclerViewHolder_SelectRecipes(View view)
+        RecyclerViewHolder_MyRecipes(View view)
         {
             super(view);
 
@@ -52,23 +52,23 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
     private ArrayList<Recipe> al ;
 
 
-    public Adapter_SelectRecipes(Context context, ArrayList<Recipe> al)
+    public Adapter_FavoriteRecipes(Context context, ArrayList<Recipe> al)
     {
         this.al = al;
         this.context = context;
     }
 
     @Override
-    public RecyclerViewHolder_SelectRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
+    public RecyclerViewHolder_MyRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.row_simple_checklist, viewGroup, false);
 
-        return new RecyclerViewHolder_SelectRecipes(v);
+        return new RecyclerViewHolder_MyRecipes(v);
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder_SelectRecipes holder, final int i)
+    public void onBindViewHolder(final RecyclerViewHolder_MyRecipes holder, final int i)
     {
         holder.recipe_name.setText(al.get(i).getName());
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
@@ -78,13 +78,12 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
 
             }
         });
-        /*
+
         Recipe rec = MainActivity.getFavoriteRecipes().get(i);
         boolean already_favorite = rec.alreadyExists(MainActivity.getFavoriteRecipes()) ;
         //Log.d(rec.getUrl(), String.valueOf(already_favorite));
-        */
 
-        holder.checkbox_delete_from_favorites.setChecked(false);
+        holder.checkbox_delete_from_favorites.setChecked(already_favorite);
         holder.checkbox_delete_from_favorites.setOnCheckedChangeListener
                 (new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -92,10 +91,16 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
 
                 Recipe rec = MainActivity.getFavoriteRecipes().get(i);
 
-                Log.d("is_selected",
+                Log.d("is_checked",
                         rec.getName() + " | " + String.valueOf(isChecked));
 
-                rec.setSelected(isChecked);
+                if (isChecked) {
+                    //MainActivity.saveRecipeInFavorites(rec);
+
+                } else {
+                    // adds back recipe (revert deletion)
+                    MainActivity.removeRecipeFromFavorites(rec);
+                }
 
                 //notifyDataSetChanged();
             }

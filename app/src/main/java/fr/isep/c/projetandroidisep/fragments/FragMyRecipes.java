@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.*;
-import fr.isep.c.projetandroidisep.adapters.Adapter_MyRecipes;
+import fr.isep.c.projetandroidisep.adapters.Adapter_FavoriteRecipes;
 
 
 public class FragMyRecipes extends Fragment
@@ -68,7 +68,7 @@ public class FragMyRecipes extends Fragment
         number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
 
         // custom adapter
-        Adapter_MyRecipes adapter = new Adapter_MyRecipes
+        Adapter_FavoriteRecipes adapter = new Adapter_FavoriteRecipes
                 (getContext(), MainActivity.getFavoriteRecipes());
         my_favorite_recipes.setAdapter(adapter);
     }

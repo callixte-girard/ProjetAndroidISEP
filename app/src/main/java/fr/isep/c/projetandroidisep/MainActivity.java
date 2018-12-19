@@ -15,7 +15,8 @@ import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
 import fr.isep.c.projetandroidisep.fragments.FragMyRecipes;
 import fr.isep.c.projetandroidisep.fragments.FragUser;
 import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
-import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
+import fr.isep.c.projetandroidisep.myClasses.ParseText;
+import fr.isep.c.projetandroidisep.myCustomTypes.*;
 
 //import com.facebook.AccessToken;
 import com.firebase.ui.auth.AuthUI;
@@ -29,7 +30,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 
 
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity
     private static FragMyShoppingLists frag_my_shopping_lists = new FragMyShoppingLists();
     private static FragCreateShoppingList frag_create_shopping_list = new FragCreateShoppingList();
     private static FragUser frag_user = new FragUser();
+
 
     private FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference favorite_recipes_ref = FirebaseDatabase.getInstance().getReference()
@@ -221,8 +225,6 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_my_shopping_lists)
                 .commit();
-
-
     }
 
     public static void displayFrag_createShoppingList(FragmentManager frag_manager)
@@ -231,6 +233,14 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_create_shopping_list)
                 .commit();
+    }
+
+    public static void hideFrag_createShoppingList(FragmentManager frag_manager)
+    {
+        frag_manager
+                .beginTransaction()
+                .remove(frag_create_shopping_list)
+                .commitAllowingStateLoss();
     }
 
     public static void displayFrag_user(FragmentManager frag_manager)
@@ -255,6 +265,17 @@ public class MainActivity extends AppCompatActivity
         current_user_ref.child("favorite_recipes")
                 .child(ParseHtml.shortifyUrl(rec.getUrl()))
                 .setValue(rec);
+    }
+
+    public static void saveListeCourses(ListeCourses lc)
+    {
+        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
+                .child(current_user.getUid());
+
+        current_user_ref.child("my_shopping_lists")
+                .child(lc.getDateCreation())
+                .setValue(lc);
     }
 
     public static void removeRecipeFromFavorites(Recipe rec)

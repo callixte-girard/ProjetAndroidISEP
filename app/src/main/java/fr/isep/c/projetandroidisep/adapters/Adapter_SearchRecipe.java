@@ -33,8 +33,8 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
         {
             super(view);
 
-            recipe_name = view.findViewById(R.id.recipe_name);
-            checkbox_add_to_favorites = view.findViewById(R.id.checkbox_favorite);
+            recipe_name = view.findViewById(R.id.title);
+            checkbox_add_to_favorites = view.findViewById(R.id.checkbox);
         }
 
         @Override
@@ -60,7 +60,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     public RecyclerViewHolder_SearchRecipe onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.list_row_recipes_layout, viewGroup, false);
+                .inflate(R.layout.row_simple_checklist, viewGroup, false);
 
         return new RecyclerViewHolder_SearchRecipe(v);
     }

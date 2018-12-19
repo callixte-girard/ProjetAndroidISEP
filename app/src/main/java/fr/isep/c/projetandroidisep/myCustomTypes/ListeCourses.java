@@ -1,5 +1,6 @@
 package fr.isep.c.projetandroidisep.myCustomTypes;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -7,16 +8,20 @@ import java.util.Date;
 
 import java.util.Calendar;
 
+import fr.isep.c.projetandroidisep.myClasses.ParseText;
+
 public class ListeCourses
 {
+    public static final String DATE_PATTERN = "yyyy-MM-dd_HH:mm:ss" ;
+
+
     public static ArrayList<ListeCourses> al = new ArrayList<>();
 
     public static int counter = 0 ;
 
     private int id ;
-    //private LocalDateTime date_creation ;
-    Date date_creation ;
-    private String creator ;
+    private String dateCreation ;
+    //private String creator ;
     //private LocalDate duree ; // a travailler
     private ArrayList<Recipe> recipes = new ArrayList<>();
     private ArrayList<Aliment> aliments = new ArrayList<>();
@@ -24,15 +29,15 @@ public class ListeCourses
 
     public ListeCourses() {}
 
-    protected ListeCourses(String creator, ArrayList<Recipe> recipes)
+    public ListeCourses(
+      //      String creator,
+            ArrayList<Recipe> recipes)
     {
         counter ++ ;
         this.id = counter ;
 
-        //this.date_creation = LocalDateTime.now();
-        this.date_creation = Calendar.getInstance().getTime();
-
-        this.creator = creator ;
+        this.dateCreation = ParseText.formatDate(new Date(System.currentTimeMillis()), DATE_PATTERN);
+        //this.creator = creator ;
         this.recipes = recipes ;
 
         // ce qui nous intéresse c'est surtout la liste d'aliments en fait.
@@ -127,23 +132,11 @@ public class ListeCourses
         this.aliments = aliments ;
     }
 
-    public Date getDateCreation()
-    {
-        return this.date_creation ;
-    }
-    public void setDateCreation(Date date_creation) {
-        //this.date_creation = date_creation ;
-        this.date_creation = date_creation ;
-    }
+    public String getDateCreation() { return this.dateCreation ; }
+    public void setDateCreation(String dateCreation) { this.dateCreation = dateCreation ; }
 
-    public String getCreator()
-    {
-        return this.creator ;
-    }
-    public void setCreator(String creator)
-    {
-        this.creator = creator ;
-    }
+    //public String getCreator() { return this.creator ; }
+    //public void setCreator(String creator) { this.creator = creator ; }
 
     public int getId()
     {

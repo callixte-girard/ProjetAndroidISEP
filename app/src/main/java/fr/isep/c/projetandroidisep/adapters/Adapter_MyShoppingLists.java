@@ -17,8 +17,8 @@ import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
-public class Adapter_MyRecipes extends RecyclerView.Adapter
-            <Adapter_MyRecipes
+public class Adapter_MyShoppingLists extends RecyclerView.Adapter
+            <Adapter_MyShoppingLists
                 .RecyclerViewHolder_MyRecipes>
 {
 
@@ -26,23 +26,23 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
         implements View.OnClickListener {
 
 
-        private TextView recipe_name ;
-        private CheckBox checkbox_delete_from_favorites ;
+        private TextView lc_date_creation ;
+        private CheckBox checkbox_delete_shopping_list ;
 
 
         RecyclerViewHolder_MyRecipes(View view)
         {
             super(view);
 
-            recipe_name = view.findViewById(R.id.recipe_name);
-            checkbox_delete_from_favorites = view.findViewById(R.id.checkbox_favorite);
+            lc_date_creation = view.findViewById(R.id.title);
+            checkbox_delete_shopping_list = view.findViewById(R.id.checkbox);
         }
 
         @Override
         public void onClick(View view) {
             switch (view.getId())
             {
-                case R.id.checkbox_favorite:
+                case R.id.checkbox:
                     Log.d("test", "my_recipes");
             }
         }
@@ -52,7 +52,7 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
     private ArrayList<Recipe> al ;
 
 
-    public Adapter_MyRecipes(Context context, ArrayList<Recipe> al)
+    public Adapter_MyShoppingLists(Context context, ArrayList<Recipe> al)
     {
         this.al = al;
         this.context = context;
@@ -62,7 +62,7 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
     public RecyclerViewHolder_MyRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.list_row_recipes_layout, viewGroup, false);
+                .inflate(R.layout.row_simple_checklist, viewGroup, false);
 
         return new RecyclerViewHolder_MyRecipes(v);
     }
@@ -70,8 +70,8 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_MyRecipes holder, final int i)
     {
-        holder.recipe_name.setText(al.get(i).getName());
-        holder.recipe_name.setOnClickListener(new View.OnClickListener() {
+        holder.lc_date_creation.setText(al.get(i).getName());
+        holder.lc_date_creation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -83,8 +83,8 @@ public class Adapter_MyRecipes extends RecyclerView.Adapter
         boolean already_favorite = rec.alreadyExists(MainActivity.getFavoriteRecipes()) ;
         //Log.d(rec.getUrl(), String.valueOf(already_favorite));
 
-        holder.checkbox_delete_from_favorites.setChecked(already_favorite);
-        holder.checkbox_delete_from_favorites.setOnCheckedChangeListener
+        holder.checkbox_delete_shopping_list.setChecked(already_favorite);
+        holder.checkbox_delete_shopping_list.setOnCheckedChangeListener
                 (new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
