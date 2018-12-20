@@ -62,7 +62,7 @@ public class FragCreateShoppingList extends Fragment
                 {
                     // saves shopping list on the db
                     ListeCourses lc = new ListeCourses(lc_recipes);
-                    MainActivity.saveListeCourses(lc);
+                    MainActivity.saveShoppingList(lc);
 
                     // removes actual fragment and restores my shopping lists one
                     MainActivity.destroyFrag_createShoppingList(getFragmentManager());

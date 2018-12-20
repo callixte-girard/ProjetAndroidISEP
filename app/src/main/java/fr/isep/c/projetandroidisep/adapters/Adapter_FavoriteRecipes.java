@@ -43,23 +43,12 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
 
         @Override
         public void onClick(View view) {
-            switch (view.getId())
-            {
-                case R.id.checkbox:
-                    Log.d("test", "my_recipes");
-            }
+
         }
     }
 
-    private Context context ;
-    private ArrayList<Recipe> al ;
 
 
-    public Adapter_FavoriteRecipes(Context context, ArrayList<Recipe> al)
-    {
-        this.al = al;
-        this.context = context;
-    }
 
     @Override
     public RecyclerViewHolder_FavoriteRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
@@ -73,7 +62,9 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_FavoriteRecipes holder, final int i)
     {
-        holder.recipe_name.setText(al.get(i).getName());
+        final Recipe rec = MainActivity.getFavoriteRecipes().get(i);
+
+        holder.recipe_name.setText(rec.getName());
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,11 +73,10 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
             }
         });
         
-        holder.recipe_duration.setText("00 min");
+        holder.recipe_duration.setText(rec.getDuration());
 
         //holder.recipe_rating.setText("0/0");
 
-        Recipe rec = MainActivity.getFavoriteRecipes().get(i);
         boolean already_favorite = rec.alreadyExists(MainActivity.getFavoriteRecipes()) ;
         //Log.d(rec.getUrl(), String.valueOf(already_favorite));
 
@@ -96,13 +86,11 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                Recipe rec = MainActivity.getFavoriteRecipes().get(i);
-
                 Log.d("is_checked",
                         rec.getName() + " | " + String.valueOf(isChecked));
 
                 if (isChecked) {
-                    //MainActivity.saveRecipeInFavorites(rec);
+                    MainActivity.saveRecipeInFavorites(rec);
 
                 } else {
                     // adds back recipe (revert deletion)
@@ -117,7 +105,8 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
-        return (null != al ? al.size() : 0);
+        return (null != MainActivity.getFavoriteRecipes()
+                ? MainActivity.getFavoriteRecipes().size() : 0);
     }
 
 }

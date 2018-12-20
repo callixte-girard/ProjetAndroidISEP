@@ -84,14 +84,14 @@ public class FragSearchRecipe extends Fragment
     @Override
     public void processFinish_searchRecipe(Document doc)
     {
-        // parse et ajoute les recipes aux résultats
+        // parse et ajoute les 15 recipes du doc aux résultats
         try
         {
             search_results.addAll(Recipe.fetchPageResultsFromDoc(doc));
             Log.d("results", String.valueOf(search_results.size()));
 
-            // to get the 15-recipe block's ingredients one by one
-            performFetchRecipeIngredients(search_results);
+            // HARDCORE METHOD : to get the 15-recipe block's ingredients one by one
+            //performFetchRecipeIngredients(search_results);
         }
         catch (Exception ex) {}
 
@@ -207,8 +207,7 @@ public class FragSearchRecipe extends Fragment
         results_list.addItemDecoration(itemDecor);
 
         // custom adapter
-        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe
-                (getContext(), search_results);
+        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe();
         results_list.setAdapter(adapter);
     }
 

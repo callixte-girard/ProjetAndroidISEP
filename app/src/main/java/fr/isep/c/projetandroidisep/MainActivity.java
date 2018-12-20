@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity
     private BottomNavigationView bnv ;
 
     private static FragSearchRecipe frag_search_recipe = new FragSearchRecipe();
-    private static FragFavoriteRecipes frag_my_recipes = new FragFavoriteRecipes();
+    private static FragFavoriteRecipes frag_favorite_recipes = new FragFavoriteRecipes();
     private static FragMyShoppingLists frag_my_shopping_lists = new FragMyShoppingLists();
     private static FragCreateShoppingList frag_create_shopping_list = new FragCreateShoppingList();
     private static FragUser frag_user = new FragUser();
@@ -66,13 +66,13 @@ public class MainActivity extends AppCompatActivity
                 while (it.hasNext())
                 {
                     Recipe rec = it.next().getValue(Recipe.class);
-                    Log.d("favorite_recipes", rec.getUrl());
+                    Log.d("favorite_recipes_" + getFavoriteRecipes().size(), rec.getName());
 
                     getFavoriteRecipes().add(rec);
                 }
 
                 // update fragment's number of favorites
-                frag_my_recipes.updateFavoritesList();
+                frag_favorite_recipes.updateFavoritesList();
 
             }
             catch (NullPointerException npe) {
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity
     {
         frag_manager
                 .beginTransaction()
-                .replace(R.id.frame_container, frag_my_recipes)
+                .replace(R.id.frame_container, frag_favorite_recipes)
                 .commit();
     }
 
@@ -302,12 +302,12 @@ public class MainActivity extends AppCompatActivity
                 .child(current_user.getUid());
 
         current_user_ref.child("favorite_recipes")
-                //.child(ParseHtml.shortifyUrl(rec.getUrl()))
-                .child(rec.getDateAjout())
+                .child(ParseHtml.shortifyUrl(rec.getUrl()))
+                //.child(rec.getDateAjout())
                 .setValue(rec);
     }
 
-    public static void saveListeCourses(ListeCourses lc)
+    public static void saveShoppingList(ListeCourses lc)
     {
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
@@ -325,8 +325,8 @@ public class MainActivity extends AppCompatActivity
                 .child(current_user.getUid());
 
         current_user_ref.child("favorite_recipes")
-                //.child(ParseHtml.shortifyUrl(rec.getUrl()))
-                .child(rec.getDateAjout())
+                .child(ParseHtml.shortifyUrl(rec.getUrl()))
+                //.child(rec.getDateAjout())
                 .removeValue();
     }
 

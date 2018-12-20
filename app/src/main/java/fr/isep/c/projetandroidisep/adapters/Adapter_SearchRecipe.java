@@ -44,18 +44,6 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
         }
     }
 
-    private Context context ;
-    private ArrayList<Recipe> al ;
-    private SparseBooleanArray bool_arr;
-
-
-    public Adapter_SearchRecipe(Context context, ArrayList<Recipe> al)
-    {
-        this.al = al;
-        this.context = context;
-        bool_arr = new SparseBooleanArray();
-    }
-
     @Override
     public RecyclerViewHolder_SearchRecipe onCreateViewHolder(ViewGroup viewGroup, int i)
     {
@@ -69,7 +57,9 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_SearchRecipe holder, final int i)
     {
-        holder.recipe_name.setText(al.get(i).getName());
+        final Recipe rec = FragSearchRecipe.getSearchResults().get(i);
+
+        holder.recipe_name.setText(rec.getName());
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +67,6 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
             }
         });
 
-        Recipe rec = FragSearchRecipe.getSearchResults().get(i);
         boolean already_favorite = rec.alreadyExists(MainActivity.getFavoriteRecipes()) ;
         //Log.d(rec.getUrl(), String.valueOf(already_favorite));
 
@@ -86,8 +75,6 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
                 (new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                Recipe rec = al.get(i);
 
                 Log.d("is_checked",
                         rec.getName() + " | " + String.valueOf(isChecked));
@@ -106,6 +93,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
-        return (null != al ? al.size() : 0);
+        return (null != FragSearchRecipe.getSearchResults()
+                ? FragSearchRecipe.getSearchResults().size() : 0);
     }
 }

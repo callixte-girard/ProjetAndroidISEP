@@ -91,8 +91,7 @@ public class FragMyShoppingLists extends Fragment
         number_shopping_lists.setText(String.valueOf(count) + " shopping lists");
 
         // custom adapter
-        Adapter_MyShoppingLists adapter = new Adapter_MyShoppingLists
-                (getContext(), MainActivity.getMyShoppingLists());
+        Adapter_MyShoppingLists adapter = new Adapter_MyShoppingLists();
         my_shopping_lists.setAdapter(adapter);
     }
 

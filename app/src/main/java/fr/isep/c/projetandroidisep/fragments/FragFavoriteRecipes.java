@@ -70,8 +70,7 @@ public class FragFavoriteRecipes extends Fragment
         number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
 
         // custom adapter
-        Adapter_FavoriteRecipes adapter = new Adapter_FavoriteRecipes
-                (getContext(), MainActivity.getFavoriteRecipes());
+        Adapter_FavoriteRecipes adapter = new Adapter_FavoriteRecipes();
         my_favorite_recipes.setAdapter(adapter);
     }
 

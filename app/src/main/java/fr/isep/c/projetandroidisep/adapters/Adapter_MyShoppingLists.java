@@ -49,15 +49,6 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
         }
     }
 
-    private Context context ;
-    private ArrayList<ListeCourses> al ;
-
-
-    public Adapter_MyShoppingLists(Context context, ArrayList<ListeCourses> al)
-    {
-        this.al = al;
-        this.context = context;
-    }
 
     @Override
     public RecyclerViewHolder_MyShoppingLists onCreateViewHolder(ViewGroup viewGroup, int i)
@@ -71,10 +62,9 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_MyShoppingLists holder, final int i)
     {
-        String clean_date_str = al.get(i).getDateCreation()
-                .replace("_", " ");
+        final ListeCourses rec = MainActivity.getMyShoppingLists().get(i);
 
-        holder.lc_date_creation.setText(clean_date_str);
+        holder.lc_date_creation.setText(rec.getDateCreation().replace("_", " "));
         holder.lc_date_creation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,11 +73,7 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
             }
         });
 
-        Recipe rec = MainActivity.getFavoriteRecipes().get(i);
-        boolean already_favorite = rec.alreadyExists(MainActivity.getFavoriteRecipes()) ;
-        //Log.d(rec.getUrl(), String.valueOf(already_favorite));
-
-        holder.checkbox_delete_shopping_list.setChecked(already_favorite);
+        holder.checkbox_delete_shopping_list.setChecked(true);
         holder.checkbox_delete_shopping_list.setOnCheckedChangeListener
                 (new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -113,13 +99,10 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
 
 
 
-    public ListeCourses getShoppingListAtPosition(int position) {
-        return al.get(position);
-    }
-
     @Override
     public int getItemCount() {
-        return (null != al ? al.size() : 0);
+        return (null != MainActivity.getMyShoppingLists()
+                ? MainActivity.getMyShoppingLists().size() : 0);
     }
 
 }
