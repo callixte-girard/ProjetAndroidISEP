@@ -302,7 +302,8 @@ public class MainActivity extends AppCompatActivity
                 .child(current_user.getUid());
 
         current_user_ref.child("favorite_recipes")
-                .child(ParseHtml.shortifyUrl(rec.getUrl()))
+                //.child(ParseHtml.shortifyUrl(rec.getUrl()))
+                .child(rec.getDateAjout())
                 .setValue(rec);
     }
 
@@ -324,7 +325,8 @@ public class MainActivity extends AppCompatActivity
                 .child(current_user.getUid());
 
         current_user_ref.child("favorite_recipes")
-                .child(ParseHtml.shortifyUrl(rec.getUrl()))
+                //.child(ParseHtml.shortifyUrl(rec.getUrl()))
+                .child(rec.getDateAjout())
                 .removeValue();
     }
 

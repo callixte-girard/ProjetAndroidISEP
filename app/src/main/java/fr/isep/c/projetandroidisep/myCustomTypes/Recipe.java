@@ -6,6 +6,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Date;
+
+import fr.isep.c.projetandroidisep.myClasses.ParseText;
+
+import static fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses.DATE_PATTERN;
 
 
 //import fr.isep.c.projetandroidisep.myRecipes.*;
@@ -22,11 +27,11 @@ public class Recipe
 
 	private int id ;
 	private boolean selected = false ; // can be deactivated to remove an aliment from the parsed recipe
-	private String name ;
+	private String dateAjout ;
+    private String name ;
 	private String url ;
 	private String instructions ;
 	private String img_url ;
-	//private LocalDateTime date_ajout ;
 	private double rating = 0 ;
 	private String duration = "?" ;
 	private String type = "" ; // dépend de l'user
@@ -46,8 +51,10 @@ public class Recipe
 		this.name = name ;
 		this.type = type ;
 		this.url = url ;
-		//this.date_ajout = LocalDateTime.now() ;
-	}
+
+        this.dateAjout = ParseText.formatDate(new Date(System.currentTimeMillis()), DATE_PATTERN);
+
+    }
 
 /*
 	public static void addToFavorites(Recipe rec) {
@@ -160,7 +167,8 @@ public class Recipe
 		if (!duration.isEmpty())
 			this.duration = duration ;
 	}
-	//public LocalDateTime getDate() {return this.date_ajout ;}
+	public String getDateAjout() {return this.dateAjout ;}
+	public void setDateAjout(String dateAjout) { this.dateAjout = dateAjout ;}
 	public ArrayList<Ingredient> getIngredients()
 	{
 		return this.ingredients ;
