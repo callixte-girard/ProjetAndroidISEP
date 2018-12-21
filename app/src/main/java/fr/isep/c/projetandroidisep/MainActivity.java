@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_FetchIngredients;
+import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
+import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_SearchRecipe;
 import fr.isep.c.projetandroidisep.fragments.FragCreateShoppingList;
 import fr.isep.c.projetandroidisep.fragments.FragMyShoppingLists;
 import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
@@ -30,6 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jsoup.nodes.Document;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,6 +42,7 @@ import java.util.Iterator;
 
 
 public class MainActivity extends AppCompatActivity
+    implements AsyncResponse_FetchIngredients
 {
     private BottomNavigationView bnv ;
 
@@ -69,6 +75,15 @@ public class MainActivity extends AppCompatActivity
                     Log.d("favorite_recipes_" + getFavoriteRecipes().size(), rec.getName());
 
                     getFavoriteRecipes().add(rec);
+
+                    // TEST
+                    if (rec.getIngredients().isEmpty()) {
+                        // parse them :
+                        // - call performFetchRecipeIngredients from FragSearchRecipe
+                        performFetchRecipeIngredients(rec);
+                        // - transform the other perform(...) to there
+                        // - transfer async_tasks_list here too !!!
+                    }
                 }
 
                 // update fragment's number of favorites
@@ -167,6 +182,38 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
+
+    @Override
+    public void processFinish_fetchIngredients(Document doc, String url)
+    {
+        try
+        {
+
+            ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
+
+            // --> finally adds to appropriate recipe
+            Recipe rec_to_update = Recipe.getByUrl(getFavoriteRecipes(), url);
+            rec_to_update.setIngredients(ingr_list);
+
+            // saves
+            saveIngredientsInRecipe(rec_to_update);
+
+            Log.d("task_results_id", url);
+
+        } catch (Exception e) {}
+    }
+
+
+    //protected void performFetchRecipeIngredients(ArrayList<Recipe> al)
+    protected void performFetchRecipeIngredients(Recipe rec)
+    {
+        AsyncTask_FetchIngredients task_fetchIngredients = new AsyncTask_FetchIngredients();
+        task_fetchIngredients.setDelegate(this);
+        task_fetchIngredients.setUrl(rec.getUrl());
+        task_fetchIngredients.execute(task_fetchIngredients.getUrl());
+    }
+
 
 
     public void signOut() {
@@ -291,8 +338,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     ////////////////////////////////////////////////////////:
+
 
 
     public static void saveRecipeInFavorites(Recipe rec)
@@ -305,6 +352,18 @@ public class MainActivity extends AppCompatActivity
                 .child(ParseHtml.shortifyUrl(rec.getUrl()))
                 //.child(rec.getDateAjout())
                 .setValue(rec);
+    }
+
+    public static void saveIngredientsInRecipe(Recipe rec)
+    {
+        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
+                .child(current_user.getUid());
+
+        current_user_ref.child("favorite_recipes")
+                .child(ParseHtml.shortifyUrl(rec.getUrl()))
+                .child("ingredients")
+                .setValue(rec.getIngredients());
     }
 
     public static void saveShoppingList(ListeCourses lc)
@@ -340,6 +399,8 @@ public class MainActivity extends AppCompatActivity
                 .child(lc.getDateCreation())
                 .removeValue();
     }
+
+
 
     public static ArrayList<Recipe> getFavoriteRecipes() {
         return favorite_recipes ;

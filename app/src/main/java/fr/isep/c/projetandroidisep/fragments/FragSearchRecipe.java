@@ -21,8 +21,10 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
+import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_FetchImages;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_FetchIngredients;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_SearchRecipe;
+import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchImages;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
 import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_SearchRecipe;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
@@ -31,7 +33,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class FragSearchRecipe extends Fragment
-        implements AsyncResponse_SearchRecipe, AsyncResponse_FetchIngredients
+        implements AsyncResponse_SearchRecipe, AsyncResponse_FetchImages
 {
     private SearchView search_bar ;
     private RecyclerView results_list ;
@@ -65,23 +67,6 @@ public class FragSearchRecipe extends Fragment
 
 
     @Override
-    public void processFinish_fetchIngredients(Document doc, String url)
-    {
-        try
-        {
-            Log.d("task_results_id", url);
-
-            ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
-
-            // --> finally adds to appropriate recipe
-            Recipe rec_to_update = Recipe.getByUrl(search_results, url);
-            rec_to_update.setIngredients(ingr_list);
-
-        } catch (Exception e) {}
-    }
-
-
-    @Override
     public void processFinish_searchRecipe(Document doc)
     {
         // parse et ajoute les 15 recipes du doc aux résultats
@@ -90,8 +75,7 @@ public class FragSearchRecipe extends Fragment
             search_results.addAll(Recipe.fetchPageResultsFromDoc(doc));
             Log.d("results", String.valueOf(search_results.size()));
 
-            // HARDCORE METHOD : to get the 15-recipe block's ingredients one by one
-            //performFetchRecipeIngredients(search_results);
+            performFetchRecipeImages(search_results);
         }
         catch (Exception ex) {}
 
@@ -134,6 +118,13 @@ public class FragSearchRecipe extends Fragment
                 Log.d("unknown_ex", unknown_ex.getMessage());
             }
         }
+    }
+
+
+    @Override
+    public void processFinish_fetchImages(Document doc, String url)
+    {
+        // récupère l'image
     }
 
 
@@ -247,19 +238,16 @@ public class FragSearchRecipe extends Fragment
     }
 
 
-    protected void performFetchRecipeIngredients(ArrayList<Recipe> al)
+    protected void performFetchRecipeImages(ArrayList<Recipe> al)
     {
         for (Recipe rec : al)
         {
-            if (rec.getIngredients().isEmpty())
-            {
-                AsyncTask_FetchIngredients task_fetchIngredients = new AsyncTask_FetchIngredients();
-                task_fetchIngredients.setDelegate(this);
-                task_fetchIngredients.setUrl(rec.getUrl());
-                task_fetchIngredients.execute(task_fetchIngredients.getUrl());
+            AsyncTask_FetchImages task_fetchImages = new AsyncTask_FetchImages();
+            task_fetchImages.setDelegate(this);
+            task_fetchImages.setUrl(rec.getUrl());
+            task_fetchImages.execute(task_fetchImages.getUrl());
 
-                async_tasks_list.add(task_fetchIngredients);
-            }
+            async_tasks_list.add(task_fetchImages);
         }
     }
 

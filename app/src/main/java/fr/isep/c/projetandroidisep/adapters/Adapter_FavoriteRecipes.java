@@ -35,9 +35,9 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
             super(view);
 
             recipe_name = view.findViewById(R.id.title);
-            recipe_img = view.findViewById(R.id.recipe_img);
+            //recipe_img = view.findViewById(R.id.recipe_img);
             recipe_duration = view.findViewById(R.id.recipe_duration);
-            recipe_rating = view.findViewById(R.id.recipe_rating);
+            //recipe_rating = view.findViewById(R.id.recipe_rating);
             checkbox_delete_from_favorites = view.findViewById(R.id.checkbox);
         }
 
