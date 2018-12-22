@@ -23,13 +23,8 @@ public class ParseText {
 	{
 		int initial_length = title.length() ;
 
-		if (initial_length > max)
-		{
-			title = title.substring(0, max);
-
-			if (initial_length - max > 3) {
-				title += "..." ;
-			}
+		if (initial_length > max) {
+			title = title.substring(0, max) + "...";
 		}
 
 		return title ;

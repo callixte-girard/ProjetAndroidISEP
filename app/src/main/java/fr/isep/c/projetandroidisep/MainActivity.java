@@ -1,6 +1,9 @@
 package fr.isep.c.projetandroidisep;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -33,6 +36,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jsoup.nodes.Document;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -198,7 +205,7 @@ public class MainActivity extends AppCompatActivity
             // saves
             saveIngredientsInRecipe(rec_to_update);
 
-            Log.d("task_results_id", url);
+            Log.d("task_results_fetchIngr", url);
 
         } catch (Exception e) {}
     }
@@ -212,6 +219,34 @@ public class MainActivity extends AppCompatActivity
         task_fetchIngredients.setUrl(rec.getUrl());
         task_fetchIngredients.execute(task_fetchIngredients.getUrl());
     }
+
+
+    public static Drawable loadImageFromUrl(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "src name");
+            return d;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            java.net.URL url = new java.net.URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 
 
@@ -229,7 +264,6 @@ public class MainActivity extends AppCompatActivity
                 });
         // [END auth_fui_signout]
     }
-
 
 
     public void transferToFirebaseAuthActivity()

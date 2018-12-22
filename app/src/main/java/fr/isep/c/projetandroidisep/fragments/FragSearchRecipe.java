@@ -1,6 +1,8 @@
 package fr.isep.c.projetandroidisep.fragments;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,14 +13,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
+import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
 import fr.isep.c.projetandroidisep.asyncTasks.Response_FetchImages;
@@ -119,9 +125,11 @@ public class FragSearchRecipe extends Fragment
 
 
     @Override
-    public void processFinish_fetchImages(Document doc, String url)
+    public void processFinish_fetchImages(Bitmap bitmap, String url)
     {
-        // récupère l'image
+        // récupère l'image et la refourgue à la recette en question
+        Recipe rec = Recipe.getByUrl(getSearchResults(), url);
+        rec.setImgBitmap(bitmap);
     }
 
 

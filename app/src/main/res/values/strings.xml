@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ProjetAndroidISEP</string>
     <string name="title_search_recipe">Search Recipe</string>
-    <string name="title_my_recipes">My Recipes</string>
+    <string name="title_my_recipes">Favorite Recipes</string>
     <string name="title_my_shopping_lists">My Shopping Lists</string>
     <string name="title_user">User</string>
     <string name="title_activity_main2">Main2Activity</string>*

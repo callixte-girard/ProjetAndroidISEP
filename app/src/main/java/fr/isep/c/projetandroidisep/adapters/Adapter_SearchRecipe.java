@@ -1,6 +1,7 @@
 package fr.isep.c.projetandroidisep.adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     static class RecyclerViewHolder_SearchRecipe extends RecyclerView.ViewHolder
         implements View.OnClickListener
     {
-
+        private ImageView recipe_img ;
         private TextView recipe_name, recipe_duration ;
         private CheckBox checkbox_add_to_favorites ;
 
@@ -34,6 +36,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
         {
             super(view);
 
+            recipe_img = view.findViewById(R.id.recipe_img);
             recipe_name = view.findViewById(R.id.title);
             recipe_duration = view.findViewById(R.id.sub_title);
             checkbox_add_to_favorites = view.findViewById(R.id.checkbox);
@@ -60,6 +63,8 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     public void onBindViewHolder(final RecyclerViewHolder_SearchRecipe holder, final int i)
     {
         final Recipe rec = FragSearchRecipe.getSearchResults().get(i);
+
+        holder.recipe_img.setImageBitmap(rec.getImgBitmap());
 
         //holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
         holder.recipe_name.setText(rec.getName());

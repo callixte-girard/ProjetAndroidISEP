@@ -1,6 +1,8 @@
 package fr.isep.c.projetandroidisep.myCustomTypes;
 
 
+import android.graphics.Bitmap;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -31,7 +33,8 @@ public class Recipe
     private String name ;
 	private String url ;
 	private String instructions ;
-	private String img_url ;
+	private String imgUrl ;
+	private Bitmap imgBitmap ;
 	private double rating = 0 ;
 	private String duration = "?" ;
 	private String type = "" ; // dépend de l'user
@@ -127,6 +130,7 @@ public class Recipe
 			rec.setRating(rating);
 			rec.setDuration(duration);
 			rec.setType(type);
+			rec.setImgUrl(img_url);
 
 			result.add(rec);
 		}
@@ -167,6 +171,10 @@ public class Recipe
 		if (!duration.isEmpty())
 			this.duration = duration ;
 	}
+	public String getImgUrl() { return this.imgUrl ; }
+	public void setImgUrl(String imgUrl) { this.imgUrl = imgUrl ; }
+	public Bitmap getImgBitmap() {return this.imgBitmap ; }
+	public void setImgBitmap(Bitmap imgBitmap) { this.imgBitmap = imgBitmap ; }
 	public String getDateAjout() {return this.dateAjout ;}
 	public void setDateAjout(String dateAjout) { this.dateAjout = dateAjout ;}
 	public ArrayList<Ingredient> getIngredients()

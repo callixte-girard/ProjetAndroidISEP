@@ -70,8 +70,7 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
         holder.lc_date_creation.setText(displayed_date);
         holder.lc_date_creation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {git a
-
+            public void onClick(View v) {
 
             }
         });
