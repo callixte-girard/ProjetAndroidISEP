@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.myClasses.ParseText;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
@@ -64,7 +65,7 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
     {
         final Recipe rec = MainActivity.getFavoriteRecipes().get(i);
 
-        holder.recipe_name.setText(rec.getName());
+        holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

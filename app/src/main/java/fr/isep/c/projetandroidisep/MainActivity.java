@@ -9,16 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
-import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_FetchIngredients;
-import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
-import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_SearchRecipe;
+import fr.isep.c.projetandroidisep.asyncTasks.Response_FetchIngredients;
+import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
 import fr.isep.c.projetandroidisep.fragments.FragCreateShoppingList;
 import fr.isep.c.projetandroidisep.fragments.FragMyShoppingLists;
 import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
 import fr.isep.c.projetandroidisep.fragments.FragFavoriteRecipes;
 import fr.isep.c.projetandroidisep.fragments.FragUser;
 import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
-import fr.isep.c.projetandroidisep.myClasses.ParseText;
 import fr.isep.c.projetandroidisep.myCustomTypes.*;
 
 //import com.facebook.AccessToken;
@@ -35,15 +33,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jsoup.nodes.Document;
 
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 
 
 public class MainActivity extends AppCompatActivity
-    implements AsyncResponse_FetchIngredients
+    implements Response_FetchIngredients
 {
+    // display
     private BottomNavigationView bnv ;
 
     private static FragSearchRecipe frag_search_recipe = new FragSearchRecipe();
@@ -52,7 +49,7 @@ public class MainActivity extends AppCompatActivity
     private static FragCreateShoppingList frag_create_shopping_list = new FragCreateShoppingList();
     private static FragUser frag_user = new FragUser();
 
-
+    // firebase
     private FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference ref_current_user = FirebaseDatabase.getInstance().getReference().child(current_user.getUid());
     private DatabaseReference ref_favorite_recipes = ref_current_user.child("favorite_recipes");
@@ -136,10 +133,13 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
-
+    // app lists
     private static ArrayList<Recipe> favorite_recipes = new ArrayList<>();
     //private static ArrayList<Recipe> deleted_recipes_history = new ArrayList<>();
     private static ArrayList<ListeCourses> my_shopping_lists = new ArrayList<>();
+
+    // other shits
+    public static final int MAX_LABEL_LENGTH = 35 ;
 
     /////////////////////////////////////////////////////////////////////////////////
 
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity
     //protected void performFetchRecipeIngredients(ArrayList<Recipe> al)
     protected void performFetchRecipeIngredients(Recipe rec)
     {
-        AsyncTask_FetchIngredients task_fetchIngredients = new AsyncTask_FetchIngredients();
+        Task_FetchIngredients task_fetchIngredients = new Task_FetchIngredients();
         task_fetchIngredients.setDelegate(this);
         task_fetchIngredients.setUrl(rec.getUrl());
         task_fetchIngredients.execute(task_fetchIngredients.getUrl());

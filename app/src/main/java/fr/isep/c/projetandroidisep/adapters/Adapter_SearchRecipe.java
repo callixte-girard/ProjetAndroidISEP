@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.myClasses.ParseText;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
 
@@ -59,7 +60,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     {
         final Recipe rec = FragSearchRecipe.getSearchResults().get(i);
 
-        holder.recipe_name.setText(rec.getName());
+        holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

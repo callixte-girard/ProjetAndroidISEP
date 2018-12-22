@@ -75,8 +75,8 @@ public class FragCreateShoppingList extends Fragment
             }
         });
 
-        initFavoritesList(); // to set decoration and layout
-        updateFavoritesList(); // to fill it
+        initChoicesList(); // to set decoration and layout
+        updateChoicesFromFavorites(); // to fill it
 
         return view ;
     }
@@ -88,7 +88,7 @@ public class FragCreateShoppingList extends Fragment
     }
 
 
-    private void initFavoritesList()
+    private void initChoicesList()
     {
         select_favorite_recipes.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
 
@@ -104,11 +104,10 @@ public class FragCreateShoppingList extends Fragment
 
     }
 
-    public void updateFavoritesList()
+    public void updateChoicesFromFavorites()
     {
         // custom adapter
-        Adapter_SelectRecipes adapter = new Adapter_SelectRecipes
-                (getContext(), MainActivity.getFavoriteRecipes());
+        Adapter_SelectRecipes adapter = new Adapter_SelectRecipes();
         select_favorite_recipes.setAdapter(adapter);
     }
 

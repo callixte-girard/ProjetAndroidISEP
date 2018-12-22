@@ -21,19 +21,16 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
-import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_FetchImages;
-import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_FetchIngredients;
-import fr.isep.c.projetandroidisep.asyncTasks.AsyncResponse_SearchRecipe;
-import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchImages;
-import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_FetchIngredients;
-import fr.isep.c.projetandroidisep.asyncTasks.AsyncTask_SearchRecipe;
-import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
+import fr.isep.c.projetandroidisep.asyncTasks.Response_FetchImages;
+import fr.isep.c.projetandroidisep.asyncTasks.Response_SearchRecipe;
+import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchImages;
+import fr.isep.c.projetandroidisep.asyncTasks.Task_SearchRecipe;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 
 public class FragSearchRecipe extends Fragment
-        implements AsyncResponse_SearchRecipe, AsyncResponse_FetchImages
+        implements Response_SearchRecipe, Response_FetchImages
 {
     private SearchView search_bar ;
     private RecyclerView results_list ;
@@ -102,8 +99,8 @@ public class FragSearchRecipe extends Fragment
                 Log.d("next_page_url", next_page_url);
 
                 // lance la nouvelle task pour le deepness suivant
-                AsyncTask_SearchRecipe task_search_recipe =
-                        new AsyncTask_SearchRecipe();
+                Task_SearchRecipe task_search_recipe =
+                        new Task_SearchRecipe();
                 task_search_recipe.setDelegate(this);
                 task_search_recipe
                         .execute(next_page_url, String.valueOf(current_deepness));
@@ -230,7 +227,7 @@ public class FragSearchRecipe extends Fragment
         String first_url = Recipe.URL_BASE + Recipe.URL_SEARCH + search ;
         Log.d("first_page_url", first_url);
 
-        AsyncTask_SearchRecipe task_searchRecipe = new AsyncTask_SearchRecipe();
+        Task_SearchRecipe task_searchRecipe = new Task_SearchRecipe();
         task_searchRecipe.setDelegate(this);
         task_searchRecipe.execute(first_url, String.valueOf(current_deepness));
 
@@ -242,7 +239,7 @@ public class FragSearchRecipe extends Fragment
     {
         for (Recipe rec : al)
         {
-            AsyncTask_FetchImages task_fetchImages = new AsyncTask_FetchImages();
+            Task_FetchImages task_fetchImages = new Task_FetchImages();
             task_fetchImages.setDelegate(this);
             task_fetchImages.setUrl(rec.getUrl());
             task_fetchImages.execute(task_fetchImages.getUrl());

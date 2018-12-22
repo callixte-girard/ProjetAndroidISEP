@@ -19,6 +19,14 @@ import java.util.Date;
 public class ParseText {
 
 
+	public static String shortifyTitle(String title, int max)
+	{
+		try {
+			title = title.substring(0, max) + "..." ;
+		} catch (IndexOutOfBoundsException out_bounds) {}
+
+		return title ;
+	}
 	
 	public static String fetchStringFromFile(String file) throws IOException 
 	{

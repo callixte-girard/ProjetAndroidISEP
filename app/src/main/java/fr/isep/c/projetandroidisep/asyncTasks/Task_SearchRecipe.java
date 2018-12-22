@@ -6,20 +6,13 @@ import org.jsoup.nodes.Document;
 
 import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 
-public class AsyncTask_FetchIngredients extends AsyncTask<String, Void, Document>
+public class Task_SearchRecipe extends AsyncTask<String, Void, Document>
 {
-    private AsyncResponse_FetchIngredients delegate_fetch_ingredients = null ;
-    private String url ;
+    private Response_SearchRecipe delegate_search_recipe = null ;
 
-    public AsyncTask_FetchIngredients setDelegate(AsyncResponse_FetchIngredients delegate) {
-        this.delegate_fetch_ingredients = delegate;
-
+    public Task_SearchRecipe setDelegate(Response_SearchRecipe delegate) {
+        this.delegate_search_recipe = delegate;
         return this ;
-    }
-
-    public String getUrl() { return this.url ; }
-    public void setUrl(String url) {
-        this.url = url ;
     }
 
 
@@ -32,12 +25,16 @@ public class AsyncTask_FetchIngredients extends AsyncTask<String, Void, Document
         } else {
             return null ;
         }
+
     }
 
     @Override
     public void onPostExecute(Document doc)
     {
+        // traitement local pour parser les données
+
+
         // and then return
-        this.delegate_fetch_ingredients.processFinish_fetchIngredients(doc, this.url);
+        this.delegate_search_recipe.processFinish_searchRecipe(doc);
     }
 }

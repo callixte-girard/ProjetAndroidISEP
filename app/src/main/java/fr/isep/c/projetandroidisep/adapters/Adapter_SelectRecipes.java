@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.myClasses.ParseText;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
@@ -26,8 +27,8 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
         implements View.OnClickListener {
 
 
-        private TextView recipe_name ;
-        private CheckBox checkbox_delete_from_favorites ;
+        private TextView recipe_name, recipe_duration ;
+        private CheckBox checkbox_select_recipe ;
 
 
         RecyclerViewHolder_SelectRecipes(View view)
@@ -35,7 +36,8 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
             super(view);
 
             recipe_name = view.findViewById(R.id.title);
-            checkbox_delete_from_favorites = view.findViewById(R.id.checkbox);
+            recipe_duration = view.findViewById(R.id.recipe_duration);
+            checkbox_select_recipe = view.findViewById(R.id.checkbox);
         }
 
         @Override
@@ -48,21 +50,12 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
         }
     }
 
-    private Context context ;
-    private ArrayList<Recipe> al ;
-
-
-    public Adapter_SelectRecipes(Context context, ArrayList<Recipe> al)
-    {
-        this.al = al;
-        this.context = context;
-    }
 
     @Override
     public RecyclerViewHolder_SelectRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_checklist_basic, viewGroup, false);
+                .inflate(R.layout.row_recipe, viewGroup, false);
 
         return new RecyclerViewHolder_SelectRecipes(v);
     }
@@ -70,7 +63,9 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_SelectRecipes holder, final int i)
     {
-        holder.recipe_name.setText(al.get(i).getName());
+        final Recipe rec = MainActivity.getFavoriteRecipes().get(i) ;
+
+        holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,14 +73,11 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
 
             }
         });
-        /*
-        Recipe rec = MainActivity.getFavoriteRecipes().get(i);
-        boolean already_favorite = rec.alreadyExists(MainActivity.getFavoriteRecipes()) ;
-        //Log.d(rec.getUrl(), String.valueOf(already_favorite));
-        */
 
-        holder.checkbox_delete_from_favorites.setChecked(false);
-        holder.checkbox_delete_from_favorites.setOnCheckedChangeListener
+        holder.recipe_duration.setText(rec.getDuration());
+
+        holder.checkbox_select_recipe.setChecked(false);
+        holder.checkbox_select_recipe.setOnCheckedChangeListener
                 (new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -102,15 +94,10 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
         });
     }
 
-
-
-    public Recipe getRecipeAtPosition(int position) {
-        return al.get(position);
-    }
-
     @Override
     public int getItemCount() {
-        return (null != al ? al.size() : 0);
+        return (null != MainActivity.getFavoriteRecipes()
+                ? MainActivity.getFavoriteRecipes().size() : 0);
     }
 
 }

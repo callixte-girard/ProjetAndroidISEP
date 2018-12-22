@@ -6,12 +6,12 @@ import org.jsoup.nodes.Document;
 
 import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 
-public class AsyncTask_FetchImages extends AsyncTask<String, Void, Document>
+public class Task_FetchImages extends AsyncTask<String, Void, Document>
 {
-    private AsyncResponse_FetchImages delegate_fetch_ingredients = null ;
+    private Response_FetchImages delegate_fetch_ingredients = null ;
     private String url ;
 
-    public AsyncTask_FetchImages setDelegate(AsyncResponse_FetchImages delegate) {
+    public Task_FetchImages setDelegate(Response_FetchImages delegate) {
         this.delegate_fetch_ingredients = delegate;
 
         return this ;
