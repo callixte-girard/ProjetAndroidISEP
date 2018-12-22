@@ -27,7 +27,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
         implements View.OnClickListener
     {
 
-        private TextView recipe_name ;
+        private TextView recipe_name, recipe_duration ;
         private CheckBox checkbox_add_to_favorites ;
 
         RecyclerViewHolder_SearchRecipe(View view)
@@ -35,6 +35,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
             super(view);
 
             recipe_name = view.findViewById(R.id.title);
+            recipe_duration = view.findViewById(R.id.sub_title);
             checkbox_add_to_favorites = view.findViewById(R.id.checkbox);
         }
 
@@ -60,13 +61,16 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     {
         final Recipe rec = FragSearchRecipe.getSearchResults().get(i);
 
-        holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
+        //holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
+        holder.recipe_name.setText(rec.getName());
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /////// action that happens when the NAME is pressed (not the checkbox)
             }
         });
+
+        holder.recipe_duration.setText(rec.getDuration());
 
         boolean already_favorite = rec.alreadyExists(MainActivity.getFavoriteRecipes()) ;
         //Log.d(rec.getUrl(), String.valueOf(already_favorite));

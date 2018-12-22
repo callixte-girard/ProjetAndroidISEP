@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity
     private static ArrayList<ListeCourses> my_shopping_lists = new ArrayList<>();
 
     // other shits
-    public static final int MAX_LABEL_LENGTH = 35 ;
+    public static final int MAX_LABEL_LENGTH = 31 ;
 
     /////////////////////////////////////////////////////////////////////////////////
 
@@ -189,7 +189,6 @@ public class MainActivity extends AppCompatActivity
     {
         try
         {
-
             ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
 
             // --> finally adds to appropriate recipe

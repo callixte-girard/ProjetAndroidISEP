@@ -36,7 +36,7 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
             super(view);
 
             recipe_name = view.findViewById(R.id.title);
-            recipe_duration = view.findViewById(R.id.recipe_duration);
+            recipe_duration = view.findViewById(R.id.sub_title);
             checkbox_select_recipe = view.findViewById(R.id.checkbox);
         }
 
@@ -65,7 +65,8 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
     {
         final Recipe rec = MainActivity.getFavoriteRecipes().get(i) ;
 
-        holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
+        //holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
+        holder.recipe_name.setText(rec.getName());
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
