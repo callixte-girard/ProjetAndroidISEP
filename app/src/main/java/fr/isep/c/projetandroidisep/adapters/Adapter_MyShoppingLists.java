@@ -27,7 +27,7 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
         implements View.OnClickListener {
 
 
-        private TextView lc_date_creation ;
+        private TextView lc_name, lc_date_creation ;
         private CheckBox checkbox_delete_shopping_list ;
 
 
@@ -35,17 +35,14 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
         {
             super(view);
 
-            lc_date_creation = view.findViewById(R.id.title);
+            lc_name = view.findViewById(R.id.title);
+            lc_date_creation = view.findViewById(R.id.sub_title);
             checkbox_delete_shopping_list = view.findViewById(R.id.checkbox);
         }
 
         @Override
         public void onClick(View view) {
-            switch (view.getId())
-            {
-                case R.id.checkbox:
-                    Log.d("test", "my_recipes");
-            }
+
         }
     }
 
@@ -62,12 +59,18 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_MyShoppingLists holder, final int i)
     {
-        final ListeCourses rec = MainActivity.getMyShoppingLists().get(i);
+        final ListeCourses lc = MainActivity.getMyShoppingLists().get(i);
 
-        holder.lc_date_creation.setText(rec.getDateCreation().replace("_", " "));
+        String displayed_name = "Shopping List #" + lc.getId();
+        holder.lc_name.setText(displayed_name);
+
+        String displayed_date = lc.getDateCreation()
+                .replace("_", " at ")
+                .replace("-", "/");
+        holder.lc_date_creation.setText(displayed_date);
         holder.lc_date_creation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {git a
 
 
             }
