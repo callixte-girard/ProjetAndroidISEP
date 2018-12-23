@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 public class FragCreateShoppingList extends Fragment
 {
+    private TextView label ;
     private RecyclerView select_favorite_recipes ;
     //private SearchView filter_favorite_recipes ;
     private Button button_create_shopping_list , button_back ;
@@ -35,6 +37,10 @@ public class FragCreateShoppingList extends Fragment
         View view = inflater.inflate(R.layout.fragment_create_shopping_list, container, false);
 
         //filter_favorite_recipes = view.findViewById(R.id.filter_favorite_recipes);
+
+        label = view.findViewById(R.id.label);
+        label.setText("Choose your recipes for this shopping list :");
+
 
         select_favorite_recipes = view.findViewById(R.id.select_favorite_recipes);
 

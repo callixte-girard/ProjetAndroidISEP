@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_BuyShoppingList;
@@ -17,6 +18,7 @@ import fr.isep.c.projetandroidisep.adapters.Adapter_CreateShoppingList;
 
 public class FragBuyShoppingList extends Fragment
 {
+    private TextView label ;
     private RecyclerView select_bought_aliments ;
     //private SearchView filter_favorite_recipes ;
     private Button button_done ;
@@ -26,6 +28,9 @@ public class FragBuyShoppingList extends Fragment
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_buy_shopping_list, container, false);
+
+        label = view.findViewById(R.id.label);
+        label.setText("Check the aliments you bought :");
 
         //filter_favorite_recipes = view.findViewById(R.id.filter_favorite_recipes);
 

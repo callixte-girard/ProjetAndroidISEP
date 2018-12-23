@@ -17,7 +17,6 @@
 
     <TextView
         android:id="@+id/label"
-        android:text="Choose your recipes for this shopping list :"
         android:textSize="12sp"
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginTop="10dp"

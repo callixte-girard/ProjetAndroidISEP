@@ -178,6 +178,8 @@ public class MainActivity extends AppCompatActivity
 
         ref_favorite_recipes.removeEventListener(listener_favorite_recipes);
         ref_my_shopping_lists.removeEventListener(listener_my_shopping_lists);
+
+        destroyFrag_searchRecipe();
     }
 
 
@@ -388,6 +390,14 @@ public class MainActivity extends AppCompatActivity
         fragmentManager
                 .beginTransaction()
                 .remove(frag_buy_shopping_list)
+                .commitAllowingStateLoss();
+    }
+
+    public void destroyFrag_searchRecipe()
+    {
+        fragmentManager
+                .beginTransaction()
+                .remove(frag_search_recipe)
                 .commitAllowingStateLoss();
     }
 
