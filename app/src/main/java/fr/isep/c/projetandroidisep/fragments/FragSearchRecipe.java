@@ -203,7 +203,7 @@ public class FragSearchRecipe extends Fragment
         results_list.addItemDecoration(itemDecor);
 
         // custom adapter
-        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe();
+        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe(getContext());
         results_list.setAdapter(adapter);
     }
 

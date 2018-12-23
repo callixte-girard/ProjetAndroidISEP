@@ -48,7 +48,11 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
         }
     }
 
+    private Context context ;
 
+    public Adapter_FavoriteRecipes(Context context) {
+        this.context = context ;
+    }
 
 
     @Override

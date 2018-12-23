@@ -10,16 +10,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.myClasses.ParseText;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
-public class Adapter_SelectRecipes extends RecyclerView.Adapter
-            <Adapter_SelectRecipes
+public class Adapter_BuyShoppingList extends RecyclerView.Adapter
+            <Adapter_BuyShoppingList
                 .RecyclerViewHolder_SelectRecipes>
 {
 
@@ -48,6 +45,12 @@ public class Adapter_SelectRecipes extends RecyclerView.Adapter
                     Log.d("test", "my_recipes");
             }
         }
+    }
+
+    private Context context ;
+
+    public Adapter_BuyShoppingList(Context context) {
+        this.context = context ;
     }
 
 

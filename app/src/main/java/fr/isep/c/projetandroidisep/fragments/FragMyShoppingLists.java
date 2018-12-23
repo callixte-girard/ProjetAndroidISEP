@@ -56,7 +56,8 @@ public class FragMyShoppingLists extends Fragment
                     Snackbar.make(view, FAVORITES_EMPTY, Snackbar.LENGTH_SHORT).show();
                 }
                 else {
-                    MainActivity.displayFrag_createShoppingList(getFragmentManager());
+                    MainActivity act = (MainActivity) getActivity();
+                    act.displayFrag_createShoppingList();
                 }
             }
         });
@@ -91,7 +92,7 @@ public class FragMyShoppingLists extends Fragment
         number_shopping_lists.setText(String.valueOf(count) + " shopping lists");
 
         // custom adapter
-        Adapter_MyShoppingLists adapter = new Adapter_MyShoppingLists();
+        Adapter_MyShoppingLists adapter = new Adapter_MyShoppingLists(getContext());
         my_shopping_lists.setAdapter(adapter);
     }
 

@@ -49,6 +49,13 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
         }
     }
 
+    private Context context ;
+
+    public Adapter_SearchRecipe(Context context) {
+        this.context = context ;
+    }
+
+
     @Override
     public RecyclerViewHolder_SearchRecipe onCreateViewHolder(ViewGroup viewGroup, int i)
     {

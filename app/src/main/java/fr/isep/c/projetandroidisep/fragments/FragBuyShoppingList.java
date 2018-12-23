@@ -1,7 +1,6 @@
 package fr.isep.c.projetandroidisep.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,34 +10,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.util.ArrayList;
-
-import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.adapters.Adapter_BuyShoppingList;
 import fr.isep.c.projetandroidisep.adapters.Adapter_CreateShoppingList;
-import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
-import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
-public class FragCreateShoppingList extends Fragment
+public class FragBuyShoppingList extends Fragment
 {
-    private RecyclerView select_favorite_recipes ;
+    private RecyclerView select_bought_aliments ;
     //private SearchView filter_favorite_recipes ;
-    private Button button_create_shopping_list , button_back ;
-
-    private static final String NOTHING_SELECTED = "You must choose at least one recipe." ;
+    private Button button_done ;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_create_shopping_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_buy_shopping_list, container, false);
 
         //filter_favorite_recipes = view.findViewById(R.id.filter_favorite_recipes);
 
-        select_favorite_recipes = view.findViewById(R.id.select_favorite_recipes);
+        select_bought_aliments = view.findViewById(R.id.select_bought_aliments);
 
-        button_create_shopping_list = view.findViewById(R.id.button_confirm);
+        /*
+        button_create_shopping_list = view.findViewById(R.id.butto);
         button_create_shopping_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -61,9 +55,8 @@ public class FragCreateShoppingList extends Fragment
                     MainActivity.saveShoppingList(lc);
 
                     // removes actual fragment and restores my shopping lists one
-                    MainActivity act = (MainActivity) getActivity();
-                    act.destroyFrag_createShoppingList();
-                    act.displayFrag_myShoppingLists();
+                    MainActivity.destroyFrag_createShoppingList(getFragmentManager());
+                    MainActivity.displayFrag_myShoppingLists(getFragmentManager());
                 }
                 else {
                     Snackbar.make(v, NOTHING_SELECTED, Snackbar.LENGTH_SHORT).show();
@@ -71,7 +64,7 @@ public class FragCreateShoppingList extends Fragment
 
             }
         });
-
+*/
         initChoicesList(); // to set decoration and layout
         updateChoicesFromFavorites(); // to fill it
 
@@ -87,16 +80,16 @@ public class FragCreateShoppingList extends Fragment
 
     private void initChoicesList()
     {
-        select_favorite_recipes.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
+        select_bought_aliments.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
 
         // layout
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        select_favorite_recipes.setLayoutManager(linearLayoutManager);
+        select_bought_aliments.setLayoutManager(linearLayoutManager);
 
         // add a line to divide them more clearly
         DividerItemDecoration itemDecor = new DividerItemDecoration
                 (getContext(), linearLayoutManager.getOrientation());
-        select_favorite_recipes.addItemDecoration(itemDecor);
+        select_bought_aliments.addItemDecoration(itemDecor);
 
 
     }
@@ -104,8 +97,8 @@ public class FragCreateShoppingList extends Fragment
     public void updateChoicesFromFavorites()
     {
         // custom adapter
-        Adapter_CreateShoppingList adapter = new Adapter_CreateShoppingList(getContext());
-        select_favorite_recipes.setAdapter(adapter);
+        Adapter_BuyShoppingList adapter = new Adapter_BuyShoppingList(getContext());
+        select_bought_aliments.setAdapter(adapter);
     }
 
 

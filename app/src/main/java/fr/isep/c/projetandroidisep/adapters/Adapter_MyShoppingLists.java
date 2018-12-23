@@ -22,13 +22,13 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
             <Adapter_MyShoppingLists
                 .RecyclerViewHolder_MyShoppingLists>
 {
-
     static class RecyclerViewHolder_MyShoppingLists extends RecyclerView.ViewHolder
         implements View.OnClickListener {
 
 
         private TextView lc_name, lc_date_creation ;
         private CheckBox checkbox_delete_shopping_list ;
+
 
 
         RecyclerViewHolder_MyShoppingLists(View view)
@@ -46,6 +46,22 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
         }
     }
 
+    private View.OnClickListener listener_shopping_list_clicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Log.d("shopping_list_clicked", "justa a test lol");
+
+            MainActivity act = (MainActivity) context ;
+            act.displayFrag_buyShoppingList();
+        }
+    };
+
+    private Context context ;
+
+    public Adapter_MyShoppingLists(Context context) {
+        this.context = context ;
+    }
+
 
     @Override
     public RecyclerViewHolder_MyShoppingLists onCreateViewHolder(ViewGroup viewGroup, int i)
@@ -61,19 +77,15 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
     {
         final ListeCourses lc = MainActivity.getMyShoppingLists().get(i);
 
-        String displayed_name = "Shopping List #" + lc.getId();
+        String displayed_name = "Shopping List #" + MainActivity.getMyShoppingLists().size();
         holder.lc_name.setText(displayed_name);
+        holder.lc_name.setOnClickListener(listener_shopping_list_clicked);
 
         String displayed_date = lc.getDateCreation()
                 .replace("_", " at ")
                 .replace("-", "/");
         holder.lc_date_creation.setText(displayed_date);
-        holder.lc_date_creation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        holder.lc_date_creation.setOnClickListener(listener_shopping_list_clicked);
 
         holder.checkbox_delete_shopping_list.setChecked(true);
         holder.checkbox_delete_shopping_list.setOnCheckedChangeListener
@@ -106,5 +118,6 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
         return (null != MainActivity.getMyShoppingLists()
                 ? MainActivity.getMyShoppingLists().size() : 0);
     }
+
 
 }

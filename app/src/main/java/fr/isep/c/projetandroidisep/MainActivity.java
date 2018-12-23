@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import fr.isep.c.projetandroidisep.asyncTasks.Response_FetchIngredients;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
+import fr.isep.c.projetandroidisep.fragments.FragBuyShoppingList;
 import fr.isep.c.projetandroidisep.fragments.FragCreateShoppingList;
 import fr.isep.c.projetandroidisep.fragments.FragMyShoppingLists;
 import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
@@ -50,11 +51,15 @@ public class MainActivity extends AppCompatActivity
     // display
     private BottomNavigationView bnv ;
 
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+
     private static FragSearchRecipe frag_search_recipe = new FragSearchRecipe();
     private static FragFavoriteRecipes frag_favorite_recipes = new FragFavoriteRecipes();
     private static FragMyShoppingLists frag_my_shopping_lists = new FragMyShoppingLists();
-    private static FragCreateShoppingList frag_create_shopping_list = new FragCreateShoppingList();
     private static FragUser frag_user = new FragUser();
+
+    private static FragCreateShoppingList frag_create_shopping_list = new FragCreateShoppingList();
+    private static FragBuyShoppingList frag_buy_shopping_list = new FragBuyShoppingList();
 
     // firebase
     private FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
@@ -179,13 +184,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         // ca marche po du tout :(
-        int count = getSupportFragmentManager().getBackStackEntryCount();
+        int count = fragmentManager.getBackStackEntryCount();
 
         if (count == 0) {
             super.onBackPressed();
             //additional code
         } else {
-            getSupportFragmentManager().popBackStack();
+            fragmentManager.popBackStack();
         }
 
     }
@@ -281,7 +286,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setBottomNavigationDrawer() {
         // set default bnv item action
-        displayFrag_searchRecipe(getSupportFragmentManager());
+        displayFrag_searchRecipe();
 
         // sets fab action button
         bnv = findViewById(R.id.navigation);
@@ -295,22 +300,22 @@ public class MainActivity extends AppCompatActivity
                         int id = item.getItemId();
 
                         if (id == R.id.nav_search_recipe) {
-                            displayFrag_searchRecipe(getSupportFragmentManager());
+                            displayFrag_searchRecipe();
                             Log.d("bnv", "search_recipe");
                             return true ;
                         }
                         else if (id == R.id.nav_my_recipes) {
-                            displayFrag_myRecipes(getSupportFragmentManager());
+                            displayFrag_myRecipes();
                             Log.d("bnv", "my_recipes");
                             return true ;
                         }
                         else if (id == R.id.nav_my_shopping_lists) {
-                            displayFrag_myShoppingLists(getSupportFragmentManager());
+                            displayFrag_myShoppingLists();
                             Log.d("bnv", "my_shopping_lists");
                             return true ;
                         }
                         else if (id == R.id.nav_user) {
-                            displayFrag_user(getSupportFragmentManager());
+                            displayFrag_user();
                             Log.d("bnv", "user");
                             return true ;
                         }
@@ -321,55 +326,70 @@ public class MainActivity extends AppCompatActivity
                 });
     }
 
-    public static void displayFrag_searchRecipe(FragmentManager frag_manager)
+    public void displayFrag_searchRecipe()
     {
-        frag_manager
+        fragmentManager
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_search_recipe)
                 .commit();
     }
 
 
-    public static void displayFrag_myRecipes(FragmentManager frag_manager)
+    public void displayFrag_myRecipes()
     {
-        frag_manager
+        fragmentManager
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_favorite_recipes)
                 .commit();
     }
 
-    public static void displayFrag_myShoppingLists(FragmentManager frag_manager)
+    public void displayFrag_myShoppingLists()
     {
-        frag_manager
+        fragmentManager
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_my_shopping_lists)
                 .commit();
     }
 
-    public static void displayFrag_createShoppingList(FragmentManager frag_manager)
+    public void displayFrag_user()
     {
-        frag_manager
-                .beginTransaction()
-                .replace(R.id.frame_container, frag_create_shopping_list)
-                .commit();
-    }
-
-    public static void destroyFrag_createShoppingList(FragmentManager frag_manager)
-    {
-        frag_manager
-                .beginTransaction()
-                .remove(frag_create_shopping_list)
-                .commitAllowingStateLoss();
-    }
-
-    public static void displayFrag_user(FragmentManager frag_manager)
-    {
-        frag_manager
+        fragmentManager
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_user)
                 .commit();
     }
 
+    public void displayFrag_createShoppingList()
+    {
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.frame_container, frag_create_shopping_list)
+                .commit();
+    }
+
+    public void displayFrag_buyShoppingList()
+    {
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.frame_container, frag_buy_shopping_list)
+                .commit();
+    }
+
+    public void destroyFrag_createShoppingList()
+    {
+        fragmentManager
+                .beginTransaction()
+                .remove(frag_create_shopping_list)
+                .commitAllowingStateLoss();
+    }
+
+    public void destroyFrag_buyShoppingList()
+    {
+        fragmentManager
+                .beginTransaction()
+                .remove(frag_buy_shopping_list)
+                .commitAllowingStateLoss();
+    }
 
     ////////////////////////////////////////////////////////:
 
