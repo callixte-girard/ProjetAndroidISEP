@@ -78,7 +78,7 @@ public class FragSearchRecipe extends Fragment
             search_results.addAll(Recipe.fetchPageResultsFromDoc(doc));
             Log.d("results", String.valueOf(search_results.size()));
 
-            performFetchRecipeImages(search_results);
+            //performFetchRecipeImages(search_results);
         }
         catch (Exception ex) {}
 

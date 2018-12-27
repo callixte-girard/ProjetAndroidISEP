@@ -71,7 +71,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     {
         final Recipe rec = FragSearchRecipe.getSearchResults().get(i);
 
-        holder.recipe_img.setImageBitmap(rec.getImgBitmap());
+        //holder.recipe_img.setImageBitmap(rec.getImgBitmap());
 
         //holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
         holder.recipe_name.setText(rec.getName());
