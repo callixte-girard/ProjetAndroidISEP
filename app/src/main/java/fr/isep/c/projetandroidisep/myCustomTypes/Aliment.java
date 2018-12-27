@@ -110,24 +110,12 @@ public class Aliment
 	}
 
 
-	public boolean isEmpty()
-	{
-		if (this.nutr.isEmpty())
-		{
-			return true ;
-		}
-		else
-		{
-			return false ;
-		}
-	}
-
 	/*
-	public boolean isDispoNow() 
+	public boolean isDispoNow()
 	{
 		LocalDate ld = LocalDate.now();
 		int month = ld.getMonthValue();
-		
+
 		if (this.haute_saison[month] || this.dispo[month])
 		{
 			return true ;
@@ -138,8 +126,8 @@ public class Aliment
 		}
 	}
 	*/
-	
-	
+
+
 	public void dispBlock(boolean with_nutr)
 	{
 		System.out.println("- name : " + this.name);
@@ -274,18 +262,15 @@ public class Aliment
 		return this.url ;
 	}
 	public void setUrl(String url) { this.url = url ; }
+	public String getForm()
+	{
+		return this.form ;
+	}
+	public void setForm(String form) { this.form = form ; }
 	public ArrayList<Nutr> getNutr()
 	{
 		return this.nutr ;
 	}
 	public void setNutr(ArrayList<Nutr> nutr) { this.nutr = nutr ; }
-	public String getForm()
-	{
-		return this.form ;
-	}
-	public void setForm(String form)
-	{
-		this.form = form ;
-	}
 	
 }

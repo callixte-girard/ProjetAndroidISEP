@@ -67,7 +67,7 @@ public class Adapter_CreateShoppingList extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_SelectRecipes holder, final int i)
     {
-        final Recipe rec = MainActivity.getFavoriteRecipes().get(i) ;
+        final Recipe rec = MainActivity.getFavoriteRecipes().get(holder.getAdapterPosition()) ;
 
         //holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
         holder.recipe_name.setText(rec.getName());

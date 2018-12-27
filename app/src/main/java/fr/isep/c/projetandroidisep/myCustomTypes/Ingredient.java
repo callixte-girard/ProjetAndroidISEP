@@ -14,7 +14,7 @@ import fr.isep.c.projetandroidisep.myClasses.*;
 
 public class Ingredient extends Aliment
 {
-	private String name ;
+	//private String name ;
 	private boolean selected = true ; // can be deactivated to remove an aliment from the parsed recipe
 	private double qty ;
 	private String unit ;
@@ -34,7 +34,7 @@ public class Ingredient extends Aliment
 
 	public Ingredient(String name, String form, double qty, String unit)
 	{
-		this.name = name ;
+		this.setName(name);
 		this.setForm(form);
 		this.qty =  qty ;
 		this.unit = unit ;
@@ -245,12 +245,6 @@ public class Ingredient extends Aliment
         }
     }
 
-    public String getName() {
-	    return  this.name ;
-    }
-    public void setName(String name) {
-	    this.name = name ;
-    }
     public boolean getSelected() {
 		return this.selected ;
 	}

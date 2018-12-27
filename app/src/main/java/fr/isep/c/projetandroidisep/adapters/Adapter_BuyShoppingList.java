@@ -70,26 +70,6 @@ public class Adapter_BuyShoppingList extends RecyclerView.Adapter
     public void onBindViewHolder(final RecyclerViewHolder_SelectRecipes holder, final int i)
     {
         ArrayList<Aliment> ingr_al = this.lc.getAliments();
-/*
-        holder.recipe_duration.setText(rec.getDuration());
-
-        holder.checkbox_select_recipe.setChecked(false);
-        holder.checkbox_select_recipe.setOnCheckedChangeListener
-                (new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                Recipe rec = MainActivity.getFavoriteRecipes().get(i);
-
-                Log.d("is_selected",
-                        rec.getName() + " | " + String.valueOf(isChecked));
-
-                rec.setSelected(isChecked);
-
-                //notifyDataSetChanged();
-            }
-        });
-        */
     }
 
     @Override

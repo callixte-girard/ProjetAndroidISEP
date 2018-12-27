@@ -74,7 +74,7 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_MyShoppingLists holder, final int i)
     {
-        final ListeCourses lc = MainActivity.getMyShoppingLists().get(i);
+        final ListeCourses lc = MainActivity.getMyShoppingLists().get(holder.getAdapterPosition());
 
         String displayed_title = lc.getAliments().size() + " items" ;
         holder.lc_name.setText(displayed_title);
