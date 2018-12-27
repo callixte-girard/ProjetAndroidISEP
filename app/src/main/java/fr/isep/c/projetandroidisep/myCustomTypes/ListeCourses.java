@@ -15,11 +15,6 @@ public class ListeCourses
     public static final String DATE_PATTERN = "yyyy-MM-dd_HH:mm:ss" ;
 
 
-    public static ArrayList<ListeCourses> al = new ArrayList<>();
-
-    public static int counter = 0 ;
-
-    private int id ;
     private String dateCreation ;
     //private String creator ;
     //private LocalDate duree ; // a travailler
@@ -33,9 +28,6 @@ public class ListeCourses
       //      String creator,
             ArrayList<Recipe> recipes)
     {
-        counter ++ ;
-        this.id = counter ;
-
         this.dateCreation = ParseText.formatDate(new Date(System.currentTimeMillis()), DATE_PATTERN);
         //this.creator = creator ;
         this.recipes = recipes ;
@@ -138,12 +130,4 @@ public class ListeCourses
     //public String getCreator() { return this.creator ; }
     //public void setCreator(String creator) { this.creator = creator ; }
 
-    public int getId()
-    {
-        return this.id ;
-    }
-    public void setId(int id)
-    {
-        this.id = id ;
-    }
 }

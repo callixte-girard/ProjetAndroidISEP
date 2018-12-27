@@ -49,7 +49,6 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
     private View.OnClickListener listener_shopping_list_clicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.d("shopping_list_clicked", "justa a test lol");
 
             MainActivity act = (MainActivity) context ;
             act.displayFrag_buyShoppingList();
@@ -77,8 +76,8 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
     {
         final ListeCourses lc = MainActivity.getMyShoppingLists().get(i);
 
-        String displayed_name = "Shopping List #" + MainActivity.getMyShoppingLists().size();
-        holder.lc_name.setText(displayed_name);
+        String displayed_title = lc.getAliments().size() + " items" ;
+        holder.lc_name.setText(displayed_title);
         holder.lc_name.setOnClickListener(listener_shopping_list_clicked);
 
         String displayed_date = lc.getDateCreation()

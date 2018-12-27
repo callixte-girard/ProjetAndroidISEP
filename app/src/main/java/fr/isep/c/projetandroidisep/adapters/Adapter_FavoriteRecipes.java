@@ -59,7 +59,7 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
     public RecyclerViewHolder_FavoriteRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_recipe, viewGroup, false);
+                .inflate(R.layout.row_checklist_basic, viewGroup, false);
         
         return new RecyclerViewHolder_FavoriteRecipes(v);
     }

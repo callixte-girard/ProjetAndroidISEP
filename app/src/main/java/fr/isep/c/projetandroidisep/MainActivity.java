@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity
 
         if (current_user != null) {
             setBottomNavigationDrawer();
+
         } else {
             transferToFirebaseAuthActivity();
         }
@@ -185,6 +186,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        /*
         // ca marche po du tout :(
         int count = fragmentManager.getBackStackEntryCount();
 
@@ -193,7 +195,8 @@ public class MainActivity extends AppCompatActivity
             //additional code
         } else {
             fragmentManager.popBackStack();
-        }
+        } */
+        fragmentManager.popBackStackImmediate();
 
     }
 

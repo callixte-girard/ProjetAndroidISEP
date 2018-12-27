@@ -80,6 +80,10 @@ public class FirebaseUIActivity extends AppCompatActivity {
         setContentView(R.layout.activity_firebase_ui);
 
         FirebaseAuth.getInstance().addAuthStateListener(listener_auth);
+
+        // to enable offline temp storage
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
     }
 
 

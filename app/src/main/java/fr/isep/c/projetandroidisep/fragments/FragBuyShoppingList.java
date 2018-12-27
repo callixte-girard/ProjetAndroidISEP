@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_BuyShoppingList;
 import fr.isep.c.projetandroidisep.adapters.Adapter_CreateShoppingList;
@@ -36,42 +37,19 @@ public class FragBuyShoppingList extends Fragment
 
         select_bought_aliments = view.findViewById(R.id.select_bought_aliments);
 
-        /*
-        button_create_shopping_list = view.findViewById(R.id.butto);
-        button_create_shopping_list.setOnClickListener(new View.OnClickListener() {
+        button_done = view.findViewById(R.id.button_confirm);
+        button_done.setText("OK");
+        button_done.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                ArrayList<Recipe> lc_recipes = new ArrayList<>();
-
-                // fills it
-                for (Recipe rec : MainActivity.getFavoriteRecipes())
-                {
-                    if (rec.getSelected()) {
-                        lc_recipes.add(rec);
-                    }
-                }
-
-                // checks validity
-                if (!lc_recipes.isEmpty())
-                {
-                    // saves shopping list on the db
-                    ListeCourses lc = new ListeCourses(lc_recipes);
-                    MainActivity.saveShoppingList(lc);
-
-                    // removes actual fragment and restores my shopping lists one
-                    MainActivity.destroyFrag_createShoppingList(getFragmentManager());
-                    MainActivity.displayFrag_myShoppingLists(getFragmentManager());
-                }
-                else {
-                    Snackbar.make(v, NOTHING_SELECTED, Snackbar.LENGTH_SHORT).show();
-                }
-
+            public void onClick(View v) {
+                // removes actual fragment and restores my shopping lists one
+                MainActivity act = (MainActivity) getActivity();
+                act.destroyFrag_buyShoppingList();
+                act.displayFrag_myShoppingLists();
             }
         });
-*/
-        initChoicesList(); // to set decoration and layout
-        updateChoicesFromFavorites(); // to fill it
+
+        initBuyShoppingList();
 
         return view ;
     }
@@ -83,7 +61,7 @@ public class FragBuyShoppingList extends Fragment
     }
 
 
-    private void initChoicesList()
+    private void initBuyShoppingList()
     {
         select_bought_aliments.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
 
@@ -95,20 +73,14 @@ public class FragBuyShoppingList extends Fragment
         DividerItemDecoration itemDecor = new DividerItemDecoration
                 (getContext(), linearLayoutManager.getOrientation());
         select_bought_aliments.addItemDecoration(itemDecor);
-
-
     }
-
-    public void updateChoicesFromFavorites()
+/*
+    private void updateBuyShoppingList()
     {
         // custom adapter
-        Adapter_BuyShoppingList adapter = new Adapter_BuyShoppingList(getContext());
+        Adapter_BuyShoppingList adapter = new Adapter_BuyShoppingList(getContext(), );
         select_bought_aliments.setAdapter(adapter);
     }
-
-
-
-
-
+*/
 
 }

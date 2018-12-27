@@ -10,8 +10,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
@@ -39,18 +42,16 @@ public class Adapter_CreateShoppingList extends RecyclerView.Adapter
 
         @Override
         public void onClick(View view) {
-            switch (view.getId())
-            {
-                case R.id.checkbox:
-                    Log.d("test", "my_recipes");
-            }
+
         }
     }
 
     private Context context ;
+    private ArrayList<Recipe> recipe_list ;
 
-    public Adapter_CreateShoppingList(Context context) {
+    public Adapter_CreateShoppingList(Context context, ArrayList<Recipe> recipe_list) {
         this.context = context ;
+        this.recipe_list = recipe_list ;
     }
 
 
@@ -58,7 +59,7 @@ public class Adapter_CreateShoppingList extends RecyclerView.Adapter
     public RecyclerViewHolder_SelectRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_recipe, viewGroup, false);
+                .inflate(R.layout.row_checklist_basic, viewGroup, false);
 
         return new RecyclerViewHolder_SelectRecipes(v);
     }

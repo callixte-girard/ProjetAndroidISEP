@@ -45,6 +45,7 @@ public class FragCreateShoppingList extends Fragment
         select_favorite_recipes = view.findViewById(R.id.select_favorite_recipes);
 
         button_create_shopping_list = view.findViewById(R.id.button_confirm);
+        button_create_shopping_list.setText("Create Shopping List");
         button_create_shopping_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -110,7 +111,9 @@ public class FragCreateShoppingList extends Fragment
     public void updateChoicesFromFavorites()
     {
         // custom adapter
-        Adapter_CreateShoppingList adapter = new Adapter_CreateShoppingList(getContext());
+        Adapter_CreateShoppingList adapter = new Adapter_CreateShoppingList(
+                getContext(),
+                MainActivity.getFavoriteRecipes());
         select_favorite_recipes.setAdapter(adapter);
     }
 

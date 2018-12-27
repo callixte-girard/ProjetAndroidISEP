@@ -33,7 +33,7 @@
 
     <include
         android:id="@+id/button_container"
-        layout="@layout/bottom_container"
+        layout="@layout/button_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>

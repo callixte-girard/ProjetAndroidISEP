@@ -36,7 +36,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
         {
             super(view);
 
-            recipe_img = view.findViewById(R.id.recipe_img);
+            //recipe_img = view.findViewById(R.id.recipe_img);
             recipe_name = view.findViewById(R.id.title);
             recipe_duration = view.findViewById(R.id.sub_title);
             checkbox_add_to_favorites = view.findViewById(R.id.checkbox);
@@ -60,7 +60,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     public RecyclerViewHolder_SearchRecipe onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_recipe, viewGroup, false);
+                .inflate(R.layout.row_checklist_basic, viewGroup, false);
 
         return new RecyclerViewHolder_SearchRecipe(v);
     }
