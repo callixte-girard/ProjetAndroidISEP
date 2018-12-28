@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!--
     <item android:state_checked="true" android:state_focused="true"
@@ -8,7 +7,7 @@
         android:drawable="@drawable/checkbox_off_background_focus_yellow" />
         -->
     <item android:state_checked="true"
-        android:drawable="@drawable/ic_checkbox_on_back" />
+        android:drawable="@drawable/ic_heart_filled" />
     <item android:state_checked="false"
-        android:drawable="@drawable/ic_checkbox_off_back" />
+        android:drawable="@drawable/ic_heart_shallow" />
 </selector>

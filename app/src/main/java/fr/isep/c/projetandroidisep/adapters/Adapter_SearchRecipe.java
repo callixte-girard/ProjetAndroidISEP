@@ -1,10 +1,8 @@
 package fr.isep.c.projetandroidisep.adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +11,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.myClasses.ParseText;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
 
@@ -60,7 +55,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     public RecyclerViewHolder_SearchRecipe onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_checklist_basic, viewGroup, false);
+                .inflate(R.layout.row_2_lines, viewGroup, false);
 
         return new RecyclerViewHolder_SearchRecipe(v);
     }
@@ -69,7 +64,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_SearchRecipe holder, final int i)
     {
-        final Recipe rec = FragSearchRecipe.getSearchResults().get(i);
+        final Recipe rec = FragSearchRecipe.getSearchResults().get(holder.getAdapterPosition());
 
         //holder.recipe_img.setImageBitmap(rec.getImgBitmap());
 
@@ -103,7 +98,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
                     MainActivity.removeRecipeFromFavorites(rec);
                 }
 
-                //notifyDataSetChanged();
+                notifyDataSetChanged();
             }
         });
     }

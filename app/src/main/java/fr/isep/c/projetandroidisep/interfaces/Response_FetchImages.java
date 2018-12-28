@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.asyncTasks;
+package fr.isep.c.projetandroidisep.interfaces;
 
 import android.graphics.Bitmap;
 

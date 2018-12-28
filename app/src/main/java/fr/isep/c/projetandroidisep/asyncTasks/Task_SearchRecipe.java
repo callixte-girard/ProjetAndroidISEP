@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import org.jsoup.nodes.Document;
 
+import fr.isep.c.projetandroidisep.interfaces.Response_SearchRecipe;
 import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 
 public class Task_SearchRecipe extends AsyncTask<String, Void, Document>

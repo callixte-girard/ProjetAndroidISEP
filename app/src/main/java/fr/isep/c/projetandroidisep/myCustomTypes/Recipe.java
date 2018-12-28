@@ -59,15 +59,6 @@ public class Recipe
 
     }
 
-/*
-	public static void addToFavorites(Recipe rec) {
-		al.add(rec);
-	}
-
-	public static void removeFromFavorites(Recipe rec) {
-		al.remove(rec);
-	}
-*/
 
 	public boolean alreadyExists(ArrayList<Recipe> al_scan)
 	{

@@ -2,12 +2,10 @@ package fr.isep.c.projetandroidisep.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,9 +13,7 @@ import java.util.ArrayList;
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.myCustomTypes.Aliment;
-import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
-import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Adapter_BuyShoppingList extends RecyclerView.Adapter
@@ -61,7 +57,7 @@ public class Adapter_BuyShoppingList extends RecyclerView.Adapter
     public RecyclerViewHolder_SelectRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_checklist_basic, viewGroup, false);
+                .inflate(R.layout.row_2_lines, viewGroup, false);
 
         return new RecyclerViewHolder_SelectRecipes(v);
     }

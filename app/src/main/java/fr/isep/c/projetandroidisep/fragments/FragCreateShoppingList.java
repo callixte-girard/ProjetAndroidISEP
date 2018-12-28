@@ -26,7 +26,7 @@ public class FragCreateShoppingList extends Fragment
     private TextView label ;
     private RecyclerView select_favorite_recipes ;
     //private SearchView filter_favorite_recipes ;
-    private Button button_create_shopping_list , button_back ;
+    private Button button_create_shopping_list , button_cancel ;
 
     private static final String NOTHING_SELECTED = "You must choose at least one recipe." ;
 
@@ -44,7 +44,7 @@ public class FragCreateShoppingList extends Fragment
 
         select_favorite_recipes = view.findViewById(R.id.select_favorite_recipes);
 
-        button_create_shopping_list = view.findViewById(R.id.button_confirm);
+        button_create_shopping_list = view.findViewById(R.id.button_right);
         button_create_shopping_list.setText("Create Shopping List");
         button_create_shopping_list.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -10,12 +10,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
-import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Adapter_MyShoppingLists extends RecyclerView.Adapter
@@ -66,7 +63,7 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
     public RecyclerViewHolder_MyShoppingLists onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_checklist_basic, viewGroup, false);
+                .inflate(R.layout.row_2_lines, viewGroup, false);
 
         return new RecyclerViewHolder_MyShoppingLists(v);
     }

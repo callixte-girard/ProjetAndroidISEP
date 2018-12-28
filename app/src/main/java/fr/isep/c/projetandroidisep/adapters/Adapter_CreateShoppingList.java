@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
@@ -59,7 +58,7 @@ public class Adapter_CreateShoppingList extends RecyclerView.Adapter
     public RecyclerViewHolder_SelectRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_checklist_basic, viewGroup, false);
+                .inflate(R.layout.row_2_lines, viewGroup, false);
 
         return new RecyclerViewHolder_SelectRecipes(v);
     }
@@ -93,8 +92,6 @@ public class Adapter_CreateShoppingList extends RecyclerView.Adapter
                         rec.getName() + " | " + String.valueOf(isChecked));
 
                 rec.setSelected(isChecked);
-
-                //notifyDataSetChanged();
             }
         });
     }

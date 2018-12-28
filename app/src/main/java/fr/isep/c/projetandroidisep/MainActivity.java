@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
-import fr.isep.c.projetandroidisep.asyncTasks.Response_FetchIngredients;
+import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
 import fr.isep.c.projetandroidisep.fragments.FragBuyShoppingList;
 import fr.isep.c.projetandroidisep.fragments.FragCreateShoppingList;
@@ -50,16 +50,14 @@ public class MainActivity extends AppCompatActivity
 {
     // display
     private BottomNavigationView bnv ;
-
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
-    private static FragSearchRecipe frag_search_recipe = new FragSearchRecipe();
-    private static FragFavoriteRecipes frag_favorite_recipes = new FragFavoriteRecipes();
-    private static FragMyShoppingLists frag_my_shopping_lists = new FragMyShoppingLists();
-    private static FragUser frag_user = new FragUser();
-
-    private static FragCreateShoppingList frag_create_shopping_list = new FragCreateShoppingList();
-    private static FragBuyShoppingList frag_buy_shopping_list = new FragBuyShoppingList();
+    private FragSearchRecipe frag_search_recipe = new FragSearchRecipe();
+    private FragFavoriteRecipes frag_favorite_recipes = new FragFavoriteRecipes();
+    private FragMyShoppingLists frag_my_shopping_lists = new FragMyShoppingLists();
+    private FragUser frag_user = new FragUser();
+    private FragCreateShoppingList frag_create_shopping_list = new FragCreateShoppingList();
+    private FragBuyShoppingList frag_buy_shopping_list = new FragBuyShoppingList();
 
     // firebase
     private FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
@@ -146,9 +144,10 @@ public class MainActivity extends AppCompatActivity
     };
 
     // app lists
-    private static ArrayList<Recipe> favorite_recipes = new ArrayList<>();
+    private ArrayList<Recipe> favorite_recipes = new ArrayList<>();
+    private ArrayList<ListeCourses> my_shopping_lists = new ArrayList<>();
     //private static ArrayList<Recipe> deleted_recipes_history = new ArrayList<>();
-    private static ArrayList<ListeCourses> my_shopping_lists = new ArrayList<>();
+
 
     // other shits
     public static final int MAX_LABEL_LENGTH = 31 ;
@@ -231,7 +230,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public static Drawable loadImageFromUrl(String url) {
+    public Drawable loadImageFromUrl(String url) {
         try {
             InputStream is = (InputStream) new URL(url).getContent();
             Drawable d = Drawable.createFromStream(is, "src name");
@@ -241,7 +240,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public static Bitmap getBitmapFromURL(String src) {
+    public Bitmap getBitmapFromURL(String src) {
         try {
             java.net.URL url = new java.net.URL(src);
             HttpURLConnection connection = (HttpURLConnection) url
@@ -408,7 +407,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    public static void saveRecipeInFavorites(Recipe rec)
+    public void saveRecipeInFavorites(Recipe rec)
     {
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
@@ -420,7 +419,7 @@ public class MainActivity extends AppCompatActivity
                 .setValue(rec);
     }
 
-    public static void saveIngredientsInRecipe(Recipe rec)
+    public void saveIngredientsInRecipe(Recipe rec)
     {
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
@@ -432,7 +431,7 @@ public class MainActivity extends AppCompatActivity
                 .setValue(rec.getIngredients());
     }
 
-    public static void saveShoppingList(ListeCourses lc)
+    public void saveShoppingList(ListeCourses lc)
     {
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
@@ -443,7 +442,7 @@ public class MainActivity extends AppCompatActivity
                 .setValue(lc);
     }
 
-    public static void removeRecipeFromFavorites(Recipe rec)
+    public void removeRecipeFromFavorites(Recipe rec)
     {
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
@@ -455,7 +454,7 @@ public class MainActivity extends AppCompatActivity
                 .removeValue();
     }
 
-    public static void removeShoppingList(ListeCourses lc)
+    public void removeShoppingList(ListeCourses lc)
     {
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
@@ -468,10 +467,10 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    public static ArrayList<Recipe> getFavoriteRecipes() {
+    public ArrayList<Recipe> getFavoriteRecipes() {
         return favorite_recipes ;
     }
-    public static ArrayList<ListeCourses> getMyShoppingLists() {
+    public ArrayList<ListeCourses> getMyShoppingLists() {
         return my_shopping_lists ;
     }
 }

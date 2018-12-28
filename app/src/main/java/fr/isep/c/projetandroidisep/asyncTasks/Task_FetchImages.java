@@ -3,14 +3,11 @@ package fr.isep.c.projetandroidisep.asyncTasks;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
-
-import org.jsoup.nodes.Document;
 
 import java.io.InputStream;
 import java.net.URL;
 
-import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
+import fr.isep.c.projetandroidisep.interfaces.Response_FetchImages;
 
 public class Task_FetchImages extends AsyncTask<String, Void, Bitmap>
 {

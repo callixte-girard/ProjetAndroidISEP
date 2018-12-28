@@ -2,7 +2,6 @@ package fr.isep.c.projetandroidisep.fragments;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,22 +12,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 
-import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
-import fr.isep.c.projetandroidisep.asyncTasks.Response_FetchImages;
-import fr.isep.c.projetandroidisep.asyncTasks.Response_SearchRecipe;
+import fr.isep.c.projetandroidisep.interfaces.Response_FetchImages;
+import fr.isep.c.projetandroidisep.interfaces.Response_SearchRecipe;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchImages;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_SearchRecipe;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
@@ -46,7 +41,7 @@ public class FragSearchRecipe extends Fragment
     private final int deepness = 2 ; // creuse 2 fois, càd cherche 3 x 15 résultats maximum.
     private int current_deepness = 0 ;
 
-    private static ArrayList<Recipe> search_results = new ArrayList<>();
+    private ArrayList<Recipe> search_results = new ArrayList<>();
 
     private ArrayList<AsyncTask> async_tasks_list  = new ArrayList<>();
 
@@ -257,7 +252,7 @@ public class FragSearchRecipe extends Fragment
     }
 
 
-    public static ArrayList<Recipe> getSearchResults() {
+    public ArrayList<Recipe> getSearchResults() {
         return search_results ;
     }
 

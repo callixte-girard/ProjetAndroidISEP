@@ -37,7 +37,7 @@ public class FragBuyShoppingList extends Fragment
 
         select_bought_aliments = view.findViewById(R.id.select_bought_aliments);
 
-        button_done = view.findViewById(R.id.button_confirm);
+        button_done = view.findViewById(R.id.button_right);
         button_done.setText("OK");
         button_done.setOnClickListener(new View.OnClickListener() {
             @Override

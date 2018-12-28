@@ -11,11 +11,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.myClasses.ParseText;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
@@ -59,7 +56,7 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
     public RecyclerViewHolder_FavoriteRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_checklist_basic, viewGroup, false);
+                .inflate(R.layout.row_2_lines, viewGroup, false);
         
         return new RecyclerViewHolder_FavoriteRecipes(v);
     }
@@ -67,7 +64,7 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_FavoriteRecipes holder, final int i)
     {
-        final Recipe rec = MainActivity.getFavoriteRecipes().get(i);
+        final Recipe rec = MainActivity.getFavoriteRecipes().get(holder.getAdapterPosition());
 
         //holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
         holder.recipe_name.setText(rec.getName());
@@ -102,8 +99,6 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
                     // adds back recipe (revert deletion)
                     MainActivity.removeRecipeFromFavorites(rec);
                 }
-
-                //notifyDataSetChanged();
             }
         });
     }
