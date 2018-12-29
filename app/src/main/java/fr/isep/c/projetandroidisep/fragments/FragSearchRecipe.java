@@ -34,7 +34,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 public class FragSearchRecipe extends Fragment
         implements Response_SearchRecipe, Response_FetchImages
 {
-    private MainActivity main_act = (MainActivity) getActivity();
+    private MainActivity main_act ;
 
     private SearchView search_bar ;
     private RecyclerView results_list ;
@@ -50,6 +50,8 @@ public class FragSearchRecipe extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
+        main_act = (MainActivity) getActivity();
+
         View view = inflater.inflate(R.layout.fragment_search_recipe, container, false);
 
         search_bar = view.findViewById(R.id.search_bar);

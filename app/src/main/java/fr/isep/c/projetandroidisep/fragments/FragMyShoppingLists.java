@@ -23,7 +23,7 @@ import fr.isep.c.projetandroidisep.adapters.Adapter_MyShoppingLists;
 
 public class FragMyShoppingLists extends Fragment
 {
-    private MainActivity main_act = (MainActivity) getActivity();
+    private MainActivity main_act ;
 
     private SearchView filter_shopping_lists ;
     private TextView number_shopping_lists ;
@@ -36,6 +36,8 @@ public class FragMyShoppingLists extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
+        main_act = (MainActivity) getActivity();
+
         View view = inflater.inflate(R.layout.fragment_my_shopping_lists, container, false);
 
         filter_shopping_lists = view.findViewById(R.id.filter_shopping_lists);

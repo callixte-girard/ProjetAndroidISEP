@@ -69,6 +69,7 @@ public class Adapter_CreateShoppingList extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_SelectRecipes holder, final int i)
     {
+        /*
         final Recipe rec = main_act.getFavoriteRecipes().get(holder.getAdapterPosition()) ;
 
         //holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
@@ -88,15 +89,14 @@ public class Adapter_CreateShoppingList extends RecyclerView.Adapter
                 (new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-/*
                 Recipe rec = MainActivity.getFavoriteRecipes().get(i);
 
                 Log.d("is_selected",
                         rec.getName() + " | " + String.valueOf(isChecked));
 
-                rec.setSelected(isChecked);*/
+                rec.setSelected(isChecked);
             }
-        });
+        }); */
     }
 
     @Override

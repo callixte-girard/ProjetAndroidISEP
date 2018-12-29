@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,12 @@ import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.*;
 import fr.isep.c.projetandroidisep.adapters.Adapter_FavoriteRecipes;
+import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class FragFavoriteRecipes extends Fragment
 {
-    private MainActivity main_act = (MainActivity) getActivity() ;
+    private MainActivity main_act ;
 
     private RecyclerView my_favorite_recipes ;
     //private SearchView filter_favorite_recipes ;
@@ -27,6 +29,8 @@ public class FragFavoriteRecipes extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
+        main_act = (MainActivity) getActivity();
+
         View view = inflater.inflate(R.layout.fragment_favorite_recipes, container, false);
 
         //filter_favorite_recipes = view.findViewById(R.id.filter_favorite_recipes);
@@ -68,8 +72,8 @@ public class FragFavoriteRecipes extends Fragment
     public void updateFavoritesList()
     {
         // favorites count
-        //int count = main_act.getFavoriteRecipes().size();
-        //number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
+        int count = main_act.getFavoriteRecipes().size();
+        number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
 
         // custom adapter
         Adapter_FavoriteRecipes adapter = new Adapter_FavoriteRecipes(getContext());

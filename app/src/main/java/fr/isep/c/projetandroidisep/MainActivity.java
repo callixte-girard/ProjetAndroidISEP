@@ -59,6 +59,12 @@ public class MainActivity extends AppCompatActivity
     private FragCreateShoppingList frag_create_shopping_list ;
     private FragBuyShoppingList frag_buy_shopping_list ;
 
+    // app lists
+    private ArrayList<Recipe> search_results = new ArrayList<>();
+    private ArrayList<Recipe> favorite_recipes = new ArrayList<>();
+    private ArrayList<ListeCourses> my_shopping_lists = new ArrayList<>();
+    //private static ArrayList<Recipe> deleted_recipes_history = new ArrayList<>();
+
     // firebase
     private FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference ref_current_user = FirebaseDatabase.getInstance().getReference().child(current_user.getUid());
@@ -142,13 +148,6 @@ public class MainActivity extends AppCompatActivity
             Log.d("onCancelled", databaseError.getMessage());
         }
     };
-
-    // app lists
-    private ArrayList<Recipe> search_results = new ArrayList<>();
-    private ArrayList<Recipe> favorite_recipes = new ArrayList<>();
-    private ArrayList<ListeCourses> my_shopping_lists = new ArrayList<>();
-    //private static ArrayList<Recipe> deleted_recipes_history = new ArrayList<>();
-
 
     // other shits
     public static final int MAX_LABEL_LENGTH = 31 ;
@@ -296,8 +295,8 @@ public class MainActivity extends AppCompatActivity
         frag_my_shopping_lists = new FragMyShoppingLists();
         frag_user = new FragUser();
 
-        //frag_create_shopping_list = new FragCreateShoppingList();
-        //frag_buy_shopping_list = new FragBuyShoppingList();
+        frag_create_shopping_list = new FragCreateShoppingList();
+        frag_buy_shopping_list = new FragBuyShoppingList();
 
         // set default bnv item action
         displayFrag_searchRecipe();

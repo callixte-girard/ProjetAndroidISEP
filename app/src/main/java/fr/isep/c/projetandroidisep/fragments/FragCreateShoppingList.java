@@ -23,7 +23,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 public class FragCreateShoppingList extends Fragment
 {
-    private MainActivity main_act = (MainActivity) getActivity();
+    private MainActivity main_act ;
 
     private TextView label ;
     private RecyclerView select_favorite_recipes ;
@@ -36,6 +36,8 @@ public class FragCreateShoppingList extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
+        main_act = (MainActivity) getActivity();
+
         View view = inflater.inflate(R.layout.fragment_create_shopping_list, container, false);
 
         //filter_favorite_recipes = view.findViewById(R.id.filter_favorite_recipes);

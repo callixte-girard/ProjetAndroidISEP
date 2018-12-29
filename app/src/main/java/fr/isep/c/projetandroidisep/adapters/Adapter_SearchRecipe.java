@@ -67,6 +67,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_SearchRecipe holder, final int i)
     {
+        /*
         final Recipe rec = this.main_act.getSearchResults().get(holder.getAdapterPosition());
 
         //holder.recipe_img.setImageBitmap(rec.getImgBitmap());
@@ -103,7 +104,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
 
                 notifyDataSetChanged();
             }
-        });
+        });*/
     }
 
     @Override

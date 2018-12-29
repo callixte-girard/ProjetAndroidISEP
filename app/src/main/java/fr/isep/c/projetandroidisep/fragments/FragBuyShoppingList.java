@@ -19,7 +19,7 @@ import fr.isep.c.projetandroidisep.adapters.Adapter_CreateShoppingList;
 
 public class FragBuyShoppingList extends Fragment
 {
-    private MainActivity main_act = (MainActivity) getActivity();
+    private MainActivity main_act ;
 
     private TextView label ;
     private RecyclerView select_bought_aliments ;
@@ -30,6 +30,8 @@ public class FragBuyShoppingList extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
+        main_act = (MainActivity) getActivity();
+
         View view = inflater.inflate(R.layout.fragment_buy_shopping_list, container, false);
 
         label = view.findViewById(R.id.label);
