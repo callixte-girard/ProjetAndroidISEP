@@ -46,11 +46,14 @@ public class Adapter_CreateShoppingList extends RecyclerView.Adapter
     }
 
     private Context context ;
+    private MainActivity main_act ;
+
     private ArrayList<Recipe> recipe_list ;
 
     public Adapter_CreateShoppingList(Context context, ArrayList<Recipe> recipe_list) {
         this.context = context ;
         this.recipe_list = recipe_list ;
+        this.main_act = (MainActivity) this.context;
     }
 
 
@@ -66,7 +69,7 @@ public class Adapter_CreateShoppingList extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_SelectRecipes holder, final int i)
     {
-        final Recipe rec = MainActivity.getFavoriteRecipes().get(holder.getAdapterPosition()) ;
+        final Recipe rec = main_act.getFavoriteRecipes().get(holder.getAdapterPosition()) ;
 
         //holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
         holder.recipe_name.setText(rec.getName());
@@ -85,21 +88,24 @@ public class Adapter_CreateShoppingList extends RecyclerView.Adapter
                 (new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+/*
                 Recipe rec = MainActivity.getFavoriteRecipes().get(i);
 
                 Log.d("is_selected",
                         rec.getName() + " | " + String.valueOf(isChecked));
 
-                rec.setSelected(isChecked);
+                rec.setSelected(isChecked);*/
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return (null != MainActivity.getFavoriteRecipes()
-                ? MainActivity.getFavoriteRecipes().size() : 0);
+
+        MainActivity act = (MainActivity) this.context ;
+
+        return (null != act.getFavoriteRecipes()
+                ? act.getFavoriteRecipes().size() : 0);
     }
 
 }

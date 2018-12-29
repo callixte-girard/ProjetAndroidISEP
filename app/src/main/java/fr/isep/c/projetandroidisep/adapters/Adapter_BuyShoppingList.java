@@ -45,10 +45,13 @@ public class Adapter_BuyShoppingList extends RecyclerView.Adapter
     }
 
     private Context context ;
+    private MainActivity main_act ;
+
     private ListeCourses lc ;
 
     public Adapter_BuyShoppingList(Context context, ListeCourses lc) {
         this.context = context ;
+        this.main_act = (MainActivity) this.context ;
         this.lc = lc ;
     }
 
@@ -70,8 +73,8 @@ public class Adapter_BuyShoppingList extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
-        return (null != MainActivity.getFavoriteRecipes()
-                ? MainActivity.getFavoriteRecipes().size() : 0);
+        return (null != main_act.getFavoriteRecipes()
+                ? main_act.getFavoriteRecipes().size() : 0);
     }
 
 }

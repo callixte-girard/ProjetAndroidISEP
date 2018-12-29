@@ -53,9 +53,11 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
     };
 
     private Context context ;
+    private MainActivity main_act ;
 
     public Adapter_MyShoppingLists(Context context) {
         this.context = context ;
+        this.main_act = (MainActivity) this.context ;
     }
 
 
@@ -71,7 +73,7 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_MyShoppingLists holder, final int i)
     {
-        final ListeCourses lc = MainActivity.getMyShoppingLists().get(holder.getAdapterPosition());
+        final ListeCourses lc = main_act.getMyShoppingLists().get(holder.getAdapterPosition());
 
         String displayed_title = lc.getAliments().size() + " items" ;
         holder.lc_name.setText(displayed_title);
@@ -89,17 +91,17 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                ListeCourses lc = MainActivity.getMyShoppingLists().get(i);
+                ListeCourses lc = main_act.getMyShoppingLists().get(i);
 
                 Log.d("is_checked",
                         lc.getDateCreation() + " | " + String.valueOf(isChecked));
 
                 if (isChecked) {
-                    //MainActivity.saveRecipeInFavorites(rec);
+                    //main_act.saveRecipeInFavorites(rec);
 
                 } else {
                     // adds back recipe (revert deletion)
-                    MainActivity.removeShoppingList(lc);
+                    main_act.removeShoppingList(lc);
                 }
 
                 //notifyDataSetChanged();
@@ -111,8 +113,8 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
-        return (null != MainActivity.getMyShoppingLists()
-                ? MainActivity.getMyShoppingLists().size() : 0);
+        return (null != main_act.getMyShoppingLists()
+                ? main_act.getMyShoppingLists().size() : 0);
     }
 
 

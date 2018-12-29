@@ -23,10 +23,12 @@ import fr.isep.c.projetandroidisep.adapters.Adapter_MyShoppingLists;
 
 public class FragMyShoppingLists extends Fragment
 {
-    SearchView filter_shopping_lists ;
-    TextView number_shopping_lists ;
-    RecyclerView my_shopping_lists ;
-    FloatingActionButton create_shopping_list ;
+    private MainActivity main_act = (MainActivity) getActivity();
+
+    private SearchView filter_shopping_lists ;
+    private TextView number_shopping_lists ;
+    private RecyclerView my_shopping_lists ;
+    private FloatingActionButton create_shopping_list ;
 
     private static final String DEFAULT_COUNTER = "Fetching your shopping lists...";
     private static final String FAVORITES_EMPTY = "You must add recipes in your favorites first ;)" ;
@@ -49,9 +51,9 @@ public class FragMyShoppingLists extends Fragment
             public void onClick(View view) {
 
                 Log.d("number_favorites", String.valueOf(
-                        MainActivity.getFavoriteRecipes().size()));
+                        main_act.getFavoriteRecipes().size()));
 
-                if (MainActivity.getFavoriteRecipes().isEmpty())
+                if (main_act.getFavoriteRecipes().isEmpty())
                 {
                     Snackbar.make(view, FAVORITES_EMPTY, Snackbar.LENGTH_SHORT).show();
                 }
@@ -88,7 +90,7 @@ public class FragMyShoppingLists extends Fragment
     public void updateShoppingLists()
     {
         // favorites count
-        int count = MainActivity.getMyShoppingLists().size();
+        int count = main_act.getMyShoppingLists().size();
         number_shopping_lists.setText(String.valueOf(count) + " shopping lists");
 
         // custom adapter

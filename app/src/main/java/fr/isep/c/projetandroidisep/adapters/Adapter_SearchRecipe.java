@@ -45,9 +45,12 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     }
 
     private Context context ;
+    private MainActivity main_act ;
+
 
     public Adapter_SearchRecipe(Context context) {
         this.context = context ;
+        this.main_act = (MainActivity) this.context;
     }
 
 
@@ -64,7 +67,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_SearchRecipe holder, final int i)
     {
-        final Recipe rec = FragSearchRecipe.getSearchResults().get(holder.getAdapterPosition());
+        final Recipe rec = this.main_act.getSearchResults().get(holder.getAdapterPosition());
 
         //holder.recipe_img.setImageBitmap(rec.getImgBitmap());
 
@@ -79,7 +82,7 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
 
         holder.recipe_duration.setText(rec.getDuration());
 
-        boolean already_favorite = rec.alreadyExists(MainActivity.getFavoriteRecipes()) ;
+        boolean already_favorite = rec.alreadyExists(main_act.getFavoriteRecipes()) ;
         //Log.d(rec.getUrl(), String.valueOf(already_favorite));
 
         holder.checkbox_add_to_favorites.setChecked(already_favorite);
@@ -92,10 +95,10 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
                         rec.getName() + " | " + String.valueOf(isChecked));
 
                 if (isChecked) {
-                    MainActivity.saveRecipeInFavorites(rec);
+                    main_act.saveRecipeInFavorites(rec);
 
                 } else {
-                    MainActivity.removeRecipeFromFavorites(rec);
+                    main_act.removeRecipeFromFavorites(rec);
                 }
 
                 notifyDataSetChanged();
@@ -105,7 +108,8 @@ public class Adapter_SearchRecipe extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
-        return (null != FragSearchRecipe.getSearchResults()
-                ? FragSearchRecipe.getSearchResults().size() : 0);
+
+        return (null != main_act.getSearchResults()
+                ? main_act.getSearchResults().size() : 0);
     }
 }

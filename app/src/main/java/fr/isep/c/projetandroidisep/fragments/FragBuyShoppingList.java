@@ -19,6 +19,8 @@ import fr.isep.c.projetandroidisep.adapters.Adapter_CreateShoppingList;
 
 public class FragBuyShoppingList extends Fragment
 {
+    private MainActivity main_act = (MainActivity) getActivity();
+
     private TextView label ;
     private RecyclerView select_bought_aliments ;
     //private SearchView filter_favorite_recipes ;

@@ -46,9 +46,11 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
     }
 
     private Context context ;
+    private MainActivity main_act ;
 
     public Adapter_FavoriteRecipes(Context context) {
         this.context = context ;
+        this.main_act = (MainActivity) this.context ;
     }
 
 
@@ -64,50 +66,14 @@ public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final RecyclerViewHolder_FavoriteRecipes holder, final int i)
     {
-        final Recipe rec = MainActivity.getFavoriteRecipes().get(holder.getAdapterPosition());
 
-        //holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
-        holder.recipe_name.setText(rec.getName());
-        holder.recipe_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
-        
-        holder.recipe_duration.setText(rec.getDuration());
-
-        //holder.recipe_rating.setText("0/0");
-
-        boolean already_favorite = rec.alreadyExists(MainActivity.getFavoriteRecipes()) ;
-        //Log.d(rec.getUrl(), String.valueOf(already_favorite));
-
-        holder.checkbox_delete_from_favorites.setChecked(already_favorite);
-        holder.checkbox_delete_from_favorites.setOnCheckedChangeListener
-                (new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                Log.d("is_checked",
-                        rec.getName() + " | " + String.valueOf(isChecked));
-
-                if (isChecked) {
-                    MainActivity.saveRecipeInFavorites(rec);
-
-                } else {
-                    // adds back recipe (revert deletion)
-                    MainActivity.removeRecipeFromFavorites(rec);
-                }
-            }
-        });
     }
 
 
     @Override
     public int getItemCount() {
-        return (null != MainActivity.getFavoriteRecipes()
-                ? MainActivity.getFavoriteRecipes().size() : 0);
+        return (null != main_act.getFavoriteRecipes()
+                ? main_act.getFavoriteRecipes().size() : 0);
     }
 
 }

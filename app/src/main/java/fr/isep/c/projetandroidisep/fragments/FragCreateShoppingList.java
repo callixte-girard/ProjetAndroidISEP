@@ -23,6 +23,8 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 public class FragCreateShoppingList extends Fragment
 {
+    private MainActivity main_act = (MainActivity) getActivity();
+
     private TextView label ;
     private RecyclerView select_favorite_recipes ;
     //private SearchView filter_favorite_recipes ;
@@ -53,7 +55,7 @@ public class FragCreateShoppingList extends Fragment
                 ArrayList<Recipe> lc_recipes = new ArrayList<>();
 
                 // fills it
-                for (Recipe rec : MainActivity.getFavoriteRecipes())
+                for (Recipe rec : main_act.getFavoriteRecipes())
                 {
                     if (rec.getSelected()) {
                         lc_recipes.add(rec);
@@ -65,7 +67,7 @@ public class FragCreateShoppingList extends Fragment
                 {
                     // saves shopping list on the db
                     ListeCourses lc = new ListeCourses(lc_recipes);
-                    MainActivity.saveShoppingList(lc);
+                    main_act.saveShoppingList(lc);
 
                     // removes actual fragment and restores my shopping lists one
                     MainActivity act = (MainActivity) getActivity();
@@ -113,7 +115,7 @@ public class FragCreateShoppingList extends Fragment
         // custom adapter
         Adapter_CreateShoppingList adapter = new Adapter_CreateShoppingList(
                 getContext(),
-                MainActivity.getFavoriteRecipes());
+                main_act.getFavoriteRecipes());
         select_favorite_recipes.setAdapter(adapter);
     }
 

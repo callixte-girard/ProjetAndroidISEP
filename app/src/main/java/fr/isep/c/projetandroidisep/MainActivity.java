@@ -52,12 +52,12 @@ public class MainActivity extends AppCompatActivity
     private BottomNavigationView bnv ;
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
-    private FragSearchRecipe frag_search_recipe = new FragSearchRecipe();
-    private FragFavoriteRecipes frag_favorite_recipes = new FragFavoriteRecipes();
-    private FragMyShoppingLists frag_my_shopping_lists = new FragMyShoppingLists();
-    private FragUser frag_user = new FragUser();
-    private FragCreateShoppingList frag_create_shopping_list = new FragCreateShoppingList();
-    private FragBuyShoppingList frag_buy_shopping_list = new FragBuyShoppingList();
+    private FragSearchRecipe frag_search_recipe ;
+    private FragFavoriteRecipes frag_favorite_recipes ;
+    private FragMyShoppingLists frag_my_shopping_lists ;
+    private FragUser frag_user  ;
+    private FragCreateShoppingList frag_create_shopping_list ;
+    private FragBuyShoppingList frag_buy_shopping_list ;
 
     // firebase
     private FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity
     };
 
     // app lists
+    private ArrayList<Recipe> search_results = new ArrayList<>();
     private ArrayList<Recipe> favorite_recipes = new ArrayList<>();
     private ArrayList<ListeCourses> my_shopping_lists = new ArrayList<>();
     //private static ArrayList<Recipe> deleted_recipes_history = new ArrayList<>();
@@ -289,6 +290,15 @@ public class MainActivity extends AppCompatActivity
 
 
     private void setBottomNavigationDrawer() {
+        // initiates all fragments
+        frag_search_recipe = new FragSearchRecipe();
+        frag_favorite_recipes = new FragFavoriteRecipes();
+        frag_my_shopping_lists = new FragMyShoppingLists();
+        frag_user = new FragUser();
+
+        //frag_create_shopping_list = new FragCreateShoppingList();
+        //frag_buy_shopping_list = new FragBuyShoppingList();
+
         // set default bnv item action
         displayFrag_searchRecipe();
 
@@ -465,12 +475,13 @@ public class MainActivity extends AppCompatActivity
                 .removeValue();
     }
 
-
-
+    public ArrayList<Recipe> getSearchResults() {
+        return this.search_results ;
+    }
     public ArrayList<Recipe> getFavoriteRecipes() {
-        return favorite_recipes ;
+        return this.favorite_recipes ;
     }
     public ArrayList<ListeCourses> getMyShoppingLists() {
-        return my_shopping_lists ;
+        return this.my_shopping_lists ;
     }
 }

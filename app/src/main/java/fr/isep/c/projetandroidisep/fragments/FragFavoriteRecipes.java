@@ -16,6 +16,8 @@ import fr.isep.c.projetandroidisep.adapters.Adapter_FavoriteRecipes;
 
 public class FragFavoriteRecipes extends Fragment
 {
+    private MainActivity main_act = (MainActivity) getActivity() ;
+
     private RecyclerView my_favorite_recipes ;
     //private SearchView filter_favorite_recipes ;
     private TextView number_favorite_recipes ;
@@ -66,8 +68,8 @@ public class FragFavoriteRecipes extends Fragment
     public void updateFavoritesList()
     {
         // favorites count
-        int count = MainActivity.getFavoriteRecipes().size();
-        number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
+        //int count = main_act.getFavoriteRecipes().size();
+        //number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
 
         // custom adapter
         Adapter_FavoriteRecipes adapter = new Adapter_FavoriteRecipes(getContext());

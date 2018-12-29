@@ -20,6 +20,7 @@ import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
 
+import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchImages;
@@ -33,6 +34,8 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 public class FragSearchRecipe extends Fragment
         implements Response_SearchRecipe, Response_FetchImages
 {
+    private MainActivity main_act = (MainActivity) getActivity();
+
     private SearchView search_bar ;
     private RecyclerView results_list ;
     private TextView results_number ;
@@ -41,7 +44,6 @@ public class FragSearchRecipe extends Fragment
     private final int deepness = 2 ; // creuse 2 fois, càd cherche 3 x 15 résultats maximum.
     private int current_deepness = 0 ;
 
-    private ArrayList<Recipe> search_results = new ArrayList<>();
 
     private ArrayList<AsyncTask> async_tasks_list  = new ArrayList<>();
 
@@ -56,7 +58,8 @@ public class FragSearchRecipe extends Fragment
 
         initSearchBar();
         initResultsList();
-        if (search_results.size() > 0) updateResultsCount(search_results.size());
+
+
 
 
         return view ;
@@ -70,15 +73,15 @@ public class FragSearchRecipe extends Fragment
         // parse et ajoute les 15 recipes du doc aux résultats
         try
         {
-            search_results.addAll(Recipe.fetchPageResultsFromDoc(doc));
-            Log.d("results", String.valueOf(search_results.size()));
+            main_act.getSearchResults().addAll(Recipe.fetchPageResultsFromDoc(doc));
+            Log.d("results", String.valueOf(main_act.getSearchResults().size()));
 
             //performFetchRecipeImages(search_results);
         }
         catch (Exception ex) {}
 
         // update textview that counts results
-        updateResultsCount(search_results.size());
+        updateResultsCount(main_act.getSearchResults().size());
 
         // refait une nouvelle task
         if (current_deepness < deepness)
@@ -123,7 +126,8 @@ public class FragSearchRecipe extends Fragment
     public void processFinish_fetchImages(Bitmap bitmap, String url)
     {
         // récupère l'image et la refourgue à la recette en question
-        Recipe rec = Recipe.getByUrl(getSearchResults(), url);
+
+        Recipe rec = Recipe.getByUrl(main_act.getSearchResults(), url);
         rec.setImgBitmap(bitmap);
     }
 
@@ -200,6 +204,10 @@ public class FragSearchRecipe extends Fragment
         // custom adapter
         Adapter_SearchRecipe adapter = new Adapter_SearchRecipe(getContext());
         results_list.setAdapter(adapter);
+
+
+        //if (main_act.getSearchResults().size() > 0)
+        //    updateResultsCount(main_act.getSearchResults().size());
     }
 
     private void resetResultsList()
@@ -211,7 +219,9 @@ public class FragSearchRecipe extends Fragment
             task.cancel(true);
         }
 
-        search_results.clear();
+        // clear results
+        main_act.getSearchResults().clear();
+
         results_list.getAdapter().notifyDataSetChanged();
     }
 
@@ -252,8 +262,6 @@ public class FragSearchRecipe extends Fragment
     }
 
 
-    public ArrayList<Recipe> getSearchResults() {
-        return search_results ;
-    }
+
 
 }
