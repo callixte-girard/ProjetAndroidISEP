@@ -16,7 +16,7 @@ import fr.isep.c.projetandroidisep.adapters.Adapter_FavoriteRecipes;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
-public class FragFavoriteRecipes extends Fragment
+public class Frag_FavoriteRecipes extends Fragment
 {
     private MainActivity main_act ;
 

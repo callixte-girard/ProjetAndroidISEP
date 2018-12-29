@@ -21,7 +21,7 @@ import fr.isep.c.projetandroidisep.adapters.Adapter_FavoriteRecipes;
 import fr.isep.c.projetandroidisep.adapters.Adapter_MyShoppingLists;
 
 
-public class FragMyShoppingLists extends Fragment
+public class Frag_MyShoppingLists extends Fragment
 {
     private MainActivity main_act ;
 

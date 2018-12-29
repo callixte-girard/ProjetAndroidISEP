@@ -17,7 +17,7 @@ import fr.isep.c.projetandroidisep.adapters.Adapter_BuyShoppingList;
 import fr.isep.c.projetandroidisep.adapters.Adapter_CreateShoppingList;
 
 
-public class FragBuyShoppingList extends Fragment
+public class Frag_BuyShoppingList extends Fragment
 {
     private MainActivity main_act ;
 

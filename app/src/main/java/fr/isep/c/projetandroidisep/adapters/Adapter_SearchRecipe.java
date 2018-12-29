@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.snapshot.Index;
+
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
@@ -36,6 +38,10 @@ public class Adapter_SearchRecipe
         notifyDataSetChanged();
     }
 
+    public void clearResults() {
+        this.list_results.clear();
+        notifyDataSetChanged();
+    }
 
     @Override
     public Holder_SearchRecipe onCreateViewHolder(ViewGroup viewGroup, int i)
@@ -50,7 +56,8 @@ public class Adapter_SearchRecipe
     @Override
     public void onBindViewHolder(final Holder_SearchRecipe holder, int position)
     {
-        Recipe rec = main_act.getSearchResults().get(position);
+        //Recipe rec = main_act.getSearchResults().get(position);
+        Recipe rec = list_results.get(position);
 
         //set values of data here
         holder.recipe_name.setText(rec.getName());

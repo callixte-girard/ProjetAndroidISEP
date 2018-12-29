@@ -21,7 +21,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
-public class FragCreateShoppingList extends Fragment
+public class Frag_CreateShoppingList extends Fragment
 {
     private MainActivity main_act ;
 

@@ -14,12 +14,12 @@ import android.view.MenuItem;
 
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
-import fr.isep.c.projetandroidisep.fragments.FragBuyShoppingList;
-import fr.isep.c.projetandroidisep.fragments.FragCreateShoppingList;
-import fr.isep.c.projetandroidisep.fragments.FragMyShoppingLists;
-import fr.isep.c.projetandroidisep.fragments.FragSearchRecipe;
-import fr.isep.c.projetandroidisep.fragments.FragFavoriteRecipes;
-import fr.isep.c.projetandroidisep.fragments.FragUser;
+import fr.isep.c.projetandroidisep.fragments.Frag_BuyShoppingList;
+import fr.isep.c.projetandroidisep.fragments.Frag_CreateShoppingList;
+import fr.isep.c.projetandroidisep.fragments.Frag_MyShoppingLists;
+import fr.isep.c.projetandroidisep.fragments.Frag_SearchRecipe;
+import fr.isep.c.projetandroidisep.fragments.Frag_FavoriteRecipes;
+import fr.isep.c.projetandroidisep.fragments.Frag_User;
 import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 import fr.isep.c.projetandroidisep.myCustomTypes.*;
 
@@ -52,12 +52,12 @@ public class MainActivity extends AppCompatActivity
     private BottomNavigationView bnv ;
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
-    private FragSearchRecipe frag_search_recipe ;
-    private FragFavoriteRecipes frag_favorite_recipes ;
-    private FragMyShoppingLists frag_my_shopping_lists ;
-    private FragUser frag_user  ;
-    private FragCreateShoppingList frag_create_shopping_list ;
-    private FragBuyShoppingList frag_buy_shopping_list ;
+    private Frag_SearchRecipe frag_search_recipe ;
+    private Frag_FavoriteRecipes frag_favorite_recipes ;
+    private Frag_MyShoppingLists frag_my_shopping_lists ;
+    private Frag_User frag_user  ;
+    private Frag_CreateShoppingList frag_create_shopping_list ;
+    private Frag_BuyShoppingList frag_buy_shopping_list ;
 
     // app lists
     private ArrayList<Recipe> search_results = new ArrayList<>();
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
                     // TEST
                     if (rec.getIngredients().isEmpty()) {
                         // parse them :
-                        // - call performFetchRecipeIngredients from FragSearchRecipe
+                        // - call performFetchRecipeIngredients from Frag_SearchRecipe
                         performFetchRecipeIngredients(rec);
                         // - transform the other perform(...) to there
                         // - transfer async_tasks_list here too !!!
@@ -290,13 +290,13 @@ public class MainActivity extends AppCompatActivity
 
     private void setBottomNavigationDrawer() {
         // initiates all fragments
-        frag_search_recipe = new FragSearchRecipe();
-        frag_favorite_recipes = new FragFavoriteRecipes();
-        frag_my_shopping_lists = new FragMyShoppingLists();
-        frag_user = new FragUser();
+        frag_search_recipe = new Frag_SearchRecipe();
+        frag_favorite_recipes = new Frag_FavoriteRecipes();
+        frag_my_shopping_lists = new Frag_MyShoppingLists();
+        frag_user = new Frag_User();
 
-        frag_create_shopping_list = new FragCreateShoppingList();
-        frag_buy_shopping_list = new FragBuyShoppingList();
+        frag_create_shopping_list = new Frag_CreateShoppingList();
+        frag_buy_shopping_list = new Frag_BuyShoppingList();
 
         // set default bnv item action
         displayFrag_searchRecipe();

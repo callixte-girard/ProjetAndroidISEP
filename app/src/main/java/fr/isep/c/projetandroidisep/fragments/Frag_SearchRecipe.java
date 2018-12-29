@@ -33,7 +33,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 
-public class FragSearchRecipe extends Fragment
+public class Frag_SearchRecipe extends Fragment
         implements Response_SearchRecipe, Response_FetchImages, Listener_SearchRecipe
 {
     private MainActivity main_act ;
@@ -70,7 +70,7 @@ public class FragSearchRecipe extends Fragment
 
     public void onChecked(View view, int position)
     {
-        Log.d("test", view.toString() + " | " + String.valueOf(position));
+        Log.d("test", String.valueOf(position));
     }
 
 
@@ -80,18 +80,16 @@ public class FragSearchRecipe extends Fragment
         // parse et ajoute les 15 recipes du doc aux résultats
         try
         {
-            ArrayList<Recipe> new_results = Recipe.fetchPageResultsFromDoc(doc);
-            main_act.getSearchResults().addAll(new_results);
+            main_act.getSearchResults().addAll(Recipe.fetchPageResultsFromDoc(doc));
 
             Adapter_SearchRecipe adapter = (Adapter_SearchRecipe) results_list.getAdapter();
             adapter.updateResults(main_act.getSearchResults());
 
             //performFetchRecipeImages(search_results);
+
+            updateResultsCount(main_act.getSearchResults().size());
         }
         catch (Exception ex) {}
-
-        // update textview that counts results
-        updateResultsCount(main_act.getSearchResults().size());
 
         // refait une nouvelle task
         if (current_deepness < deepness)
@@ -230,9 +228,8 @@ public class FragSearchRecipe extends Fragment
         }
 
         // clear results
-        main_act.getSearchResults().clear();
-
-        results_list.getAdapter().notifyDataSetChanged();
+        Adapter_SearchRecipe adapter = (Adapter_SearchRecipe) results_list.getAdapter();
+        adapter.clearResults();
     }
 
 

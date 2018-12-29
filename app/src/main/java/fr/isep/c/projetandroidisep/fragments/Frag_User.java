@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import fr.isep.c.projetandroidisep.*;
 
 
-public class FragUser extends Fragment
+public class Frag_User extends Fragment
 {
     Button button_sign_out ;
     TextView user_name ;
