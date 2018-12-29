@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
+import fr.isep.c.projetandroidisep.interfaces.Listener_SearchRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchImages;
 import fr.isep.c.projetandroidisep.interfaces.Response_SearchRecipe;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchImages;
@@ -32,7 +34,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class FragSearchRecipe extends Fragment
-        implements Response_SearchRecipe, Response_FetchImages
+        implements Response_SearchRecipe, Response_FetchImages, Listener_SearchRecipe
 {
     private MainActivity main_act ;
 
@@ -44,6 +46,7 @@ public class FragSearchRecipe extends Fragment
     private final int deepness = 2 ; // creuse 2 fois, càd cherche 3 x 15 résultats maximum.
     private int current_deepness = 0 ;
 
+    private View view ;
 
     private ArrayList<AsyncTask> async_tasks_list  = new ArrayList<>();
 
@@ -52,7 +55,7 @@ public class FragSearchRecipe extends Fragment
     {
         main_act = (MainActivity) getActivity();
 
-        View view = inflater.inflate(R.layout.fragment_search_recipe, container, false);
+        view = inflater.inflate(R.layout.fragment_search_recipe, container, false);
 
         search_bar = view.findViewById(R.id.search_bar);
         results_list = view.findViewById(R.id.results_list);
@@ -61,12 +64,14 @@ public class FragSearchRecipe extends Fragment
         initSearchBar();
         initResultsList();
 
-
-
-
         return view ;
     }
 
+
+    public void onChecked(View view, int position)
+    {
+        Log.d("test", view.toString() + " | " + String.valueOf(position));
+    }
 
 
     @Override
@@ -75,8 +80,11 @@ public class FragSearchRecipe extends Fragment
         // parse et ajoute les 15 recipes du doc aux résultats
         try
         {
-            main_act.getSearchResults().addAll(Recipe.fetchPageResultsFromDoc(doc));
-            Log.d("results", String.valueOf(main_act.getSearchResults().size()));
+            ArrayList<Recipe> new_results = Recipe.fetchPageResultsFromDoc(doc);
+            main_act.getSearchResults().addAll(new_results);
+
+            Adapter_SearchRecipe adapter = (Adapter_SearchRecipe) results_list.getAdapter();
+            adapter.updateResults(main_act.getSearchResults());
 
             //performFetchRecipeImages(search_results);
         }
@@ -204,7 +212,7 @@ public class FragSearchRecipe extends Fragment
         results_list.addItemDecoration(itemDecor);
 
         // custom adapter
-        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe(getContext());
+        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe(getContext(), this);
         results_list.setAdapter(adapter);
 
 
