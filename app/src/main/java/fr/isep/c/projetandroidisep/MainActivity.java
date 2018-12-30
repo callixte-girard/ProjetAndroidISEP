@@ -163,7 +163,17 @@ public class MainActivity extends AppCompatActivity
         ref_favorite_recipes.addValueEventListener(listener_favorite_recipes);
         ref_my_shopping_lists.addValueEventListener(listener_my_shopping_lists);
 
-        if (current_user != null) {
+        if (current_user != null)
+        {
+            // initiates all fragments
+            frag_search_recipe = new Frag_SearchRecipe();
+            frag_favorite_recipes = new Frag_FavoriteRecipes();
+            frag_my_shopping_lists = new Frag_MyShoppingLists();
+            frag_user = new Frag_User();
+
+            frag_create_shopping_list = new Frag_CreateShoppingList();
+            frag_buy_shopping_list = new Frag_BuyShoppingList();
+
             setBottomNavigationDrawer();
 
         } else {
@@ -289,19 +299,11 @@ public class MainActivity extends AppCompatActivity
 
 
     private void setBottomNavigationDrawer() {
-        // initiates all fragments
-        frag_search_recipe = new Frag_SearchRecipe();
-        frag_favorite_recipes = new Frag_FavoriteRecipes();
-        frag_my_shopping_lists = new Frag_MyShoppingLists();
-        frag_user = new Frag_User();
-
-        frag_create_shopping_list = new Frag_CreateShoppingList();
-        frag_buy_shopping_list = new Frag_BuyShoppingList();
 
         // set default bnv item action
         displayFrag_searchRecipe();
 
-        // sets fab action button
+        // sets fragments to bnv tab
         bnv = findViewById(R.id.navigation);
         bnv.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener()

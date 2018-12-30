@@ -1,6 +1,7 @@
 package fr.isep.c.projetandroidisep.recycleViewHolders;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -36,7 +37,7 @@ public class Holder_SearchRecipe
     @Override
     public void onClick(View view)
     {
-        listener_addRemoveRecipe.checkedListener_searchRecipe(view, getAdapterPosition());
+
     }
 }
 

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.google.firebase.database.snapshot.Index;
 
@@ -54,7 +55,7 @@ public class Adapter_SearchRecipe
 
 
     @Override
-    public void onBindViewHolder(final Holder_SearchRecipe holder, int position)
+    public void onBindViewHolder(final Holder_SearchRecipe holder, final int position)
     {
         //Recipe rec = main_act.getSearchResults().get(position);
         Recipe rec = list_results.get(position);
@@ -62,7 +63,15 @@ public class Adapter_SearchRecipe
         //set values of data here
         holder.recipe_name.setText(rec.getName());
         holder.recipe_duration.setText(rec.getDuration());
+
         holder.checkbox_add_to_favorites.setChecked(rec.alreadyExists(main_act.getFavoriteRecipes()));
+        holder.checkbox_add_to_favorites.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                listener_addRemoveRecipe.checkedListener_searchRecipe(buttonView, position, isChecked);
+            }
+        });
     }
 
     @Override

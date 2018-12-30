@@ -68,16 +68,11 @@ public class Frag_SearchRecipe extends Fragment
     }
 
 
-    public void checkedListener_searchRecipe(View view, int position)
+    public void checkedListener_searchRecipe(View view, int position, boolean isChecked)
     {
-        main_act.getSearchResults().get(position).setSelected(
-                !main_act.getSearchResults().get(position).getSelected()
-        );
-
         // à corriger : doit aller sur le checkbox, pas sur la view entière !!!!!
 
-        Log.d("onChecked", String.valueOf(position) + " | "
-                + main_act.getSearchResults().get(position).getSelected());
+        Log.d("listener_searchRecipe", position + " | " + isChecked);
     }
 
 
@@ -220,10 +215,6 @@ public class Frag_SearchRecipe extends Fragment
         // custom adapter
         Adapter_SearchRecipe adapter = new Adapter_SearchRecipe(getContext(), this);
         results_list.setAdapter(adapter);
-
-
-        //if (main_act.getSearchResults().size() > 0)
-        //    updateResultsCount(main_act.getSearchResults().size());
     }
 
     private void resetResultsList()
