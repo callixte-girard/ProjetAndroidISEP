@@ -60,7 +60,7 @@ public class Frag_FavoriteRecipes extends Fragment
 
     public void checkedListener_myRecipes(View view, int position, boolean isChecked)
     {
-        Recipe rec = main_act.getFavoriteRecipes().get(position);
+        final Recipe rec = main_act.getFavoriteRecipes().get(position);
 
         Log.d("checkedListener_favo", position + " | " + isChecked + " | " + rec.getName());
 
@@ -71,12 +71,21 @@ public class Frag_FavoriteRecipes extends Fragment
 
             //backup if error
             Snackbar.make(view,
-                    position + " | " + rec.getName() + REMOVED_SUCCESSFULLY
-                            + UNDO_REMOVAL, Snackbar.LENGTH_LONG).show();
+                        "[" + rec.getName() + "]" + REMOVED_SUCCESSFULLY + UNDO_REMOVAL,
+                        Snackbar.LENGTH_LONG)
+                    .setAction("UNDO", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            cancelRecipeDeletion(rec);
+                        }
+                    }).show();
         }
     }
 
-
+    private void cancelRecipeDeletion(Recipe rec) {
+        Log.d("cancelRecipeDeletion", rec.getName());
+        main_act.saveRecipeInFavorites(rec);
+    }
 
 
     private void initFavoritesList()
