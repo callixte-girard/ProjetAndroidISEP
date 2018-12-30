@@ -2,21 +2,16 @@ package fr.isep.c.projetandroidisep.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 import fr.isep.c.projetandroidisep.recycleViewHolders.Holder_FavoriteRecipes;
-import fr.isep.c.projetandroidisep.recycleViewHolders.Holder_SearchRecipe;
 
 
 public class Adapter_FavoriteRecipes
@@ -56,7 +51,7 @@ public class Adapter_FavoriteRecipes
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                listener_addRemoveRecipe.checkedListener_searchRecipe
+                listener_addRemoveRecipe.checkedListener_myRecipes
                         (buttonView, holder.getAdapterPosition(), isChecked);
             }
         });

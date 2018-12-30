@@ -34,7 +34,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Frag_SearchRecipe extends Fragment
-        implements Response_SearchRecipe, Response_FetchImages //, Listener_AddRemoveRecipe
+        implements Response_SearchRecipe, Response_FetchImages , Listener_AddRemoveRecipe
 {
     private MainActivity main_act ;
 
@@ -68,6 +68,18 @@ public class Frag_SearchRecipe extends Fragment
     }
 
 
+    public void checkedListener_myRecipes(View view, int position, boolean isChecked)
+    {
+        Recipe rec = main_act.getSearchResults().get(position);
+
+        Log.d("checkedListener_search", position + " | " + isChecked + " | " + rec.getName());
+
+        if (isChecked) {
+            if (!rec.alreadyExists(main_act.getFavoriteRecipes())) main_act.saveRecipeInFavorites(rec);
+        } else {
+            main_act.removeRecipeFromFavorites(rec);
+        }
+    }
 
 
     @Override
@@ -206,7 +218,7 @@ public class Frag_SearchRecipe extends Fragment
         results_list.addItemDecoration(itemDecor);
 
         // custom adapter
-        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe(getContext(), main_act);
+        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe(getContext(), this);
         results_list.setAdapter(adapter);
     }
 

@@ -1,6 +1,7 @@
 package fr.isep.c.projetandroidisep.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Frag_FavoriteRecipes extends Fragment
-    //implements Listener_AddRemoveRecipe
+    implements Listener_AddRemoveRecipe
 {
     private MainActivity main_act ;
 
@@ -27,6 +28,8 @@ public class Frag_FavoriteRecipes extends Fragment
     private TextView number_favorite_recipes ;
 
     private static final String DEFAULT_COUNTER = "Fetching your favorite recipes...";
+    private static final String REMOVED_SUCCESSFULLY = " has been removed successfully. ";
+    private static final String UNDO_REMOVAL = "Press here to undo removal" ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
@@ -55,6 +58,26 @@ public class Frag_FavoriteRecipes extends Fragment
     }
 
 
+    public void checkedListener_myRecipes(View view, int position, boolean isChecked)
+    {
+        Recipe rec = main_act.getFavoriteRecipes().get(position);
+
+        Log.d("checkedListener_favo", position + " | " + isChecked + " | " + rec.getName());
+
+        if (isChecked) {
+            if (!rec.alreadyExists(main_act.getFavoriteRecipes())) main_act.saveRecipeInFavorites(rec);
+        } else {
+            main_act.removeRecipeFromFavorites(rec);
+
+            //backup if error
+            Snackbar.make(view,
+                    position + " | " + rec.getName() + REMOVED_SUCCESSFULLY
+                            + UNDO_REMOVAL, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+
+
 
     private void initFavoritesList()
     {
@@ -79,7 +102,7 @@ public class Frag_FavoriteRecipes extends Fragment
         number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
 
         // custom adapter
-        Adapter_FavoriteRecipes adapter = new Adapter_FavoriteRecipes(getContext(), main_act);
+        Adapter_FavoriteRecipes adapter = new Adapter_FavoriteRecipes(getContext(), this);
         my_favorite_recipes.setAdapter(adapter);
     }
 

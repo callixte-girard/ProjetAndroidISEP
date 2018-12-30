@@ -2,15 +2,10 @@ package fr.isep.c.projetandroidisep.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-
-import com.google.firebase.database.snapshot.Index;
-
-import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
@@ -56,7 +51,7 @@ public class Adapter_SearchRecipe
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                listener_addRemoveRecipe.checkedListener_searchRecipe(buttonView, holder.getAdapterPosition(), isChecked);
+                listener_addRemoveRecipe.checkedListener_myRecipes(buttonView, holder.getAdapterPosition(), isChecked);
             }
         });
     }

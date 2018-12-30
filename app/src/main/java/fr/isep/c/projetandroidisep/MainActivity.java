@@ -50,7 +50,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
-    implements Response_FetchIngredients, Listener_AddRemoveRecipe
+    implements Response_FetchIngredients //, Listener_AddRemoveRecipe
 {
     // display
     private BottomNavigationView bnv ;
@@ -213,19 +213,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-    public void checkedListener_searchRecipe(View view, int position, boolean isChecked)
-    {
-        Recipe rec = this.getSearchResults().get(position);
-
-        //Log.d("listener_searchRecipe", position + " | " + isChecked + " | " + rec.getName());
-
-        if (isChecked) {
-            if (!rec.alreadyExists(this.getFavoriteRecipes())) this.saveRecipeInFavorites(rec);
-        } else {
-            this.removeRecipeFromFavorites(rec);
-        }
-    }
 
 
 
