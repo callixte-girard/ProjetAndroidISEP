@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import java.util.ArrayList;
+
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
@@ -19,6 +21,7 @@ public class Adapter_SearchRecipe
 {
     private MainActivity main_act;
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
+    private ArrayList<Recipe> al ;
 
 
     public Adapter_SearchRecipe(Context context, Listener_AddRemoveRecipe listener_addRemoveRecipe) {
@@ -56,6 +59,10 @@ public class Adapter_SearchRecipe
         });
     }
 
+    public void updateResultsList(ArrayList<Recipe> al) {
+        this.al = al ;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount()

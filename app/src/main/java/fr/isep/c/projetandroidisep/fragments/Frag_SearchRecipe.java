@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.adapters.Adapter_FavoriteRecipes;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchImages;
@@ -63,6 +64,7 @@ public class Frag_SearchRecipe extends Fragment
 
         initSearchBar();
         initResultsList();
+        updateResultsList(main_act.getSearchResults());
 
         return view ;
     }
@@ -89,15 +91,11 @@ public class Frag_SearchRecipe extends Fragment
         try
         {
             main_act.getSearchResults().addAll(Recipe.fetchPageResultsFromDoc(doc));
-
-            Adapter_SearchRecipe adapter = (Adapter_SearchRecipe) results_list.getAdapter();
-            //adapter.updateResults(main_act.getSearchResults());
-
             //performFetchRecipeImages(search_results);
         }
         catch (Exception ex) {}
 
-        updateResultsCount(main_act.getSearchResults().size());
+        updateResultsList(main_act.getSearchResults());
 
         // refait une nouvelle task
         if (current_deepness < deepness)
@@ -192,7 +190,6 @@ public class Frag_SearchRecipe extends Fragment
                     optional = "_clear";
                     //Text is cleared, do your thing
                     resetResultsList();
-                    results_number.setText("");
                 }
 
                 Log.d("onQueryTextChange" + optional, newText);
@@ -245,10 +242,15 @@ public class Frag_SearchRecipe extends Fragment
     }
 
 
-    private void updateResultsCount(int number)
+    public void updateResultsList(ArrayList<Recipe> new_list)
     {
-        String nb_res = String.valueOf(number) + " results";
-        results_number.setText(nb_res);
+        // updates adapter
+        ((Adapter_SearchRecipe) results_list.getAdapter()).updateResultsList(new_list);
+
+        // updates counter
+        int count = main_act.getSearchResults().size();
+        results_number.setText(String.valueOf(count) + " results");
+
     }
 
 

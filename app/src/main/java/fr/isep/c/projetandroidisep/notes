@@ -14,3 +14,4 @@ TO-DO :
 V backup delete with snackbar
 - implémenter onBackPressed pour chaque fragment
 - add filters in recipes and shopping lists fragments
+- sort favorite recipes by last added

@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import java.util.ArrayList;
+
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
@@ -19,6 +21,7 @@ public class Adapter_FavoriteRecipes
 {
     private MainActivity main_act ;
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
+    private ArrayList<Recipe> al ;
 
 
     public Adapter_FavoriteRecipes(Context context, Listener_AddRemoveRecipe listener_addRemoveRecipe) {
@@ -55,6 +58,12 @@ public class Adapter_FavoriteRecipes
                         (buttonView, holder.getAdapterPosition(), isChecked);
             }
         });
+    }
+
+    public void updateFavoritesList(ArrayList<Recipe> al) {
+        this.al = al ;
+        // sort by date ajout
+        notifyDataSetChanged();
     }
 
 

@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity
                 }
 
                 // update fragment's number of favorites
-                frag_favorite_recipes.updateFavoritesList();
+                frag_favorite_recipes.updateFavoritesList(getSearchResults());
 
             }
             catch (NullPointerException npe) {

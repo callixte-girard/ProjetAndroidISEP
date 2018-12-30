@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class Frag_FavoriteRecipes extends Fragment
     implements Listener_AddRemoveRecipe
 {
     private MainActivity main_act ;
+    private View view ;
 
     private RecyclerView my_favorite_recipes ;
     private SearchView filter_favorite_recipes ;
@@ -39,7 +41,7 @@ public class Frag_FavoriteRecipes extends Fragment
     {
         main_act = (MainActivity) getActivity();
 
-        View view = inflater.inflate(R.layout.fragment_favorite_recipes, container, false);
+        view = inflater.inflate(R.layout.fragment_favorite_recipes, container, false);
 
         filter_favorite_recipes = view.findViewById(R.id.filter_favorite_recipes);
         filter_favorite_recipes.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -66,9 +68,8 @@ public class Frag_FavoriteRecipes extends Fragment
         number_favorite_recipes = view.findViewById(R.id.number_favorite_recipes);
         number_favorite_recipes.setText(DEFAULT_COUNTER);
 
-        my_favorite_recipes = view.findViewById(R.id.my_favorite_recipes);
-        initFavoritesList(); // to set decoration and layout
-        updateFavoritesList(); // to fill it
+        initFavoritesList(); // to set decoration, layout and adapter
+        updateFavoritesList(main_act.getFavoriteRecipes()); // to fill adapter
 
         return view ;
     }
@@ -125,6 +126,8 @@ public class Frag_FavoriteRecipes extends Fragment
 
     private void initFavoritesList()
     {
+        my_favorite_recipes = view.findViewById(R.id.my_favorite_recipes);
+
         my_favorite_recipes.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
 
         // layout
@@ -136,18 +139,20 @@ public class Frag_FavoriteRecipes extends Fragment
                 (getContext(), linearLayoutManager.getOrientation());
         my_favorite_recipes.addItemDecoration(itemDecor);
 
-
-    }
-
-    public void updateFavoritesList()
-    {
-        // favorites count
-        int count = main_act.getFavoriteRecipes().size();
-        number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
-
         // custom adapter
         Adapter_FavoriteRecipes adapter = new Adapter_FavoriteRecipes(getContext(), this);
         my_favorite_recipes.setAdapter(adapter);
+    }
+
+    public void updateFavoritesList(ArrayList<Recipe> new_list)
+    {
+        // updates adapter
+        ((Adapter_FavoriteRecipes) my_favorite_recipes.getAdapter()).updateFavoritesList(new_list);
+
+        // updates counter
+        int count = main_act.getFavoriteRecipes().size();
+        number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
+
     }
 
 
