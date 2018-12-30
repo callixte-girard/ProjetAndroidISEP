@@ -10,7 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.*;
 import fr.isep.c.projetandroidisep.adapters.Adapter_FavoriteRecipes;
@@ -24,7 +27,7 @@ public class Frag_FavoriteRecipes extends Fragment
     private MainActivity main_act ;
 
     private RecyclerView my_favorite_recipes ;
-    //private SearchView filter_favorite_recipes ;
+    private SearchView filter_favorite_recipes ;
     private TextView number_favorite_recipes ;
 
     private static final String DEFAULT_COUNTER = "Fetching your favorite recipes...";
@@ -38,13 +41,32 @@ public class Frag_FavoriteRecipes extends Fragment
 
         View view = inflater.inflate(R.layout.fragment_favorite_recipes, container, false);
 
-        //filter_favorite_recipes = view.findViewById(R.id.filter_favorite_recipes);
+        filter_favorite_recipes = view.findViewById(R.id.filter_favorite_recipes);
+        filter_favorite_recipes.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                Log.d("test_filterOn", s);
+                return false;
+            }
+        });
+        filter_favorite_recipes.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                Log.d("test_filterOff", "");
+                // restore filtered state to normal
+                return false;
+            }
+        });
 
         number_favorite_recipes = view.findViewById(R.id.number_favorite_recipes);
         number_favorite_recipes.setText(DEFAULT_COUNTER);
 
         my_favorite_recipes = view.findViewById(R.id.my_favorite_recipes);
-
         initFavoritesList(); // to set decoration and layout
         updateFavoritesList(); // to fill it
 
@@ -58,7 +80,7 @@ public class Frag_FavoriteRecipes extends Fragment
     }
 
 
-    public void checkedListener_myRecipes(View view, int position, boolean isChecked)
+    public void checkedListener_myRecipes(View view, final int position, boolean isChecked)
     {
         final Recipe rec = main_act.getFavoriteRecipes().get(position);
 
@@ -85,6 +107,19 @@ public class Frag_FavoriteRecipes extends Fragment
     private void cancelRecipeDeletion(Recipe rec) {
         Log.d("cancelRecipeDeletion", rec.getName());
         main_act.saveRecipeInFavorites(rec);
+    }
+
+    private ArrayList<Recipe> filterRecipes(ArrayList<Recipe> to_filter, String filter)
+    {
+        ArrayList<Recipe> filtered = new ArrayList<>();
+
+        for (Recipe rec : to_filter) {
+            if (rec.getName().toLowerCase().contains(filter)) {
+                filtered.add(rec);
+            }
+        }
+
+        return filtered ;
     }
 
 

@@ -3,7 +3,6 @@ package fr.isep.c.projetandroidisep.recycleViewHolders;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,7 +28,7 @@ public class Holder_FavoriteRecipes
 
         recipe_name = view.findViewById(R.id.title);
         //recipe_img = view.findViewById(R.id.recipe_img);
-        recipe_duration = view.findViewById(R.id.sub_title);
+        recipe_duration = view.findViewById(R.id.subtitle);
         //recipe_rating = view.findViewById(R.id.recipe_rating);
         checkbox_delete_from_favorites = view.findViewById(R.id.checkbox);
 

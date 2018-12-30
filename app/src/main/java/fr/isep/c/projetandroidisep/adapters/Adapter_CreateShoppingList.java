@@ -2,12 +2,10 @@ package fr.isep.c.projetandroidisep.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,7 +33,7 @@ public class Adapter_CreateShoppingList extends RecyclerView.Adapter
             super(view);
 
             recipe_name = view.findViewById(R.id.title);
-            recipe_duration = view.findViewById(R.id.sub_title);
+            recipe_duration = view.findViewById(R.id.subtitle);
             checkbox_select_recipe = view.findViewById(R.id.checkbox);
         }
 

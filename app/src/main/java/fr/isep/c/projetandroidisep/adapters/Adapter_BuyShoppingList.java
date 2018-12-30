@@ -34,7 +34,7 @@ public class Adapter_BuyShoppingList extends RecyclerView.Adapter
             super(view);
 
             ingr_name = view.findViewById(R.id.title);
-            ingr_qty = view.findViewById(R.id.sub_title);
+            ingr_qty = view.findViewById(R.id.subtitle);
             checkbox_bought = view.findViewById(R.id.checkbox);
         }
 

@@ -201,6 +201,14 @@ public class Frag_SearchRecipe extends Fragment
                 return true;
             }
         });
+
+        search_bar.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                Log.d("onClose", "");
+                return false;
+            }
+        });
     }
 
 

@@ -11,6 +11,6 @@ TO-DO :
 - réparer pbs arret asynctasks en mode recherche :
     - trouver comment activer onQueryTextChange() quand le texte est vide
 - implémenter récupération des images
-- backup delete with snackbar
+V backup delete with snackbar
 - implémenter onBackPressed pour chaque fragment
 - add filters in recipes and shopping lists fragments

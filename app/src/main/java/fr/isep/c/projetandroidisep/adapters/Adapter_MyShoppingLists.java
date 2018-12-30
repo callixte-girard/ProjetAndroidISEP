@@ -33,7 +33,7 @@ public class Adapter_MyShoppingLists extends RecyclerView.Adapter
             super(view);
 
             lc_name = view.findViewById(R.id.title);
-            lc_date_creation = view.findViewById(R.id.sub_title);
+            lc_date_creation = view.findViewById(R.id.subtitle);
             checkbox_delete_shopping_list = view.findViewById(R.id.checkbox);
         }
 

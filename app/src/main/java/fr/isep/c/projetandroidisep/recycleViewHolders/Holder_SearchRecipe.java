@@ -1,7 +1,6 @@
 package fr.isep.c.projetandroidisep.recycleViewHolders;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -28,7 +27,7 @@ public class Holder_SearchRecipe
 
         //recipe_img = view.findViewById(R.id.recipe_img);
         recipe_name = view.findViewById(R.id.title);
-        recipe_duration = view.findViewById(R.id.sub_title);
+        recipe_duration = view.findViewById(R.id.subtitle);
         checkbox_add_to_favorites = view.findViewById(R.id.checkbox);
 
         view.setOnClickListener(this);
