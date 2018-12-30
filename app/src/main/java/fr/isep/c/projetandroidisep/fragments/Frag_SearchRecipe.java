@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.adapters.Adapter_SearchRecipe;
-import fr.isep.c.projetandroidisep.interfaces.Listener_SearchRecipe;
+import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchImages;
 import fr.isep.c.projetandroidisep.interfaces.Response_SearchRecipe;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchImages;
@@ -34,7 +34,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Frag_SearchRecipe extends Fragment
-        implements Response_SearchRecipe, Response_FetchImages, Listener_SearchRecipe
+        implements Response_SearchRecipe, Response_FetchImages, Listener_AddRemoveRecipe
 {
     private MainActivity main_act ;
 
@@ -68,10 +68,18 @@ public class Frag_SearchRecipe extends Fragment
     }
 
 
-    public void onChecked(View view, int position)
+    public void checkedListener_searchRecipe(View view, int position)
     {
-        Log.d("test", String.valueOf(position));
+        main_act.getSearchResults().get(position).setSelected(
+                !main_act.getSearchResults().get(position).getSelected()
+        );
+
+        // à corriger : doit aller sur le checkbox, pas sur la view entière !!!!!
+
+        Log.d("onChecked", String.valueOf(position) + " | "
+                + main_act.getSearchResults().get(position).getSelected());
     }
+
 
 
     @Override

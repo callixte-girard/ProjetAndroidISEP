@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.interfaces.Listener_SearchRecipe;
+import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 
 public class Holder_SearchRecipe
         extends RecyclerView.ViewHolder
@@ -17,13 +17,13 @@ public class Holder_SearchRecipe
     public TextView recipe_name, recipe_duration ;
     public CheckBox checkbox_add_to_favorites ;
 
-    private Listener_SearchRecipe listener_searchRecipe ;
+    private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
 
-    public Holder_SearchRecipe(View view, Listener_SearchRecipe listener_searchRecipe)
+    public Holder_SearchRecipe(View view, Listener_AddRemoveRecipe listener_addRemoveRecipe)
     {
         super(view);
 
-        this.listener_searchRecipe = listener_searchRecipe ;
+        this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
 
         //recipe_img = view.findViewById(R.id.recipe_img);
         recipe_name = view.findViewById(R.id.title);
@@ -36,7 +36,7 @@ public class Holder_SearchRecipe
     @Override
     public void onClick(View view)
     {
-        listener_searchRecipe.onChecked(view, getAdapterPosition());
+        listener_addRemoveRecipe.checkedListener_searchRecipe(view, getAdapterPosition());
     }
 }
 

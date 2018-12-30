@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.interfaces.Listener_SearchRecipe;
+import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 import fr.isep.c.projetandroidisep.recycleViewHolders.Holder_SearchRecipe;
 
@@ -23,13 +23,13 @@ public class Adapter_SearchRecipe
 {
     private MainActivity main_act;
 
-    private Listener_SearchRecipe listener_searchRecipe ;
+    private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
     private ArrayList<Recipe> list_results = new ArrayList<>();
 
 
-    public Adapter_SearchRecipe(Context context, Listener_SearchRecipe listener_searchRecipe) {
+    public Adapter_SearchRecipe(Context context, Listener_AddRemoveRecipe listener_addRemoveRecipe) {
         this.main_act = (MainActivity) context ;
-        this.listener_searchRecipe = listener_searchRecipe ;
+        this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
     }
 
     public void updateResults(ArrayList<Recipe> new_results) {
@@ -49,7 +49,7 @@ public class Adapter_SearchRecipe
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.row_2_lines, viewGroup, false);
 
-        return new Holder_SearchRecipe(v, this.listener_searchRecipe);
+        return new Holder_SearchRecipe(v, this.listener_addRemoveRecipe);
     }
 
 
