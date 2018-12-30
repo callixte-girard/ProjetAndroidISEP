@@ -13,60 +13,53 @@ import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
+import fr.isep.c.projetandroidisep.recycleViewHolders.Holder_FavoriteRecipes;
+import fr.isep.c.projetandroidisep.recycleViewHolders.Holder_SearchRecipe;
 
 
-public class Adapter_FavoriteRecipes extends RecyclerView.Adapter
-            <Adapter_FavoriteRecipes.RecyclerViewHolder_FavoriteRecipes>
+public class Adapter_FavoriteRecipes
+        extends RecyclerView.Adapter<Holder_FavoriteRecipes>
 {
-
-    static class RecyclerViewHolder_FavoriteRecipes extends RecyclerView.ViewHolder
-        implements View.OnClickListener {
-
-        private TextView recipe_name, recipe_duration, recipe_rating ;
-        private ImageView recipe_img ;
-        private CheckBox checkbox_delete_from_favorites ;
-
-
-        RecyclerViewHolder_FavoriteRecipes(View view)
-        {
-            super(view);
-
-            recipe_name = view.findViewById(R.id.title);
-            //recipe_img = view.findViewById(R.id.recipe_img);
-            recipe_duration = view.findViewById(R.id.sub_title);
-            //recipe_rating = view.findViewById(R.id.recipe_rating);
-            checkbox_delete_from_favorites = view.findViewById(R.id.checkbox);
-        }
-
-        @Override
-        public void onClick(View view) {
-
-        }
-    }
-
-    private Context context ;
     private MainActivity main_act ;
+    private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
 
-    public Adapter_FavoriteRecipes(Context context) {
-        this.context = context ;
-        this.main_act = (MainActivity) this.context ;
+
+    public Adapter_FavoriteRecipes(Context context, Listener_AddRemoveRecipe listener_addRemoveRecipe) {
+        this.main_act = (MainActivity) context ;
+        this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
     }
 
 
     @Override
-    public RecyclerViewHolder_FavoriteRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
+    public Holder_FavoriteRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.row_2_lines, viewGroup, false);
         
-        return new RecyclerViewHolder_FavoriteRecipes(v);
+        return new Holder_FavoriteRecipes(v, listener_addRemoveRecipe);
     }
 
-    @Override
-    public void onBindViewHolder(final RecyclerViewHolder_FavoriteRecipes holder, final int i)
-    {
 
+    @Override
+    public void onBindViewHolder(final Holder_FavoriteRecipes holder, final int i)
+    {
+        Recipe rec = main_act.getFavoriteRecipes().get(holder.getAdapterPosition());
+
+        //set values of data here
+        holder.recipe_name.setText(rec.getName());
+        holder.recipe_duration.setText(rec.getDuration());
+
+        holder.checkbox_delete_from_favorites.setChecked(true);
+        holder.checkbox_delete_from_favorites.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                listener_addRemoveRecipe.checkedListener_searchRecipe
+                        (buttonView, holder.getAdapterPosition(), isChecked);
+            }
+        });
     }
 
 

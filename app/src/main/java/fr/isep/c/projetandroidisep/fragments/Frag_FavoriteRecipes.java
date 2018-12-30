@@ -13,10 +13,12 @@ import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.*;
 import fr.isep.c.projetandroidisep.adapters.Adapter_FavoriteRecipes;
+import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Frag_FavoriteRecipes extends Fragment
+    //implements Listener_AddRemoveRecipe
 {
     private MainActivity main_act ;
 
@@ -53,6 +55,7 @@ public class Frag_FavoriteRecipes extends Fragment
     }
 
 
+
     private void initFavoritesList()
     {
         my_favorite_recipes.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
@@ -76,7 +79,7 @@ public class Frag_FavoriteRecipes extends Fragment
         number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
 
         // custom adapter
-        Adapter_FavoriteRecipes adapter = new Adapter_FavoriteRecipes(getContext());
+        Adapter_FavoriteRecipes adapter = new Adapter_FavoriteRecipes(getContext(), main_act);
         my_favorite_recipes.setAdapter(adapter);
     }
 

@@ -11,7 +11,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
+import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
 import fr.isep.c.projetandroidisep.fragments.Frag_BuyShoppingList;
@@ -24,6 +26,7 @@ import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 import fr.isep.c.projetandroidisep.myCustomTypes.*;
 
 //import com.facebook.AccessToken;
+import com.android.volley.Response;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,10 +46,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
-    implements Response_FetchIngredients
+    implements Response_FetchIngredients, Listener_AddRemoveRecipe
 {
     // display
     private BottomNavigationView bnv ;
@@ -208,6 +212,22 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.popBackStackImmediate();
 
     }
+
+
+    public void checkedListener_searchRecipe(View view, int position, boolean isChecked)
+    {
+        Recipe rec = this.getSearchResults().get(position);
+
+        //Log.d("listener_searchRecipe", position + " | " + isChecked + " | " + rec.getName());
+
+        if (isChecked) {
+            if (!rec.alreadyExists(this.getFavoriteRecipes())) this.saveRecipeInFavorites(rec);
+        } else {
+            this.removeRecipeFromFavorites(rec);
+        }
+    }
+
+
 
 
     @Override

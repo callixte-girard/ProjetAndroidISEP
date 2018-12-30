@@ -34,7 +34,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Frag_SearchRecipe extends Fragment
-        implements Response_SearchRecipe, Response_FetchImages, Listener_AddRemoveRecipe
+        implements Response_SearchRecipe, Response_FetchImages //, Listener_AddRemoveRecipe
 {
     private MainActivity main_act ;
 
@@ -68,13 +68,6 @@ public class Frag_SearchRecipe extends Fragment
     }
 
 
-    public void checkedListener_searchRecipe(View view, int position, boolean isChecked)
-    {
-        // à corriger : doit aller sur le checkbox, pas sur la view entière !!!!!
-
-        Log.d("listener_searchRecipe", position + " | " + isChecked);
-    }
-
 
 
     @Override
@@ -86,13 +79,13 @@ public class Frag_SearchRecipe extends Fragment
             main_act.getSearchResults().addAll(Recipe.fetchPageResultsFromDoc(doc));
 
             Adapter_SearchRecipe adapter = (Adapter_SearchRecipe) results_list.getAdapter();
-            adapter.updateResults(main_act.getSearchResults());
+            //adapter.updateResults(main_act.getSearchResults());
 
             //performFetchRecipeImages(search_results);
-
-            updateResultsCount(main_act.getSearchResults().size());
         }
         catch (Exception ex) {}
+
+        updateResultsCount(main_act.getSearchResults().size());
 
         // refait une nouvelle task
         if (current_deepness < deepness)
@@ -213,9 +206,10 @@ public class Frag_SearchRecipe extends Fragment
         results_list.addItemDecoration(itemDecor);
 
         // custom adapter
-        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe(getContext(), this);
+        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe(getContext(), main_act);
         results_list.setAdapter(adapter);
     }
+
 
     private void resetResultsList()
     {
@@ -227,8 +221,7 @@ public class Frag_SearchRecipe extends Fragment
         }
 
         // clear results
-        Adapter_SearchRecipe adapter = (Adapter_SearchRecipe) results_list.getAdapter();
-        adapter.clearResults();
+        main_act.getSearchResults().clear();
     }
 
 
