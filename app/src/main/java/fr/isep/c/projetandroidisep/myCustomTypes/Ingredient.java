@@ -245,7 +245,7 @@ public class Ingredient extends Aliment
         }
     }
 
-    public String getNameAndForm()
+    public String returnNameAndForm()
 	{
 		String out = this.getName();
 

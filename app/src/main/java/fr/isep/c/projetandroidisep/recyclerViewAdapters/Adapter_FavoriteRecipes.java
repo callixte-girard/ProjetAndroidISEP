@@ -57,7 +57,7 @@ public class Adapter_FavoriteRecipes
         for (Ingredient ingr : rec.getIngredients())
         {
             TextView tv_ingr = new TextView(main_act);
-            tv_ingr.setText(" - " + ingr.getNameAndForm());
+            tv_ingr.setText(" - " + ingr.returnNameAndForm());
             //tv_ingr.setTextColor(tv_ingr.getResources().getColor(R.color.black));
             expandable_ingr_list.addView(tv_ingr);
 
