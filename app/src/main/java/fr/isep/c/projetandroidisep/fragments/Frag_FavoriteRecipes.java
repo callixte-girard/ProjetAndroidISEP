@@ -10,8 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -108,6 +111,7 @@ public class Frag_FavoriteRecipes extends Fragment
         Log.d("cancelRecipeDeletion", rec.getName());
         main_act.saveRecipeInFavorites(rec);
     }
+
 
     private ArrayList<Recipe> filterRecipes(ArrayList<Recipe> to_filter, String filter)
     {

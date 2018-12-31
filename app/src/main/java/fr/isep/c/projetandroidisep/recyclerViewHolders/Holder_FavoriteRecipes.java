@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.R;
@@ -13,9 +14,10 @@ public class Holder_FavoriteRecipes
         extends RecyclerView.ViewHolder
         implements View.OnClickListener {
 
-    public TextView recipe_name, recipe_duration, recipe_rating ;
     public ImageView recipe_img ;
-    public CheckBox checkbox_delete_from_favorites ;
+    public TextView recipe_name, recipe_duration, recipe_rating ;
+    public CheckBox checkbox_show_ingredients , checkbox_delete_from_favorites ;
+    public LinearLayout recipe_ingr_expandable ;
 
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
 
@@ -30,7 +32,9 @@ public class Holder_FavoriteRecipes
         //recipe_img = view.findViewById(R.id.recipe_img);
         recipe_duration = view.findViewById(R.id.subtitle);
         //recipe_rating = view.findViewById(R.id.recipe_rating);
-        checkbox_delete_from_favorites = view.findViewById(R.id.checkbox);
+        checkbox_show_ingredients = view.findViewById(R.id.checkbox_show_expandable);
+        checkbox_delete_from_favorites = view.findViewById(R.id.checkbox_add_remove);
+        recipe_ingr_expandable = view.findViewById(R.id.expandable_list);
 
         view.setOnClickListener(this);
     }

@@ -34,7 +34,7 @@ public class Adapter_SearchRecipe
     public Holder_SearchRecipe onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_2_lines, viewGroup, false);
+                .inflate(R.layout.row_2lines_expandable, viewGroup, false);
 
         return new Holder_SearchRecipe(v, this.listener_addRemoveRecipe);
     }

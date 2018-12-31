@@ -60,7 +60,7 @@ public class Adapter_BuyShoppingList extends RecyclerView.Adapter
     public RecyclerViewHolder_SelectRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_2_lines, viewGroup, false);
+                .inflate(R.layout.row_2lines_expandable, viewGroup, false);
 
         return new RecyclerViewHolder_SelectRecipes(v);
     }

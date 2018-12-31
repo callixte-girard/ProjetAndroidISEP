@@ -245,6 +245,17 @@ public class Ingredient extends Aliment
         }
     }
 
+    public String getNameAndForm()
+	{
+		String out = this.getName();
+
+		if (!this.getForm().isEmpty()) {
+			out += " (" + this.getForm() + ")" ;
+		}
+
+		return out ;
+	}
+
     public boolean getSelected() {
 		return this.selected ;
 	}
