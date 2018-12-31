@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.adapters.Adapter_BuyShoppingList;
-import fr.isep.c.projetandroidisep.adapters.Adapter_CreateShoppingList;
 
 
 public class Frag_BuyShoppingList extends Fragment

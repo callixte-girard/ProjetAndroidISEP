@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.adapters.Adapter_CreateShoppingList;
+import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_CreateShoppingList;
 import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 

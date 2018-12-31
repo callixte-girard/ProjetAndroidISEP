@@ -10,14 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.*;
-import fr.isep.c.projetandroidisep.adapters.Adapter_FavoriteRecipes;
+import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_FavoriteRecipes;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
@@ -94,7 +93,7 @@ public class Frag_FavoriteRecipes extends Fragment
 
             //backup if error
             Snackbar.make(view,
-                        "[" + rec.getName() + "]" + REMOVED_SUCCESSFULLY + UNDO_REMOVAL,
+                        "[" + rec.getName() + "]" + REMOVED_SUCCESSFULLY,
                         Snackbar.LENGTH_LONG)
                     .setAction("UNDO", new View.OnClickListener() {
                         @Override

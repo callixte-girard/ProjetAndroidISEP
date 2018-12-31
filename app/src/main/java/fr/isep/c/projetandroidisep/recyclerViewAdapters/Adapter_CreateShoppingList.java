@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.adapters;
+package fr.isep.c.projetandroidisep.recyclerViewAdapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

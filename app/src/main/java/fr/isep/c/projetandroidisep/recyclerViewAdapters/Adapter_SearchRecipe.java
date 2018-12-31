@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.adapters;
+package fr.isep.c.projetandroidisep.recyclerViewAdapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,7 @@ import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
-import fr.isep.c.projetandroidisep.recycleViewHolders.Holder_SearchRecipe;
+import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_SearchRecipe;
 
 
 public class Adapter_SearchRecipe
@@ -43,7 +43,8 @@ public class Adapter_SearchRecipe
     @Override
     public void onBindViewHolder(final Holder_SearchRecipe holder, final int position)
     {
-        Recipe rec = main_act.getSearchResults().get(holder.getAdapterPosition());
+        //Recipe rec = main_act.getSearchResults().get(holder.getAdapterPosition());
+        Recipe rec = al.get(holder.getAdapterPosition());
 
         //set values of data here
         holder.recipe_name.setText(rec.getName());
@@ -67,7 +68,6 @@ public class Adapter_SearchRecipe
     @Override
     public int getItemCount()
     {
-        return (null != main_act.getSearchResults()
-                ? main_act.getSearchResults().size() : 0);
+        return (null != al ? al.size() : 0);
     }
 }

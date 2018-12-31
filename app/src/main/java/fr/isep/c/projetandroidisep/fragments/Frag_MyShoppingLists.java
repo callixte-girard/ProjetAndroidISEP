@@ -7,18 +7,15 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.*;
-import fr.isep.c.projetandroidisep.adapters.Adapter_FavoriteRecipes;
-import fr.isep.c.projetandroidisep.adapters.Adapter_MyShoppingLists;
+import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_MyShoppingLists;
 
 
 public class Frag_MyShoppingLists extends Fragment

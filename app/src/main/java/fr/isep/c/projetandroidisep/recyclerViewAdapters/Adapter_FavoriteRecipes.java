@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.adapters;
+package fr.isep.c.projetandroidisep.recyclerViewAdapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,7 @@ import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
-import fr.isep.c.projetandroidisep.recycleViewHolders.Holder_FavoriteRecipes;
+import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_FavoriteRecipes;
 
 
 public class Adapter_FavoriteRecipes
@@ -43,7 +43,8 @@ public class Adapter_FavoriteRecipes
     @Override
     public void onBindViewHolder(final Holder_FavoriteRecipes holder, final int i)
     {
-        Recipe rec = main_act.getFavoriteRecipes().get(holder.getAdapterPosition());
+        //Recipe rec = main_act.getFavoriteRecipes().get(holder.getAdapterPosition());
+        Recipe rec = al.get(holder.getAdapterPosition());
 
         //set values of data here
         holder.recipe_name.setText(rec.getName());
@@ -62,15 +63,13 @@ public class Adapter_FavoriteRecipes
 
     public void updateFavoritesList(ArrayList<Recipe> al) {
         this.al = al ;
-        // sort by date ajout
         notifyDataSetChanged();
     }
 
 
     @Override
     public int getItemCount() {
-        return (null != main_act.getFavoriteRecipes()
-                ? main_act.getFavoriteRecipes().size() : 0);
+        return (null != al ? al.size() : 0);
     }
 
 }
