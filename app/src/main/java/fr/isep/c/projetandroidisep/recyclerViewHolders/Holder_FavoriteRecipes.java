@@ -16,8 +16,8 @@ public class Holder_FavoriteRecipes
 
     public ImageView recipe_img ;
     public TextView recipe_name, recipe_duration, recipe_rating ;
-    public CheckBox checkbox_show_ingredients , checkbox_delete_from_favorites ;
-    public LinearLayout recipe_ingr_expandable ;
+    public CheckBox checkbox_delete_from_favorites ;
+    public LinearLayout recipe_ingr_expandable, recipe_info ;
 
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
 
@@ -28,11 +28,11 @@ public class Holder_FavoriteRecipes
 
         this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
 
+        recipe_info = view.findViewById(R.id.recipe_info); // the linearlayout clickable
         recipe_name = view.findViewById(R.id.title);
         //recipe_img = view.findViewById(R.id.recipe_img);
         recipe_duration = view.findViewById(R.id.subtitle);
         //recipe_rating = view.findViewById(R.id.recipe_rating);
-        checkbox_show_ingredients = view.findViewById(R.id.checkbox_show_expandable);
         checkbox_delete_from_favorites = view.findViewById(R.id.checkbox_add_remove);
         recipe_ingr_expandable = view.findViewById(R.id.expandable_list);
 

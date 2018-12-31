@@ -27,6 +27,8 @@ public class Adapter_FavoriteRecipes
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
     private ArrayList<Recipe> al ;
 
+    private boolean show_expandable = false ;
+
 
     public Adapter_FavoriteRecipes(Context context, Listener_AddRemoveRecipe listener_addRemoveRecipe) {
         this.main_act = (MainActivity) context ;
@@ -70,13 +72,14 @@ public class Adapter_FavoriteRecipes
         holder.recipe_name.setText(rec.getName());
         holder.recipe_duration.setText(rec.getDuration());
 
-        // checkboxes
-        holder.checkbox_show_ingredients.setChecked(false);
-        holder.checkbox_show_ingredients.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        // container for the labels
+        holder.recipe_info.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(View v) {
 
-                if (isChecked) {
+                show_expandable = !show_expandable ;
+
+                if (show_expandable) {
                     holder.recipe_ingr_expandable.setVisibility(View.VISIBLE);
                 } else {
                     holder.recipe_ingr_expandable.setVisibility(View.GONE);
@@ -84,6 +87,7 @@ public class Adapter_FavoriteRecipes
             }
         });
 
+        // checkboxes
         holder.checkbox_delete_from_favorites.setChecked(true);
         holder.checkbox_delete_from_favorites.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
