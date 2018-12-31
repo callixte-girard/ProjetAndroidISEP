@@ -52,28 +52,12 @@ public class Adapter_FavoriteRecipes
         //Recipe rec = main_act.getFavoriteRecipes().get(holder.getAdapterPosition());
         Recipe rec = al.get(holder.getAdapterPosition());
 
-        // dynamically adds ingredient views to child LinearLayout
-        LinearLayout expandable_ingr_list = holder.recipe_ingr_expandable ;
-        for (Ingredient ingr : rec.getIngredients())
-        {
-            TextView tv_ingr = new TextView(main_act);
-            tv_ingr.setText(" - " + ingr.returnNameAndForm());
-            //tv_ingr.setTextColor(tv_ingr.getResources().getColor(R.color.black));
-            expandable_ingr_list.addView(tv_ingr);
-
-            CheckBox cb_ingr = new CheckBox(main_act);
-            cb_ingr.setChecked(ingr.getSelected());
-            // suite
-        }
-        expandable_ingr_list.setVisibility(View.GONE); // default : hidden
-
-
         // labels
         holder.recipe_name.setText(rec.getName());
         holder.recipe_duration.setText(rec.getDuration());
 
         // container for the labels
-        holder.recipe_info.setOnClickListener(new View.OnClickListener() {
+        holder.recipe_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -97,6 +81,22 @@ public class Adapter_FavoriteRecipes
                         (buttonView, holder.getAdapterPosition(), isChecked);
             }
         });
+
+        // NO NEEDA CHECK HERE :D
+        // dynamically adds ingredient views to child LinearLayout
+        LinearLayout expandable_ingr_list = holder.recipe_ingr_expandable ;
+        for (Ingredient ingr : rec.getIngredients())
+        {
+            TextView tv_ingr = new TextView(main_act);
+            tv_ingr.setText(" - " + ingr.returnNameAndForm());
+            //tv_ingr.setTextColor(tv_ingr.getResources().getColor(R.color.black));
+            expandable_ingr_list.addView(tv_ingr);
+
+            CheckBox cb_ingr = new CheckBox(main_act);
+            cb_ingr.setChecked(ingr.getSelected());
+            // suite
+        }
+        expandable_ingr_list.setVisibility(View.GONE); // default : hidden
 
     }
 

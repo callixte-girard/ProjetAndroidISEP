@@ -8,7 +8,7 @@
     <include layout="@layout/el_image"/>
 
     <LinearLayout
-        android:id="@+id/recipe_info"
+        android:id="@+id/recipe_head"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">

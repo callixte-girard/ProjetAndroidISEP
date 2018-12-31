@@ -240,8 +240,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    //protected void performFetchRecipeIngredients(ArrayList<Recipe> al)
-    protected void performFetchRecipeIngredients(Recipe rec)
+    //public void performFetchRecipeIngredients(ArrayList<Recipe> al)
+    public void performFetchRecipeIngredients(Recipe rec)
     {
         Task_FetchIngredients task_fetchIngredients = new Task_FetchIngredients();
         task_fetchIngredients.setDelegate(this);
