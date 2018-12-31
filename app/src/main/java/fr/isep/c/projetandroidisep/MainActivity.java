@@ -231,6 +231,9 @@ public class MainActivity extends AppCompatActivity
             // saves
             saveIngredientsInRecipe(rec_to_update);
 
+            // update SearchRecipe UI
+            // to-do
+
             Log.d("task_results_fetchIngr", url);
 
         } catch (Exception e) {}
@@ -431,10 +434,12 @@ public class MainActivity extends AppCompatActivity
         DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
                 .child(current_user.getUid());
 
-        current_user_ref.child("favorite_recipes")
-                .child(ParseHtml.shortifyUrl(rec.getUrl()))
-                //.child(rec.getDateAjout())
-                .setValue(rec);
+        DatabaseReference favorite_recipes_ref = current_user_ref
+                .child("favorite_recipes")
+                .child(ParseHtml.shortifyUrl(rec.getUrl()));
+
+        favorite_recipes_ref.orderByChild("dateAjout");
+        favorite_recipes_ref.setValue(rec);
     }
 
     public void saveIngredientsInRecipe(Recipe rec)
@@ -443,10 +448,11 @@ public class MainActivity extends AppCompatActivity
         DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
                 .child(current_user.getUid());
 
-        current_user_ref.child("favorite_recipes")
+        DatabaseReference favorite_recipes_ingr_ref = current_user_ref.child("favorite_recipes")
                 .child(ParseHtml.shortifyUrl(rec.getUrl()))
-                .child("ingredients")
-                .setValue(rec.getIngredients());
+                .child("ingredients");
+
+        favorite_recipes_ingr_ref.setValue(rec.getIngredients());
     }
 
     public void saveShoppingList(ListeCourses lc)
