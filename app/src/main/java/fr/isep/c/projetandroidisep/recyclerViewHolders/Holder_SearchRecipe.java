@@ -41,7 +41,7 @@ public class Holder_SearchRecipe
         this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
         this.main_act = (MainActivity) context ;
 
-        recipe_head = view.findViewById(R.id.recipe_labels);
+        recipe_head = view.findViewById(R.id.labels);
         //recipe_img = view.findViewById(R.id.recipe_img);
         recipe_name = view.findViewById(R.id.title);
         recipe_duration = view.findViewById(R.id.subtitle);

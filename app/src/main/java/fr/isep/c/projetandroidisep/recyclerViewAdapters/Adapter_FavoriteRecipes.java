@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,12 +25,13 @@ public class Adapter_FavoriteRecipes
 {
     private MainActivity main_act ;
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
-    private ArrayList<Recipe> al ;
+    private ArrayList<Recipe> al = new ArrayList<>();
 
 
     public Adapter_FavoriteRecipes(Context context, Listener_AddRemoveRecipe listener_addRemoveRecipe) {
         this.main_act = (MainActivity) context ;
         this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
+        updateFavoritesList(main_act.getFavoriteRecipes());
     }
 
 
@@ -55,7 +55,7 @@ public class Adapter_FavoriteRecipes
         holder.recipe_duration.setText(rec.getDuration());
 
         // container for the labels
-        holder.recipe_head.setOnClickListener(new View.OnClickListener() {
+        holder.recipe_labels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -102,7 +102,8 @@ public class Adapter_FavoriteRecipes
 
 
     public void updateFavoritesList(ArrayList<Recipe> al) {
-        this.al = al ;
+        this.al.clear();
+        this.al.addAll(al);
         notifyDataSetChanged();
     }
 

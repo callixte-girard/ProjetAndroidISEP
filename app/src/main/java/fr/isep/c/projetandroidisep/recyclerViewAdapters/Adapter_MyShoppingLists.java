@@ -10,111 +10,85 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveShoppingList;
 import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
+import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
+import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_MyShoppingLists;
 
 
-public class Adapter_MyShoppingLists extends RecyclerView.Adapter
-            <Adapter_MyShoppingLists
-                .RecyclerViewHolder_MyShoppingLists>
+public class Adapter_MyShoppingLists
+        extends RecyclerView.Adapter<Holder_MyShoppingLists>
 {
-    static class RecyclerViewHolder_MyShoppingLists extends RecyclerView.ViewHolder
-        implements View.OnClickListener {
-
-
-        private TextView lc_name, lc_date_creation ;
-        private CheckBox checkbox_delete_shopping_list ;
-
-
-
-        RecyclerViewHolder_MyShoppingLists(View view)
-        {
-            super(view);
-
-            lc_name = view.findViewById(R.id.title);
-            lc_date_creation = view.findViewById(R.id.subtitle);
-            checkbox_delete_shopping_list = view.findViewById(R.id.checkbox);
-        }
-
-        @Override
-        public void onClick(View view) {
-
-        }
-    }
-
-    private View.OnClickListener listener_shopping_list_clicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            MainActivity act = (MainActivity) context ;
-            act.displayFrag_buyShoppingList();
-        }
-    };
-
-    private Context context ;
     private MainActivity main_act ;
+    private Listener_AddRemoveShoppingList listener_addRemoveShoppingList ;
+    private ArrayList<ListeCourses> al = new ArrayList<>();
 
-    public Adapter_MyShoppingLists(Context context) {
-        this.context = context ;
-        this.main_act = (MainActivity) this.context ;
+
+    public Adapter_MyShoppingLists(Context context, Listener_AddRemoveShoppingList listener_addRemoveShoppingList) {
+        this.main_act = (MainActivity) context ;
+        this.listener_addRemoveShoppingList = listener_addRemoveShoppingList ;
+        updateShoppingLists(main_act.getMyShoppingLists());
     }
 
 
     @Override
-    public RecyclerViewHolder_MyShoppingLists onCreateViewHolder(ViewGroup viewGroup, int i)
+    public Holder_MyShoppingLists onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.row_2lines_expandable, viewGroup, false);
 
-        return new RecyclerViewHolder_MyShoppingLists(v);
+        return new Holder_MyShoppingLists(v);
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder_MyShoppingLists holder, final int i)
+    public void onBindViewHolder(final Holder_MyShoppingLists holder, final int i)
     {
         final ListeCourses lc = main_act.getMyShoppingLists().get(holder.getAdapterPosition());
 
+        // labels
         String displayed_title = lc.getAliments().size() + " items" ;
         holder.lc_name.setText(displayed_title);
-        holder.lc_name.setOnClickListener(listener_shopping_list_clicked);
 
         String displayed_date = lc.getDateCreation()
                 .replace("_", " at ")
                 .replace("-", "/");
         holder.lc_date_creation.setText(displayed_date);
-        holder.lc_date_creation.setOnClickListener(listener_shopping_list_clicked);
 
+        // container for the labels
+        holder.lc_labels.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main_act.displayFrag_buyShoppingList();
+            }
+        });
+
+        // checkboxes
         holder.checkbox_delete_shopping_list.setChecked(true);
-        holder.checkbox_delete_shopping_list.setOnCheckedChangeListener
-                (new CompoundButton.OnCheckedChangeListener() {
+        holder.checkbox_delete_shopping_list.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                ListeCourses lc = main_act.getMyShoppingLists().get(i);
-
-                Log.d("is_checked",
-                        lc.getDateCreation() + " | " + String.valueOf(isChecked));
-
-                if (isChecked) {
-                    //main_act.saveRecipeInFavorites(rec);
-
-                } else {
-                    // adds back recipe (revert deletion)
-                    main_act.removeShoppingList(lc);
-                }
-
-                //notifyDataSetChanged();
+                listener_addRemoveShoppingList.checkedListener_myShoppingLists
+                        (buttonView, holder.getAdapterPosition(), isChecked);
             }
         });
     }
 
 
+    public void updateShoppingLists(ArrayList<ListeCourses> al) {
+        this.al.clear();
+        this.al.addAll(al);
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemCount() {
-        return (null != main_act.getMyShoppingLists()
-                ? main_act.getMyShoppingLists().size() : 0);
+        return (null != al ? al.size() : 0);
     }
 
 

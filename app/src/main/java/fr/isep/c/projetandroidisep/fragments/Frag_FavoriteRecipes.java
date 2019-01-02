@@ -39,8 +39,6 @@ public class Frag_FavoriteRecipes extends Fragment
     private TextView number_favorite_recipes ;
 
     private static final String DEFAULT_COUNTER = "Fetching your favorite recipes...";
-    private static final String REMOVED_SUCCESSFULLY = " has been removed successfully. ";
-    private static final String UNDO_REMOVAL = "Press here to undo removal" ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
@@ -100,7 +98,7 @@ public class Frag_FavoriteRecipes extends Fragment
 
             //backup if error
             Snackbar.make(view,
-                        "[" + rec.getName() + "]" + REMOVED_SUCCESSFULLY,
+                        rec.getName() + MainActivity.REMOVED_SUCCESSFULLY,
                         Snackbar.LENGTH_LONG)
                     .setAction("UNDO", new View.OnClickListener() {
                         @Override
@@ -110,6 +108,7 @@ public class Frag_FavoriteRecipes extends Fragment
                     }).show();
         }
     }
+
 
     private void cancelRecipeDeletion(Recipe rec) {
         Log.d("cancelRecipeDeletion", rec.getName());

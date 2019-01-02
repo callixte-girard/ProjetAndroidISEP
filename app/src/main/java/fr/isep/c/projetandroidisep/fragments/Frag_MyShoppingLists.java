@@ -14,11 +14,18 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import fr.isep.c.projetandroidisep.*;
+import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveShoppingList;
+import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
+import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
+import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_FavoriteRecipes;
 import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_MyShoppingLists;
 
 
 public class Frag_MyShoppingLists extends Fragment
+    implements Listener_AddRemoveShoppingList
 {
     private MainActivity main_act ;
 
@@ -57,16 +64,46 @@ public class Frag_MyShoppingLists extends Fragment
                     Snackbar.make(view, FAVORITES_EMPTY, Snackbar.LENGTH_SHORT).show();
                 }
                 else {
-                    MainActivity act = (MainActivity) getActivity();
-                    act.displayFrag_createShoppingList();
+                    main_act.displayFrag_createShoppingList();
                 }
             }
         });
 
         initShoppingLists();
-        updateShoppingLists();
+        updateShoppingLists(main_act.getMyShoppingLists());
 
         return view ;
+    }
+
+
+    public void checkedListener_myShoppingLists(View view, final int position, boolean isChecked)
+    {
+        final ListeCourses lc = main_act.getMyShoppingLists().get(position);
+
+        Log.d("checkedListener_favo", position + " | " + isChecked + " | " + lc.getDateCreation());
+
+        if (isChecked) {
+            main_act.saveShoppingList(lc);
+        } else {
+            main_act.removeShoppingList(lc);
+
+            //backup if error
+            Snackbar.make(view,
+                    "Shopping list created on " + lc.getDateCreation() + MainActivity.REMOVED_SUCCESSFULLY,
+                    Snackbar.LENGTH_LONG)
+                    .setAction("UNDO", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            cancelShoppingListDeletion(lc);
+                        }
+                    }).show();
+        }
+    }
+
+
+    private void cancelShoppingListDeletion(ListeCourses lc) {
+        Log.d("cancelShoppingListDel", lc.getDateCreation());
+        main_act.saveShoppingList(lc);
     }
 
 
@@ -83,18 +120,20 @@ public class Frag_MyShoppingLists extends Fragment
                 (getContext(), linearLayoutManager.getOrientation());
         my_shopping_lists.addItemDecoration(itemDecor);
 
+        // custom adapter
+        Adapter_MyShoppingLists adapter = new Adapter_MyShoppingLists(getContext(), this);
+        my_shopping_lists.setAdapter(adapter);
     }
 
 
-    public void updateShoppingLists()
+    public void updateShoppingLists(ArrayList<ListeCourses> new_list)
     {
-        // favorites count
+        // updates adapter
+        ((Adapter_MyShoppingLists) my_shopping_lists.getAdapter()).updateShoppingLists(new_list);
+
+        // updates counter
         int count = main_act.getMyShoppingLists().size();
         number_shopping_lists.setText(String.valueOf(count) + " shopping lists");
-
-        // custom adapter
-        Adapter_MyShoppingLists adapter = new Adapter_MyShoppingLists(getContext());
-        my_shopping_lists.setAdapter(adapter);
     }
 
 }

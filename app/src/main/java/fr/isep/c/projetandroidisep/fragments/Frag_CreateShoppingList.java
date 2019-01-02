@@ -45,8 +45,16 @@ public class Frag_CreateShoppingList extends Fragment
         label = view.findViewById(R.id.label);
         label.setText("Choose your recipes for this shopping list :");
 
-
         select_favorite_recipes = view.findViewById(R.id.select_favorite_recipes);
+
+        button_cancel = view.findViewById(R.id.button_left);
+        button_cancel.setText("Cancel");
+        button_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetChoicesListAndClose();
+            }
+        });
 
         button_create_shopping_list = view.findViewById(R.id.button_right);
         button_create_shopping_list.setText("Create Shopping List");
@@ -57,8 +65,7 @@ public class Frag_CreateShoppingList extends Fragment
                 ArrayList<Recipe> lc_recipes = new ArrayList<>();
 
                 // fills it
-                for (Recipe rec : main_act.getFavoriteRecipes())
-                {
+                for (Recipe rec : main_act.getFavoriteRecipes()) {
                     if (rec.getSelected()) {
                         lc_recipes.add(rec);
                     }
@@ -71,10 +78,7 @@ public class Frag_CreateShoppingList extends Fragment
                     ListeCourses lc = new ListeCourses(lc_recipes);
                     main_act.saveShoppingList(lc);
 
-                    // removes actual fragment and restores my shopping lists one
-                    MainActivity act = (MainActivity) getActivity();
-                    act.destroyFrag_createShoppingList();
-                    act.displayFrag_myShoppingLists();
+                    resetChoicesListAndClose();
                 }
                 else {
                     Snackbar.make(v, NOTHING_SELECTED, Snackbar.LENGTH_SHORT).show();
@@ -83,8 +87,7 @@ public class Frag_CreateShoppingList extends Fragment
             }
         });
 
-        initChoicesList(); // to set decoration and layout
-        updateChoicesFromFavorites(); // to fill it
+        initChoicesList();
 
         return view ;
     }
@@ -109,21 +112,21 @@ public class Frag_CreateShoppingList extends Fragment
                 (getContext(), linearLayoutManager.getOrientation());
         select_favorite_recipes.addItemDecoration(itemDecor);
 
-
-    }
-
-    public void updateChoicesFromFavorites()
-    {
         // custom adapter
-        Adapter_CreateShoppingList adapter = new Adapter_CreateShoppingList(
-                getContext(),
-                main_act.getFavoriteRecipes());
+        Adapter_CreateShoppingList adapter = new Adapter_CreateShoppingList(getContext());
         select_favorite_recipes.setAdapter(adapter);
     }
 
-
-
-
+    private void resetChoicesListAndClose()
+    {
+        // removes actual fragment and restores my shopping lists one
+        main_act.destroyFrag_createShoppingList();
+        main_act.displayFrag_myShoppingLists();
+        // resets all recipes selected attributes
+        for (Recipe rec : main_act.getFavoriteRecipes()) {
+            rec.setSelected(false);
+        }
+    }
 
 
 }

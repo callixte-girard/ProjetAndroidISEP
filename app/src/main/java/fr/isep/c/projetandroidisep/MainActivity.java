@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity
                 }
 
                 // update fragment's number of favorites
-                frag_my_shopping_lists.updateShoppingLists();
+                frag_my_shopping_lists.updateShoppingLists(getMyShoppingLists());
 
             }
             catch (NullPointerException npe) {
@@ -149,6 +149,9 @@ public class MainActivity extends AppCompatActivity
 
     // other shits
     public static final int MAX_LABEL_LENGTH = 31 ;
+
+    public static final String REMOVED_SUCCESSFULLY = " has been removed successfully. ";
+
 
     /////////////////////////////////////////////////////////////////////////////////
 
