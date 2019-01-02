@@ -11,11 +11,15 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.jsoup.nodes.Document;
+
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
+import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_SearchRecipe;
@@ -28,7 +32,6 @@ public class Adapter_SearchRecipe
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
     private ArrayList<Recipe> al ;
 
-    private boolean show_expandable = false ;
 
 
     public Adapter_SearchRecipe(Context context, Listener_AddRemoveRecipe listener_addRemoveRecipe) {
@@ -43,7 +46,7 @@ public class Adapter_SearchRecipe
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.row_2lines_expandable, viewGroup, false);
 
-        return new Holder_SearchRecipe(v, this.listener_addRemoveRecipe);
+        return new Holder_SearchRecipe(main_act, v, this.listener_addRemoveRecipe);
     }
 
 
@@ -51,7 +54,7 @@ public class Adapter_SearchRecipe
     public void onBindViewHolder(final Holder_SearchRecipe holder, final int position)
     {
         //Recipe rec = main_act.getSearchResults().get(holder.getAdapterPosition());
-        Recipe rec = al.get(holder.getAdapterPosition());
+        final Recipe rec = al.get(holder.getAdapterPosition());
 
         // labels
         holder.recipe_name.setText(rec.getName());
@@ -62,15 +65,32 @@ public class Adapter_SearchRecipe
             @Override
             public void onClick(View v) {
 
-                // check that expandable is filled
+                holder.show_expandable = !holder.show_expandable ;
+                Log.d("show_expandable", rec.getName() + " | " + holder.show_expandable);
 
-                show_expandable = !show_expandable ;
+                Recipe rec_corresponding = Recipe.getByUrl(main_act.getFavoriteRecipes(), rec.getUrl());
 
-                if (show_expandable) {
-                    holder.recipe_ingr_expandable.setVisibility(View.VISIBLE);
-                } else {
-                    holder.recipe_ingr_expandable.setVisibility(View.GONE);
+                if (rec_corresponding != null) {
+                    // updates actual recipe with corresponding favorite object's ingr list
+                    rec.setIngredients(rec_corresponding.getIngredients());
+                    // now updates UI
+                    holder.buildIngredientsExpandableList(rec, holder.recipe_ingr_expandable);
                 }
+                else {
+                    // launch asynctask
+                    holder.performFetchRecipeIngredients(rec);
+                }
+
+                // displays it if available (peut etre à déplacer dans un if ou autre)
+                if (!rec.getIngredients().isEmpty())
+                {
+                    if (holder.show_expandable) {
+                        holder.recipe_ingr_expandable.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.recipe_ingr_expandable.setVisibility(View.GONE);
+                    }
+                }
+
             }
         });
 
@@ -85,26 +105,6 @@ public class Adapter_SearchRecipe
 
         LinearLayout expandable_ingr_list = holder.recipe_ingr_expandable ;
         expandable_ingr_list.setVisibility(View.GONE); // default : hidden
-
-        // check ingredients list
-        if (rec.getIngredients().isEmpty()) {
-            // launch asynctask
-            main_act.performFetchRecipeIngredients(rec);
-
-        } else { // !!!!!!!!!!!! THIS PART IS WRONGLY DONE !!!!!!!!!!!!!!!!!!
-            // dynamically adds ingredient views to child LinearLayout
-            for (Ingredient ingr : rec.getIngredients())
-            {
-                TextView tv_ingr = new TextView(main_act);
-                tv_ingr.setText(" - " + ingr.returnNameAndForm());
-                //tv_ingr.setTextColor(tv_ingr.getResources().getColor(R.color.black));
-                expandable_ingr_list.addView(tv_ingr);
-
-                CheckBox cb_ingr = new CheckBox(main_act);
-                cb_ingr.setChecked(ingr.getSelected());
-                // suite
-            }
-        }
 
     }
 

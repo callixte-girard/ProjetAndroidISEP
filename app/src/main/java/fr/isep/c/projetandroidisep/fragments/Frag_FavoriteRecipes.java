@@ -14,18 +14,22 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import org.jsoup.nodes.Document;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.*;
+import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
+import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
+import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_FavoriteRecipes;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Frag_FavoriteRecipes extends Fragment
-    implements Listener_AddRemoveRecipe
+        implements Listener_AddRemoveRecipe
 {
     private MainActivity main_act ;
     private View view ;

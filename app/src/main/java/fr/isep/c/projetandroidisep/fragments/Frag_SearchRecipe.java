@@ -22,6 +22,9 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
+import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
+import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_SearchRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchImages;
@@ -33,7 +36,8 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Frag_SearchRecipe extends Fragment
-        implements Response_SearchRecipe, Response_FetchImages , Listener_AddRemoveRecipe
+        implements Response_SearchRecipe, Response_FetchImages, Response_FetchIngredients
+        ,Listener_AddRemoveRecipe
 {
     private MainActivity main_act ;
 
@@ -68,18 +72,23 @@ public class Frag_SearchRecipe extends Fragment
     }
 
 
+
     public void checkedListener_myRecipes(View view, int position, boolean isChecked)
     {
         Recipe rec = main_act.getSearchResults().get(position);
-
         Log.d("checkedListener_search", position + " | " + isChecked + " | " + rec.getName());
 
         if (isChecked) {
-            if (!rec.alreadyExists(main_act.getFavoriteRecipes())) main_act.saveRecipeInFavorites(rec);
+            if (!rec.alreadyExists(main_act.getFavoriteRecipes())) {
+                main_act.saveRecipeInFavorites(rec);
+
+                performFetchRecipeIngredients(rec);
+            }
         } else {
             main_act.removeRecipeFromFavorites(rec);
         }
     }
+
 
 
     @Override
@@ -131,6 +140,26 @@ public class Frag_SearchRecipe extends Fragment
                 Log.d("unknown_ex", unknown_ex.getMessage());
             }
         }
+    }
+
+
+    @Override
+    public void processFinish_fetchIngredients(Document doc, String url)
+    {
+        try {
+            ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
+
+            // --> finally adds to appropriate recipe
+            Recipe rec_to_update = Recipe.getByUrl(main_act.getFavoriteRecipes(), url);
+            rec_to_update.setIngredients(ingr_list);
+
+            // saves
+            main_act.saveIngredientsInRecipe(rec_to_update);
+
+            Log.d("task_results_fetchIngr", url);
+
+        } catch (Exception e) {}
+
     }
 
 
@@ -264,6 +293,17 @@ public class Frag_SearchRecipe extends Fragment
         task_searchRecipe.execute(first_url, String.valueOf(current_deepness));
 
         async_tasks_list.add(task_searchRecipe);
+    }
+
+
+    public void performFetchRecipeIngredients(Recipe rec)
+    {
+        Task_FetchIngredients task_fetchIngredients = new Task_FetchIngredients();
+        task_fetchIngredients.setDelegate(this);
+        task_fetchIngredients.setUrl(rec.getUrl());
+        task_fetchIngredients.execute(task_fetchIngredients.getUrl());
+
+        async_tasks_list.add(task_fetchIngredients);
     }
 
 

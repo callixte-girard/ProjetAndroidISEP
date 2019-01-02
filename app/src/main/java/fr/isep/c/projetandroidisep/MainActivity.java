@@ -12,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
@@ -50,7 +53,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
-    implements Response_FetchIngredients //, Listener_AddRemoveRecipe
+    //implements Response_FetchIngredients
 {
     // display
     private BottomNavigationView bnv ;
@@ -89,18 +92,9 @@ public class MainActivity extends AppCompatActivity
                 while (it.hasNext())
                 {
                     Recipe rec = it.next().getValue(Recipe.class);
-                    Log.d("favorite_recipes_" + getFavoriteRecipes().size(), rec.getName());
+                    //Log.d("favorite_recipes_" + getFavoriteRecipes().size(), rec.getName());
 
                     getFavoriteRecipes().add(rec);
-
-                    // TEST
-                    if (rec.getIngredients().isEmpty()) {
-                        // parse them :
-                        // - call performFetchRecipeIngredients from Frag_SearchRecipe
-                        performFetchRecipeIngredients(rec);
-                        // - transform the other perform(...) to there
-                        // - transfer async_tasks_list here too !!!
-                    }
                 }
 
                 // update fragment's number of favorites
@@ -215,39 +209,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
-
-    @Override
-    public void processFinish_fetchIngredients(Document doc, String url)
-    {
-        try
-        {
-            ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
-
-            // --> finally adds to appropriate recipe
-            Recipe rec_to_update = Recipe.getByUrl(getFavoriteRecipes(), url);
-            rec_to_update.setIngredients(ingr_list);
-
-            // saves
-            saveIngredientsInRecipe(rec_to_update);
-
-            // update SearchRecipe UI
-            // to-do
-
-            Log.d("task_results_fetchIngr", url);
-
-        } catch (Exception e) {}
-    }
-
-
-    //public void performFetchRecipeIngredients(ArrayList<Recipe> al)
-    public void performFetchRecipeIngredients(Recipe rec)
-    {
-        Task_FetchIngredients task_fetchIngredients = new Task_FetchIngredients();
-        task_fetchIngredients.setDelegate(this);
-        task_fetchIngredients.setUrl(rec.getUrl());
-        task_fetchIngredients.execute(task_fetchIngredients.getUrl());
-    }
 
 
     public Drawable loadImageFromUrl(String url) {

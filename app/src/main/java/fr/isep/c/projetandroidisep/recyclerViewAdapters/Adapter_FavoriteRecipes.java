@@ -2,6 +2,7 @@ package fr.isep.c.projetandroidisep.recyclerViewAdapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +28,6 @@ public class Adapter_FavoriteRecipes
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
     private ArrayList<Recipe> al ;
 
-    private boolean show_expandable = false ;
-
 
     public Adapter_FavoriteRecipes(Context context, Listener_AddRemoveRecipe listener_addRemoveRecipe) {
         this.main_act = (MainActivity) context ;
@@ -49,8 +48,7 @@ public class Adapter_FavoriteRecipes
     @Override
     public void onBindViewHolder(final Holder_FavoriteRecipes holder, final int i)
     {
-        //Recipe rec = main_act.getFavoriteRecipes().get(holder.getAdapterPosition());
-        Recipe rec = al.get(holder.getAdapterPosition());
+        final Recipe rec = al.get(holder.getAdapterPosition());
 
         // labels
         holder.recipe_name.setText(rec.getName());
@@ -61,9 +59,10 @@ public class Adapter_FavoriteRecipes
             @Override
             public void onClick(View v) {
 
-                show_expandable = !show_expandable ;
+                holder.show_expandable = !holder.show_expandable ;
+                Log.d("show_expandable", rec.getName() + " | " + holder.show_expandable);
 
-                if (show_expandable) {
+                if (holder.show_expandable) {
                     holder.recipe_ingr_expandable.setVisibility(View.VISIBLE);
                 } else {
                     holder.recipe_ingr_expandable.setVisibility(View.GONE);
@@ -82,23 +81,25 @@ public class Adapter_FavoriteRecipes
             }
         });
 
-        // NO NEEDA CHECK HERE :D
-        // dynamically adds ingredient views to child LinearLayout
         LinearLayout expandable_ingr_list = holder.recipe_ingr_expandable ;
+        expandable_ingr_list = buildIngredientsExpandableList(rec, expandable_ingr_list);
+        // default : hidden
+        expandable_ingr_list.setVisibility(View.GONE);
+    }
+
+
+    private LinearLayout buildIngredientsExpandableList(Recipe rec, LinearLayout expandable_ingr_list)
+    {
         for (Ingredient ingr : rec.getIngredients())
         {
             TextView tv_ingr = new TextView(main_act);
             tv_ingr.setText(" - " + ingr.returnNameAndForm());
             //tv_ingr.setTextColor(tv_ingr.getResources().getColor(R.color.black));
             expandable_ingr_list.addView(tv_ingr);
-
-            CheckBox cb_ingr = new CheckBox(main_act);
-            cb_ingr.setChecked(ingr.getSelected());
-            // suite
         }
-        expandable_ingr_list.setVisibility(View.GONE); // default : hidden
-
+        return expandable_ingr_list ;
     }
+
 
     public void updateFavoritesList(ArrayList<Recipe> al) {
         this.al = al ;
