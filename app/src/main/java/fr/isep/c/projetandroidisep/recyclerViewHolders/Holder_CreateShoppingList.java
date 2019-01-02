@@ -21,7 +21,7 @@ public class Holder_CreateShoppingList extends RecyclerView.ViewHolder
 
         recipe_name = view.findViewById(R.id.title);
         recipe_duration = view.findViewById(R.id.subtitle);
-        checkbox_select_recipe = view.findViewById(R.id.checkbox_add_remove);
+        checkbox_select_recipe = view.findViewById(R.id.checkbox);
     }
 
     @Override

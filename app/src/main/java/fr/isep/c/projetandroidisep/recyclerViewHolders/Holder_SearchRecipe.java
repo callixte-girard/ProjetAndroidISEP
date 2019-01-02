@@ -41,12 +41,12 @@ public class Holder_SearchRecipe
         this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
         this.main_act = (MainActivity) context ;
 
-        recipe_header = view.findViewById(R.id.labels);
+        recipe_header = view.findViewById(R.id.header_vertical);
         //recipe_img = view.findViewById(R.id.recipe_img);
         recipe_name = view.findViewById(R.id.title);
         recipe_duration = view.findViewById(R.id.subtitle);
         //recipe_rating = view.findViewById(R.id.recipe_rating);
-        checkbox_add_to_favorites = view.findViewById(R.id.checkbox_add_remove);
+        checkbox_add_to_favorites = view.findViewById(R.id.checkbox);
         recipe_ingr_expandable = view.findViewById(R.id.expandable_list);
 
         view.setOnClickListener(this);

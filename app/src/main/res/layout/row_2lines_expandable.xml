@@ -5,7 +5,7 @@
     android:gravity="center_vertical">
 
     <!-- ta be flattened like the others -->
-    <include layout="@layout/el_image"/>
+    <include layout="@layout/img_square_small"/>
 
     <LinearLayout
         android:id="@+id/header_vertical"
@@ -13,31 +13,33 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/el_title"/>
-        <include layout="@layout/el_subtitle"/>
+        <include layout="@layout/tv_primary"/>
+        <include layout="@layout/tv_secondary"/>
     </LinearLayout>
 
+
     <RelativeLayout
-        android:id="@+id/recipe_checkboxes"
+        android:id="@+id/checkboxes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_toEndOf="@+id/header_vertical">
 <!--
-        <include layout="@layout/el_checkbox"
+        <include layout="@layout/checkbox"
             android:id="@+id/checkbox_show_expandable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"/>
 -->
-        <include layout="@layout/el_checkbox"
-            android:id="@+id/checkbox_add_remove"
+        <include layout="@layout/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"/>
-
     </RelativeLayout>
 
-    <include layout="@layout/el_expandable_list"/>
+    <include layout="@layout/expandable_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header_vertical"/>
 
 </RelativeLayout>

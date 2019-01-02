@@ -20,7 +20,7 @@ public class Ingredient extends Aliment
 	private String unit ;
 
 	public Ingredient() {}
-
+/*
 	private Ingredient(Aliment alim, double qty, String unit)
 	{
 		super(alim.getName(), alim.getCat(), alim.getUrl()); // sets cat & url from alim
@@ -31,11 +31,11 @@ public class Ingredient extends Aliment
 		this.unit = unit ;
 
 	}
-
+*/
 	public Ingredient(String name, String form, double qty, String unit)
 	{
-		this.setName(name);
-		this.setForm(form);
+		this.setName(name.toLowerCase());
+		this.setForm(form.toLowerCase());
 		this.qty =  qty ;
 		this.unit = unit ;
 

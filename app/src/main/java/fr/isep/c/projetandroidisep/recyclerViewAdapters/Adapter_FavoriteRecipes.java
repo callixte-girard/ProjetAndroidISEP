@@ -90,6 +90,9 @@ public class Adapter_FavoriteRecipes
 
     private LinearLayout buildIngredientsExpandableList(Recipe rec, LinearLayout expandable_ingr_list)
     {
+        // to make sure it doesn't already have children
+        expandable_ingr_list.removeAllViews();
+
         for (Ingredient ingr : rec.getIngredients())
         {
             TextView tv_ingr = new TextView(main_act);
@@ -97,7 +100,7 @@ public class Adapter_FavoriteRecipes
             //tv_ingr.setTextColor(tv_ingr.getResources().getColor(R.color.black));
             expandable_ingr_list.addView(tv_ingr);
         }
-        return expandable_ingr_list ;
+        return expandable_ingr_list;
     }
 
 

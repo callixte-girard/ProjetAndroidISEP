@@ -34,7 +34,7 @@ public class Holder_FavoriteRecipes
         //recipe_img = view.findViewById(R.id.recipe_img);
         recipe_duration = view.findViewById(R.id.subtitle);
         //recipe_rating = view.findViewById(R.id.recipe_rating);
-        checkbox_delete_from_favorites = view.findViewById(R.id.checkbox_add_remove);
+        checkbox_delete_from_favorites = view.findViewById(R.id.checkbox);
         recipe_ingr_expandable = view.findViewById(R.id.expandable_list);
 
         view.setOnClickListener(this);

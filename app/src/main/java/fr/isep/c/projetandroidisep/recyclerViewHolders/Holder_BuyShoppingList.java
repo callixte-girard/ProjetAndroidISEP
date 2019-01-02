@@ -20,7 +20,7 @@ public class Holder_BuyShoppingList extends RecyclerView.ViewHolder
 
         ingr_name_form = view.findViewById(R.id.ingr_name_form);
         ingr_qty_unit = view.findViewById(R.id.ingr_qty_unit);
-        checkbox_bought = view.findViewById(R.id.checkbox_bought);
+        checkbox_bought = view.findViewById(R.id.checkbox);
     }
 
     @Override

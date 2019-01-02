@@ -23,7 +23,7 @@ public class Holder_MyShoppingLists extends RecyclerView.ViewHolder
         lc_header = view.findViewById(R.id.header_vertical);
         lc_name = view.findViewById(R.id.title);
         lc_date_creation = view.findViewById(R.id.subtitle);
-        checkbox_delete_shopping_list = view.findViewById(R.id.checkbox_add_remove);
+        checkbox_delete_shopping_list = view.findViewById(R.id.checkbox);
     }
 
     @Override
