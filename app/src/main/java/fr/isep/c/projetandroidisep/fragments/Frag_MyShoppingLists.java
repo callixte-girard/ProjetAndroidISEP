@@ -46,7 +46,7 @@ public class Frag_MyShoppingLists extends Fragment
 
         filter_shopping_lists = view.findViewById(R.id.filter_shopping_lists);
 
-        number_shopping_lists = view.findViewById(R.id.number_shopping_lists);
+        number_shopping_lists = view.findViewById(R.id.label);
         number_shopping_lists.setText(DEFAULT_COUNTER);
 
         my_shopping_lists = view.findViewById(R.id.my_shopping_lists);

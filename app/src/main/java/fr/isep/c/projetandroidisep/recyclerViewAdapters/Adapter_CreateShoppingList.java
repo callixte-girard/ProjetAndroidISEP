@@ -43,7 +43,7 @@ public class Adapter_CreateShoppingList
     {
         final Recipe rec = main_act.getFavoriteRecipes().get(holder.getAdapterPosition()) ;
 
-        //holder.recipe_name.setText(ParseText.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
+        //holder.recipe_name.setText(Misc.shortifyTitle(rec.getName(), MainActivity.MAX_LABEL_LENGTH));
         holder.recipe_name.setText(rec.getName());
         holder.recipe_name.setOnClickListener(new View.OnClickListener() {
             @Override

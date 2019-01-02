@@ -101,7 +101,7 @@ public class Ingredient extends Aliment
 
 			for (String s2 : attr_list)
 			{
-				s2 = ParseHtml.removeSpecifiedCharFromString(s2, '"');
+				s2 = Misc.removeSpecifiedCharFromString(s2, '"');
 
 				try
 				{
@@ -169,12 +169,12 @@ public class Ingredient extends Aliment
 
 			if (nom.contains(" de " ))
 			{
-				patched = ParseText.cutAndPatchUpString(
+				patched = Misc.cutAndPatchUpString(
 						nom, " de ", "=");
 			}
 			else // if (nom.contains(" d'"))
 			{
-				patched = ParseText.cutAndPatchUpString(
+				patched = Misc.cutAndPatchUpString(
 						nom, " d'", "=");
 			}
 
@@ -185,7 +185,7 @@ public class Ingredient extends Aliment
 		}
 		else if (nom.contains(" en " )) // ATTENTION ! inversé par rapport à de.
 		{
-			String patched = ParseText.cutAndPatchUpString(
+			String patched = Misc.cutAndPatchUpString(
 					nom, " en ", "=");
 
 			String[] nom_spl = patched.split("=");
@@ -195,7 +195,7 @@ public class Ingredient extends Aliment
 		}
 		else if (nom.contains(" à " )) // pareil.
 		{
-			String patched = ParseText.cutAndPatchUpString(
+			String patched = Misc.cutAndPatchUpString(
 					nom, " à ", "=");
 
 			String[] nom_spl = patched.split("=");

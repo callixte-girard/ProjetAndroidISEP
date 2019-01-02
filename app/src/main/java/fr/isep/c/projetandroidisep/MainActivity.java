@@ -11,14 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
-import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
-import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
 import fr.isep.c.projetandroidisep.fragments.Frag_BuyShoppingList;
 import fr.isep.c.projetandroidisep.fragments.Frag_CreateShoppingList;
 import fr.isep.c.projetandroidisep.fragments.Frag_MyShoppingLists;
@@ -29,7 +22,6 @@ import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
 import fr.isep.c.projetandroidisep.myCustomTypes.*;
 
 //import com.facebook.AccessToken;
-import com.android.volley.Response;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,15 +33,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.jsoup.nodes.Document;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity

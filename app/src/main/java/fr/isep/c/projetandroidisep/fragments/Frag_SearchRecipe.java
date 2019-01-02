@@ -62,7 +62,7 @@ public class Frag_SearchRecipe extends Fragment
 
         search_bar = view.findViewById(R.id.search_bar);
         results_list = view.findViewById(R.id.results_list);
-        results_number = view.findViewById(R.id.results_number);
+        results_number = view.findViewById(R.id.label);
 
         initSearchBar();
         initResultsList();
@@ -215,7 +215,7 @@ public class Frag_SearchRecipe extends Fragment
 
                 if (newText.isEmpty()) {
                     optional = "_clear";
-                    //Text is cleared, do your thing
+                    //Misc is cleared, do your thing
                     resetResultsList();
                 }
 
@@ -276,7 +276,7 @@ public class Frag_SearchRecipe extends Fragment
 
         // updates counter
         int count = main_act.getSearchResults().size();
-        results_number.setText(String.valueOf(count) + " results");
+        results_number.setText(count + " results");
 
     }
 
@@ -296,7 +296,7 @@ public class Frag_SearchRecipe extends Fragment
     }
 
 
-    public void performFetchRecipeIngredients(Recipe rec)
+    protected void performFetchRecipeIngredients(Recipe rec)
     {
         Task_FetchIngredients task_fetchIngredients = new Task_FetchIngredients();
         task_fetchIngredients.setDelegate(this);

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
-    <ImageView
-        android:id="@+id/image"
-        android:textColor="@color/grey"
-        android:gravity="center_vertical"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentStart="true"/>
-</merge>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/image"
+    android:textColor="@color/grey"
+    android:gravity="center_vertical"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_alignParentStart="true"/>

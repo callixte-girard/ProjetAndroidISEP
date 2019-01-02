@@ -1,14 +1,11 @@
 package fr.isep.c.projetandroidisep.myCustomTypes;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-import java.util.Calendar;
-
-import fr.isep.c.projetandroidisep.myClasses.ParseText;
+import fr.isep.c.projetandroidisep.myClasses.Misc;
 
 public class ListeCourses
 {
@@ -28,7 +25,7 @@ public class ListeCourses
       //      String creator,
             ArrayList<Recipe> recipes)
     {
-        this.dateCreation = ParseText.formatDate(new Date(System.currentTimeMillis()), DATE_PATTERN);
+        this.dateCreation = Misc.formatDate(new Date(System.currentTimeMillis()), DATE_PATTERN);
         //this.creator = creator ;
         this.recipes = recipes ;
 
@@ -47,7 +44,7 @@ public class ListeCourses
         }
 
         System.out.println("# Liste de courses N°" + this.id
-                + " | créée le : " + ParseText.formatLocalDateTime(this.date_creation)
+                + " | créée le : " + Misc.formatLocalDateTime(this.date_creation)
                 + " | par : " + this.creator
         );
         System.out.println(Disp.line);

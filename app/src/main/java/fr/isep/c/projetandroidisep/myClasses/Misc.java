@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ParseText {
+public class Misc {
 
 
 	public static String shortifyTitle(String title, int max)

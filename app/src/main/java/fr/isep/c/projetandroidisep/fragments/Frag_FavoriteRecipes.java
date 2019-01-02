@@ -69,7 +69,7 @@ public class Frag_FavoriteRecipes extends Fragment
             }
         });
 
-        number_favorite_recipes = view.findViewById(R.id.number_favorite_recipes);
+        number_favorite_recipes = view.findViewById(R.id.label);
         number_favorite_recipes.setText(DEFAULT_COUNTER);
 
         initFavoritesList(); // to set decoration, layout and adapter

@@ -8,7 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 
-public class ParseHtml extends ParseText
+public class ParseHtml
 {
 	//////////////////////////////////////////////////////////////////
 

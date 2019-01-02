@@ -10,18 +10,15 @@
 
     <SearchView
         android:id="@+id/filter_recipe_selection"
-        android:queryHint="Filter recipes"
+        android:queryHint="Filter shopping lists"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"/>
 
-    <TextView
-        android:id="@+id/label"
-        android:textSize="12sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_marginTop="10dp"
+    <include layout="@layout/el_label"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@id/filter_recipe_selection"/>
 
     <android.support.v7.widget.RecyclerView
@@ -31,9 +28,8 @@
         android:layout_below="@id/label"
         android:layout_above="@id/button_container"/>
 
-    <include
+    <include layout="@layout/container_button_2"
         android:id="@+id/button_container"
-        layout="@layout/button_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>

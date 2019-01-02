@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.Date;
 
-import fr.isep.c.projetandroidisep.myClasses.ParseText;
+import fr.isep.c.projetandroidisep.myClasses.Misc;
 
 import static fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses.DATE_PATTERN;
 
@@ -55,7 +55,7 @@ public class Recipe
 		this.type = type ;
 		this.url = url ;
 
-        this.dateAjout = ParseText.formatDate(new Date(System.currentTimeMillis()), DATE_PATTERN);
+        this.dateAjout = Misc.formatDate(new Date(System.currentTimeMillis()), DATE_PATTERN);
 
     }
 

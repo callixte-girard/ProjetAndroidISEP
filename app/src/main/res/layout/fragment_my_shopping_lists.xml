@@ -13,20 +13,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"/>
 
-    <TextView
-        android:id="@+id/number_shopping_lists"
-        android:textSize="12sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_marginTop="10dp"
+    <include layout="@layout/el_label"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@id/filter_shopping_lists"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_shopping_lists"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/number_shopping_lists"/>
+        android:layout_below="@id/label"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/create_shopping_list"

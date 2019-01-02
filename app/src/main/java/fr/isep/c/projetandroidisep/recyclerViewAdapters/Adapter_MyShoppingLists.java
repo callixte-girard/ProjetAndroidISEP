@@ -2,22 +2,18 @@ package fr.isep.c.projetandroidisep.recyclerViewAdapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveShoppingList;
-import fr.isep.c.projetandroidisep.myClasses.ParseText;
+import fr.isep.c.projetandroidisep.myClasses.Misc;
 import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
-import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_MyShoppingLists;
 
 
@@ -53,7 +49,7 @@ public class Adapter_MyShoppingLists
         // labels
         String displayed_title = lc.getAliments().size() + " items" ;
         holder.lc_name.setText(displayed_title);
-        String displayed_date = "Created on " + ParseText.makeFormattedDateHumanReadable(lc.getDateCreation());
+        String displayed_date = "Created on " + Misc.makeFormattedDateHumanReadable(lc.getDateCreation());
         holder.lc_date_creation.setText(displayed_date);
 
         // container for the labels

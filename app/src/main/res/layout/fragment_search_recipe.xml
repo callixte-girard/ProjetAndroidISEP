@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:padding="10dp">
 
     <SearchView
         android:id="@+id/search_bar"
@@ -14,20 +13,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"/>
 
-    <TextView
-        android:id="@+id/results_number"
-        android:textSize="12sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_marginTop="10dp"
+    <include layout="@layout/el_label"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_below="@id/search_bar"/>
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/search_bar"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/results_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/results_number"
+        android:layout_below="@id/label"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
