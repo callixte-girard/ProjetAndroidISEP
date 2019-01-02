@@ -63,7 +63,7 @@ public class Aliment
 	}
 	
 	
-	public static boolean existsName(String name, String form, ArrayList<Aliment> l)
+	public static boolean existsName(String name, String form, ArrayList<? extends Aliment> l)
 	{
 		for (Aliment a : l)
 		{
@@ -156,7 +156,7 @@ public class Aliment
 
 
 
-	public static Aliment getByNameAndForm(String name, String form, ArrayList<Aliment> l)
+	public static Aliment getByNameAndForm(String name, String form, ArrayList<? extends Aliment> l)
 	{
 		if (Aliment.existsName(name, form, l))
 		{

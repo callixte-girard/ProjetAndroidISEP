@@ -47,13 +47,13 @@ public class Adapter_MyShoppingLists
         final ListeCourses lc = main_act.getMyShoppingLists().get(holder.getAdapterPosition());
 
         // labels
-        String displayed_title = lc.getAliments().size() + " items" ;
+        String displayed_title = lc.getIngredients().size() + " items" ;
         holder.lc_name.setText(displayed_title);
         String displayed_date = "Created on " + Misc.makeFormattedDateHumanReadable(lc.getDateCreation());
         holder.lc_date_creation.setText(displayed_date);
 
         // container for the labels
-        holder.lc_labels.setOnClickListener(new View.OnClickListener() {
+        holder.lc_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 main_act.displayFrag_buyShoppingList();

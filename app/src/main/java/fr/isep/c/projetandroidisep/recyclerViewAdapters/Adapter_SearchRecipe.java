@@ -60,7 +60,7 @@ public class Adapter_SearchRecipe
         holder.recipe_duration.setText(rec.getDuration());
 
         // container for the labels
-        holder.recipe_head.setOnClickListener(new View.OnClickListener() {
+        holder.recipe_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

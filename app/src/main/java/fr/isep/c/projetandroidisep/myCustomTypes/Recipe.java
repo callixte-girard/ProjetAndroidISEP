@@ -25,10 +25,8 @@ public class Recipe
 	public final static String URL_BASE = "https://www.marmiton.org" ;
 	public final static String URL_SEARCH = "/recettes/recherche.aspx?aqt=" ;
 
-	public static int counter = 0 ;
-
-	private int id ;
 	private boolean selected = false ; // can be deactivated to remove an aliment from the parsed recipe
+	private boolean custom = false ; // is activated if an ingredient is removed manually by the user
 	private String dateAjout ;
     private String name ;
 	private String url ;
@@ -48,9 +46,6 @@ public class Recipe
 			, String url
 			)
 	{
-		counter ++ ;
-		this.id = counter ;
-
 		this.name = name ;
 		this.type = type ;
 		this.url = url ;
@@ -150,8 +145,14 @@ public class Recipe
 	}
 
 	// possible after creation
-	public boolean getSelected() { return this.selected ; }
+	public boolean isSelected() { return this.selected ; }
 	public void setSelected(boolean selected) {this.selected = selected ; }
+	public boolean isCustom() {
+		return this.custom ;
+	}
+	public void setCustom(boolean custom) {
+		this.custom = custom ;
+	}
 	public double getRating() { return this.rating ; }
 	public void setRating(double rating)
 	{

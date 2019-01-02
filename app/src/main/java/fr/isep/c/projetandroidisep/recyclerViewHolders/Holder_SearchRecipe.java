@@ -25,7 +25,7 @@ public class Holder_SearchRecipe
         extends RecyclerView.ViewHolder
         implements View.OnClickListener, Response_FetchIngredients
 {
-    public LinearLayout recipe_head, recipe_ingr_expandable ;
+    public LinearLayout recipe_header, recipe_ingr_expandable ;
     public ImageView recipe_img ;
     public TextView recipe_name, recipe_duration, recipe_rating ;
     public CheckBox checkbox_add_to_favorites ;
@@ -41,7 +41,7 @@ public class Holder_SearchRecipe
         this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
         this.main_act = (MainActivity) context ;
 
-        recipe_head = view.findViewById(R.id.labels);
+        recipe_header = view.findViewById(R.id.labels);
         //recipe_img = view.findViewById(R.id.recipe_img);
         recipe_name = view.findViewById(R.id.title);
         recipe_duration = view.findViewById(R.id.subtitle);

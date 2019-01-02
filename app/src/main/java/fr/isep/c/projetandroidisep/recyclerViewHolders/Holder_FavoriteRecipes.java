@@ -14,7 +14,7 @@ public class Holder_FavoriteRecipes
         extends RecyclerView.ViewHolder
         implements View.OnClickListener {
 
-    public LinearLayout recipe_labels, recipe_ingr_expandable ;
+    public LinearLayout recipe_header, recipe_ingr_expandable ;
     public ImageView recipe_img ;
     public TextView recipe_name, recipe_duration, recipe_rating ;
     public CheckBox checkbox_delete_from_favorites ;
@@ -29,7 +29,7 @@ public class Holder_FavoriteRecipes
 
         this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
 
-        recipe_labels = view.findViewById(R.id.labels); // the linearlayout clickable
+        recipe_header = view.findViewById(R.id.header_vertical); // the linearlayout clickable
         recipe_name = view.findViewById(R.id.title);
         //recipe_img = view.findViewById(R.id.recipe_img);
         recipe_duration = view.findViewById(R.id.subtitle);

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.myCustomTypes.Aliment;
+import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
 import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_BuyShoppingList;
 
@@ -21,12 +22,12 @@ public class Adapter_BuyShoppingList
         extends RecyclerView.Adapter<Holder_BuyShoppingList>
 {
     private MainActivity main_act ;
-    private ArrayList<Aliment> al = new ArrayList<>();
+    private ArrayList<Ingredient> al = new ArrayList<>();
 
 
     public Adapter_BuyShoppingList(Context context, ListeCourses lc) {
         this.main_act = (MainActivity) context ;
-        this.al.addAll(lc.getAliments());
+        this.al.addAll(lc.getIngredients());
     }
 
 
@@ -34,7 +35,7 @@ public class Adapter_BuyShoppingList
     public Holder_BuyShoppingList onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_2lines_expandable, viewGroup, false);
+                .inflate(R.layout.row_2cells, viewGroup, false);
 
         return new Holder_BuyShoppingList(v);
     }
@@ -42,7 +43,13 @@ public class Adapter_BuyShoppingList
     @Override
     public void onBindViewHolder(final Holder_BuyShoppingList holder, final int i)
     {
+        final Ingredient ingr = al.get(i);
 
+        holder.ingr_name_form.setText(ingr.returnNameAndForm());
+
+        holder.ingr_qty_unit.setText(ingr.getQty() + " " + ingr.getUnit());
+
+        holder.checkbox_bought.setChecked(ingr.isSelected());
     }
 
     @Override

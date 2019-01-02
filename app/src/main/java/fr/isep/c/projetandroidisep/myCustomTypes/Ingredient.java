@@ -257,7 +257,7 @@ public class Ingredient extends Aliment
 		return out ;
 	}
 
-    public boolean getSelected() {
+    public boolean isSelected() {
 		return this.selected ;
 	}
 	public void setSelected(boolean selected) {

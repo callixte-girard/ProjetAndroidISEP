@@ -11,7 +11,7 @@ import fr.isep.c.projetandroidisep.R;
 public class Holder_MyShoppingLists extends RecyclerView.ViewHolder
         implements View.OnClickListener {
 
-    public LinearLayout lc_labels ;
+    public LinearLayout lc_header ;
     public TextView lc_name, lc_date_creation ;
     public CheckBox checkbox_delete_shopping_list ;
 
@@ -20,7 +20,7 @@ public class Holder_MyShoppingLists extends RecyclerView.ViewHolder
     {
         super(view);
 
-        lc_labels = view.findViewById(R.id.labels);
+        lc_header = view.findViewById(R.id.header_vertical);
         lc_name = view.findViewById(R.id.title);
         lc_date_creation = view.findViewById(R.id.subtitle);
         checkbox_delete_shopping_list = view.findViewById(R.id.checkbox_add_remove);

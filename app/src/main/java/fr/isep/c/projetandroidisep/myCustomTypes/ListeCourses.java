@@ -13,10 +13,10 @@ public class ListeCourses
 
 
     private String dateCreation ;
-    //private String creator ;
-    //private LocalDate duree ; // a travailler
+    //private String dateAchat ;
     private ArrayList<Recipe> recipes = new ArrayList<>();
-    private ArrayList<Aliment> aliments = new ArrayList<>();
+    private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private String boughtAt ;
 
 
     public ListeCourses() {}
@@ -30,38 +30,15 @@ public class ListeCourses
         this.recipes = recipes ;
 
         // ce qui nous intéresse c'est surtout la liste d'aliments en fait.
-        this.aliments = createListAlimentsFromRecipes(this.recipes) ;
+        this.ingredients = createListIngredientsFromRecipes(this.recipes) ;
 
         this.sortAlimAlphabetically();
     }
 
-/*
-    public void dispAttr(boolean sort)
+
+    private static ArrayList<Ingredient> createListIngredientsFromRecipes(ArrayList<Recipe> recipes)
     {
-        if (sort)
-        {
-            this.sortAlimAlphabetically();
-        }
-
-        System.out.println("# Liste de courses N°" + this.id
-                + " | créée le : " + Misc.formatLocalDateTime(this.date_creation)
-                + " | par : " + this.creator
-        );
-        System.out.println(Disp.line);
-
-        for (Aliment alim : this.aliments)
-        {
-            Ingredient ingr = (Ingredient) alim ;
-            ingr.dispQty();
-        }
-
-        System.out.println(Disp.star);
-    }
-*/
-
-    private static ArrayList<Aliment> createListAlimentsFromRecipes(ArrayList<Recipe> recipes)
-    {
-        ArrayList<Aliment> temp_ingr = new ArrayList<>();
+        ArrayList<Ingredient> temp_ingr = new ArrayList<>();
 
         for (Recipe rec : recipes)
         {
@@ -92,7 +69,7 @@ public class ListeCourses
 
     private void sortAlimAlphabetically()
     {
-        Collections.sort(this.aliments, new Comparator<Aliment>()
+        Collections.sort(this.ingredients, new Comparator<Aliment>()
         {
             @Override
             public int compare(Aliment al1, Aliment al2)
@@ -112,19 +89,18 @@ public class ListeCourses
         this.recipes = recipes ;
     }
 
-    public ArrayList<Aliment> getAliments()
+    public ArrayList<Ingredient> getIngredients()
     {
-        return this.aliments ;
+        return this.ingredients ;
     }
-    public void setAliments(ArrayList<Aliment> aliments)
-    {
-        this.aliments = aliments ;
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients = ingredients ;
     }
 
     public String getDateCreation() { return this.dateCreation ; }
     public void setDateCreation(String dateCreation) { this.dateCreation = dateCreation ; }
 
-    //public String getCreator() { return this.creator ; }
-    //public void setCreator(String creator) { this.creator = creator ; }
+    public String getBoughtAt() { return this.boughtAt ; }
+    public void setBoughtAt(String boughtAt) { this.boughtAt = boughtAt ; }
 
 }

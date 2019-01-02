@@ -66,7 +66,7 @@ public class Frag_CreateShoppingList extends Fragment
 
                 // fills it
                 for (Recipe rec : main_act.getFavoriteRecipes()) {
-                    if (rec.getSelected()) {
+                    if (rec.isSelected()) {
                         lc_recipes.add(rec);
                     }
                 }

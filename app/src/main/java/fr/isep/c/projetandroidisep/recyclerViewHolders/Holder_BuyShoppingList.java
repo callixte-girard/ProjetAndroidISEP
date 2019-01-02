@@ -11,16 +11,16 @@ public class Holder_BuyShoppingList extends RecyclerView.ViewHolder
         implements View.OnClickListener {
 
 
-    private TextView ingr_name, ingr_qty ;
-    private CheckBox checkbox_bought ;
+    public TextView ingr_name_form, ingr_qty_unit ;
+    public CheckBox checkbox_bought ;
 
     public Holder_BuyShoppingList(View view)
     {
         super(view);
 
-        ingr_name = view.findViewById(R.id.title);
-        ingr_qty = view.findViewById(R.id.subtitle);
-        checkbox_bought = view.findViewById(R.id.checkbox);
+        ingr_name_form = view.findViewById(R.id.ingr_name_form);
+        ingr_qty_unit = view.findViewById(R.id.ingr_qty_unit);
+        checkbox_bought = view.findViewById(R.id.checkbox_bought);
     }
 
     @Override
