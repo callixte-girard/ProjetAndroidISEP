@@ -8,9 +8,14 @@ Egor Rumyantsev
 TO-DO :
 V expandable view
 - faire mode buy shopping list
-- réparer pbs arret asynctasks en mode recherche :
+V réparer pbs arret asynctasks en mode recherche :
     - trouver comment activer onQueryTextChange() quand le texte est vide
-- add filters in recipes and shopping lists fragments
+    V bon le résultat obtenu n'arrete pas tjs la derniere asynctask mais on s'en satisfera.
+- add filters in fragments :
+    - favorite recipes
+    - my shopping lists
+    - create sl
+    - buy sl
 - customiser icones
 - implémenter récupération des images (seems not to work for now)
 V backup delete with snackbar

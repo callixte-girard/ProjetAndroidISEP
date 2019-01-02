@@ -161,8 +161,8 @@ public class MainActivity extends AppCompatActivity
             frag_my_shopping_lists = new Frag_MyShoppingLists();
             frag_user = new Frag_User();
 
-            frag_create_shopping_list = new Frag_CreateShoppingList();
-            frag_buy_shopping_list = new Frag_BuyShoppingList();
+            //frag_create_shopping_list = new Frag_CreateShoppingList();
+            //frag_buy_shopping_list = new Frag_BuyShoppingList();
 
             setBottomNavigationDrawer();
 
@@ -339,14 +339,21 @@ public class MainActivity extends AppCompatActivity
 
     public void displayFrag_createShoppingList()
     {
+        // creates new one first
+        frag_create_shopping_list = new Frag_CreateShoppingList();
+
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_create_shopping_list)
                 .commit();
     }
 
-    public void displayFrag_buyShoppingList()
+    public void displayFrag_buyShoppingList(ListeCourses lc_buy)
     {
+        // creates new and adds lc_buy to it
+        frag_buy_shopping_list = new Frag_BuyShoppingList();
+        frag_buy_shopping_list.setShoppingListToBuy(lc_buy);
+
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.frame_container, frag_buy_shopping_list)
@@ -359,6 +366,9 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .remove(frag_create_shopping_list)
                 .commitAllowingStateLoss();
+
+        // destroys it now
+        frag_create_shopping_list = null ;
     }
 
     public void destroyFrag_buyShoppingList()
@@ -367,6 +377,9 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .remove(frag_buy_shopping_list)
                 .commitAllowingStateLoss();
+
+        // destroys it now
+        frag_buy_shopping_list = null ;
     }
 
     public void destroyFrag_searchRecipe()

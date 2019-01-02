@@ -44,23 +44,29 @@ public class ListeCourses
         {
             for (Ingredient ingr : rec.getIngredients())
             {
-                // regarde s'il est déjà présent. Si non, l'ajoute.
-                if (!Ingredient.existsName(ingr.getName(), ingr.getForm(), temp_ingr))
-                {
-                    Ingredient new_ingr = new Ingredient(
-                            ingr.getName(), ingr.getForm(), ingr.getQty(), ingr.getUnit()
-                    );
+                // gestion des ingrédients sélectionnés ou non :
+                if (ingr.isSelected()) {
+                    // regarde s'il est déjà présent. Si non, l'ajoute.
+                    if (!Ingredient.existsName(ingr.getName(), ingr.getForm(), temp_ingr))
+                    {
+                        Ingredient new_ingr = new Ingredient(
+                                ingr.getName(), ingr.getForm(), ingr.getQty(), ingr.getUnit()
+                        );
+                        // put it to false for shopping list
+                        new_ingr.setSelected(false);
 
-                    temp_ingr.add(new_ingr);
+                        temp_ingr.add(new_ingr);
+                    }
+                    else // sinon, augmente la qtité de l'alim
+                    {
+                        Ingredient ingr_to_update = (Ingredient) Ingredient
+                                .getByNameAndForm(ingr.getName(), ingr.getForm(), temp_ingr);
+
+                        ingr_to_update.updateQty(ingr);
+                    }
+                } else {
+                    /// ne l'ajoute pas.
                 }
-                else // sinon, augmente la qtité de l'alim
-                {
-                    Ingredient ingr_to_update = (Ingredient) Ingredient
-                            .getByNameAndForm(ingr.getName(), ingr.getForm(), temp_ingr);
-
-                    ingr_to_update.updateQty(ingr);
-                }
-
             }
         }
         return temp_ingr ;
@@ -103,4 +109,12 @@ public class ListeCourses
     public String getBoughtAt() { return this.boughtAt ; }
     public void setBoughtAt(String boughtAt) { this.boughtAt = boughtAt ; }
 
+    public boolean isFinished()
+    {
+        try {
+            return !this.getBoughtAt().isEmpty();
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
 }

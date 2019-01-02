@@ -27,7 +27,9 @@
         android:layout_below="@id/label"
         android:layout_above="@id/button_container"/>
 
+    <!--<include layout="@layout/container_buttons_2"-->
     <include layout="@layout/container_button_centered"
+        android:id="@+id/button_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>

@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.interfaces.Listener_BuyIngredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.Aliment;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
@@ -24,10 +26,15 @@ public class Adapter_BuyShoppingList
     private MainActivity main_act ;
     private ArrayList<Ingredient> al = new ArrayList<>();
 
+    private Listener_BuyIngredient listener_buyIngredient ;
 
-    public Adapter_BuyShoppingList(Context context, ListeCourses lc) {
+
+    public Adapter_BuyShoppingList(Context context, ListeCourses lc
+        ,Listener_BuyIngredient listener_buyIngredient
+    ) {
         this.main_act = (MainActivity) context ;
         this.al.addAll(lc.getIngredients());
+        this.listener_buyIngredient = listener_buyIngredient ;
     }
 
 
@@ -37,7 +44,7 @@ public class Adapter_BuyShoppingList
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.row_2cells, viewGroup, false);
 
-        return new Holder_BuyShoppingList(v);
+        return new Holder_BuyShoppingList(main_act, v, this.listener_buyIngredient);
     }
 
     @Override
@@ -47,9 +54,18 @@ public class Adapter_BuyShoppingList
 
         holder.ingr_name_form.setText(ingr.returnNameAndForm());
 
-        holder.ingr_qty_unit.setText(ingr.getQty() + " " + ingr.getUnit());
+        String qty_disp = ingr.getQty() + " " + ingr.getUnit();
+        holder.ingr_qty_unit.setText(qty_disp);
 
         holder.checkbox_bought.setChecked(ingr.isSelected());
+        holder.checkbox_bought.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                listener_buyIngredient.checkedListener_buyIngredient
+                        (buttonView, holder.getAdapterPosition(), isChecked);
+            }
+        });
     }
 
     @Override

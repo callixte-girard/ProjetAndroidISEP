@@ -11,18 +11,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+
+import java.util.List;
+
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.interfaces.Listener_BuyIngredient;
+import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
+import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
+import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_BuyShoppingList;
 
 
 public class Frag_BuyShoppingList extends Fragment
+    implements Listener_BuyIngredient
 {
     private MainActivity main_act ;
+    private ListeCourses lc_buy ;
 
     private TextView label ;
     private RecyclerView select_bought_aliments ;
     //private SearchView filter_favorite_recipes ;
-    private Button button_done ;
+    private Button button_finish, button_back ;
 
 
     @Override
@@ -39,15 +49,25 @@ public class Frag_BuyShoppingList extends Fragment
 
         select_bought_aliments = view.findViewById(R.id.select_bought_aliments);
 
-        button_done = view.findViewById(R.id.button_center);
-        button_done.setText("OK");
-        button_done.setOnClickListener(new View.OnClickListener() {
+        /*
+        button_finish = view.findViewById(R.id.button_right);
+        button_finish.setText("Finish");
+        button_finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ///
+            }
+        });
+        */
+
+        button_back = view.findViewById(R.id.button_center);
+        button_back.setText("Back to shopping lists");
+        button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // removes actual fragment and restores my shopping lists one
-                MainActivity act = (MainActivity) getActivity();
-                act.destroyFrag_buyShoppingList();
-                act.displayFrag_myShoppingLists();
+                main_act.destroyFrag_buyShoppingList();
+                main_act.displayFrag_myShoppingLists();
             }
         });
 
@@ -56,10 +76,12 @@ public class Frag_BuyShoppingList extends Fragment
         return view ;
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
+    public ListeCourses getShoppingListToBuy() {
+        return this.lc_buy ;
+    }
 
+    public void setShoppingListToBuy(ListeCourses lc_buy) {
+        this.lc_buy = lc_buy ;
     }
 
 
@@ -75,14 +97,20 @@ public class Frag_BuyShoppingList extends Fragment
         DividerItemDecoration itemDecor = new DividerItemDecoration
                 (getContext(), linearLayoutManager.getOrientation());
         select_bought_aliments.addItemDecoration(itemDecor);
-    }
-/*
-    private void updateBuyShoppingList()
-    {
+
         // custom adapter
-        Adapter_BuyShoppingList adapter = new Adapter_BuyShoppingList(getContext(), );
+        Adapter_BuyShoppingList adapter = new Adapter_BuyShoppingList
+                (getContext(), lc_buy, this);
         select_bought_aliments.setAdapter(adapter);
     }
-*/
+
+    public void checkedListener_buyIngredient(View view, int position, boolean isChecked)
+    {
+        final Ingredient ingr = lc_buy.getIngredients().get(position);
+
+        ingr.setSelected(isChecked); // here it is more isBought than isSelected but it works
+
+        main_act.saveShoppingList(lc_buy);
+    }
 
 }

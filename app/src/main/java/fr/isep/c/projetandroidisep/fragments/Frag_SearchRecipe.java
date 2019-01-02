@@ -26,7 +26,6 @@ import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
-import fr.isep.c.projetandroidisep.myClasses.myCustomAndroid.MySearchView;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_SearchRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
@@ -92,11 +91,9 @@ public class Frag_SearchRecipe extends Fragment
             {
                 Log.d("onQueryTextSubmit", query);
 
-
                 // reset all results list
-                results_number.setText("Searching...");
-
                 resetResultsList();
+                results_number.setText("Searching...");
 
                 //// PERFORM SEARCH HERE
                 performSearchFromKeywordsAndDeepness(query);
@@ -121,18 +118,9 @@ public class Frag_SearchRecipe extends Fragment
 
                 Log.d("onQueryTextChange" + optional, newText);
 
-
                 return true;
             }
         });
-/*      // CANNOT BE USED BECAUSE ICONIFIED DEFAULT SET TO FALSE, onClose is never called
-        search_bar.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                Log.d("onClose", "");
-                return false;
-            }
-        }); */
     }
 
 

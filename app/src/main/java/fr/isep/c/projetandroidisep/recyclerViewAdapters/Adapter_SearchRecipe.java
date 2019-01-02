@@ -29,12 +29,14 @@ public class Adapter_SearchRecipe
         extends RecyclerView.Adapter<Holder_SearchRecipe>
 {
     private MainActivity main_act;
-    private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
     private ArrayList<Recipe> al ;
 
+    private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
 
 
-    public Adapter_SearchRecipe(Context context, Listener_AddRemoveRecipe listener_addRemoveRecipe) {
+    public Adapter_SearchRecipe(Context context
+            , Listener_AddRemoveRecipe listener_addRemoveRecipe
+    ) {
         this.main_act = (MainActivity) context ;
         this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
     }

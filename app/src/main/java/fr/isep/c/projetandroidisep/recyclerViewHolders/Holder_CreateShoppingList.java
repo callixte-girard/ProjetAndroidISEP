@@ -7,10 +7,10 @@ import android.widget.TextView;
 
 import fr.isep.c.projetandroidisep.R;
 
-public class Holder_CreateShoppingList extends RecyclerView.ViewHolder
-        implements View.OnClickListener {
-
-
+public class Holder_CreateShoppingList
+        extends RecyclerView.ViewHolder
+        implements View.OnClickListener
+{
     public TextView recipe_name, recipe_duration ;
     public CheckBox checkbox_select_recipe ;
 

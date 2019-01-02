@@ -34,7 +34,8 @@ public class Holder_SearchRecipe
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
     public boolean show_expandable = false ;
 
-    public Holder_SearchRecipe(Context context, View view, Listener_AddRemoveRecipe listener_addRemoveRecipe)
+    public Holder_SearchRecipe(Context context, View view
+            , Listener_AddRemoveRecipe listener_addRemoveRecipe)
     {
         super(view);
 

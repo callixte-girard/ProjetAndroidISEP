@@ -252,8 +252,8 @@ public class Ingredient extends Aliment
 		String out = this.getName();
 
 		if (!this.getForm().isEmpty()) {
-		//	out += " (" + this.getForm() + ")" ;
-			out += ", " + this.getForm() ;
+			out += " (" + this.getForm() + ")" ;
+		//	out += ", " + this.getForm() ;
 		}
 
 		return out ;

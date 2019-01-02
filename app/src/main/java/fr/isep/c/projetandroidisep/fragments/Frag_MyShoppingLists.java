@@ -14,10 +14,14 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.isep.c.projetandroidisep.*;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveShoppingList;
+import fr.isep.c.projetandroidisep.interfaces.Listener_BuyShoppingList;
 import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_FavoriteRecipes;
@@ -25,7 +29,7 @@ import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_MyShoppingLists;
 
 
 public class Frag_MyShoppingLists extends Fragment
-    implements Listener_AddRemoveShoppingList
+    implements Listener_AddRemoveShoppingList, Listener_BuyShoppingList
 {
     private MainActivity main_act ;
 
@@ -76,6 +80,14 @@ public class Frag_MyShoppingLists extends Fragment
     }
 
 
+    public void clickListener_myShoppingLists(View v, final int position)
+    {
+        final ListeCourses lc = main_act.getMyShoppingLists().get(position);
+
+        main_act.displayFrag_buyShoppingList(lc);
+    }
+
+
     public void checkedListener_myShoppingLists(View view, final int position, boolean isChecked)
     {
         final ListeCourses lc = main_act.getMyShoppingLists().get(position);
@@ -121,7 +133,8 @@ public class Frag_MyShoppingLists extends Fragment
         my_shopping_lists.addItemDecoration(itemDecor);
 
         // custom adapter
-        Adapter_MyShoppingLists adapter = new Adapter_MyShoppingLists(getContext(), this);
+        Adapter_MyShoppingLists adapter = new Adapter_MyShoppingLists
+                (getContext(), this, this);
         my_shopping_lists.setAdapter(adapter);
     }
 

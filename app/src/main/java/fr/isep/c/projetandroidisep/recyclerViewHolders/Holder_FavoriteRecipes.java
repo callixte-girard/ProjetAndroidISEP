@@ -26,7 +26,6 @@ public class Holder_FavoriteRecipes
     public Holder_FavoriteRecipes(View view, Listener_AddRemoveRecipe listener_addRemoveRecipe)
     {
         super(view);
-
         this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
 
         recipe_header = view.findViewById(R.id.header_vertical); // the linearlayout clickable
