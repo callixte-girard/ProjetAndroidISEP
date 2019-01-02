@@ -78,12 +78,6 @@ public class Frag_FavoriteRecipes extends Fragment
         return view ;
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-
-    }
-
 
     public void checkedListener_myRecipes(View view, final int position, boolean isChecked)
     {

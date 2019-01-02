@@ -250,6 +250,13 @@ public class ParseText {
 		return df.format(date);
 	}
 
+	public static String makeFormattedDateHumanReadable(String formatted_date)
+	{
+		return formatted_date
+				.replace("_", " at ")
+				.replace("-", "/");
+	}
+
 
 	@TargetApi(Build.VERSION_CODES.O)
 	public static String formatLocalDateTime(LocalDateTime ldt)

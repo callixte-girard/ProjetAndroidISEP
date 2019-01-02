@@ -53,7 +53,6 @@ public class Adapter_SearchRecipe
     @Override
     public void onBindViewHolder(final Holder_SearchRecipe holder, final int position)
     {
-        //Recipe rec = main_act.getSearchResults().get(holder.getAdapterPosition());
         final Recipe rec = al.get(holder.getAdapterPosition());
 
         // labels

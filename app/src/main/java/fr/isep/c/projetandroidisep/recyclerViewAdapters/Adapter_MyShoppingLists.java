@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveShoppingList;
+import fr.isep.c.projetandroidisep.myClasses.ParseText;
 import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_MyShoppingLists;
@@ -52,10 +53,7 @@ public class Adapter_MyShoppingLists
         // labels
         String displayed_title = lc.getAliments().size() + " items" ;
         holder.lc_name.setText(displayed_title);
-
-        String displayed_date = lc.getDateCreation()
-                .replace("_", " at ")
-                .replace("-", "/");
+        String displayed_date = "Created on " + ParseText.makeFormattedDateHumanReadable(lc.getDateCreation());
         holder.lc_date_creation.setText(displayed_date);
 
         // container for the labels
