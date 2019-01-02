@@ -43,14 +43,15 @@ public class FirebaseUIActivity extends AppCompatActivity {
 
                 // checks if user path exists in nosql db + creates it if not
                 String auth_uid = firebaseAuth.getInstance().getUid();
-                //String auth_uid = "oiuhjuih";
 
                 try {
+                    // to enable offline temp storage if network access gets lost or shitty
+                    FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
                     DatabaseReference current_user_ref = FirebaseDatabase.getInstance()
                             .getReference().child(auth_uid);
 
                     Log.d("current_user_ref", current_user_ref.toString());
-
 
                 } catch (Exception e) {
                     Log.d("current_user_ref", e.getMessage());
@@ -80,10 +81,6 @@ public class FirebaseUIActivity extends AppCompatActivity {
         setContentView(R.layout.activity_firebase_ui);
 
         FirebaseAuth.getInstance().addAuthStateListener(listener_auth);
-
-        // to enable offline temp storage
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
     }
 
 
