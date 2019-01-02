@@ -6,7 +6,7 @@ Egor Rumyantsev
 
 
 TO-DO :
-- expandable view
+V expandable view
 - customiser icones
 - réparer pbs arret asynctasks en mode recherche :
     - trouver comment activer onQueryTextChange() quand le texte est vide
@@ -15,3 +15,4 @@ V backup delete with snackbar
 - implémenter onBackPressed pour chaque fragment
 - add filters in recipes and shopping lists fragments
 - sort favorite recipes by last added
+- réparer mode buy shopping list

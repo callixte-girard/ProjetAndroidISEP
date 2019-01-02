@@ -24,8 +24,8 @@ public class Adapter_FavoriteRecipes
         extends RecyclerView.Adapter<Holder_FavoriteRecipes>
 {
     private MainActivity main_act ;
-    private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
     private ArrayList<Recipe> al = new ArrayList<>();
+    private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
 
 
     public Adapter_FavoriteRecipes(Context context, Listener_AddRemoveRecipe listener_addRemoveRecipe) {

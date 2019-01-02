@@ -14,67 +14,40 @@ import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.myCustomTypes.Aliment;
 import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
+import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_BuyShoppingList;
 
 
-public class Adapter_BuyShoppingList extends RecyclerView.Adapter
-            <Adapter_BuyShoppingList
-                .RecyclerViewHolder_SelectRecipes>
+public class Adapter_BuyShoppingList
+        extends RecyclerView.Adapter<Holder_BuyShoppingList>
 {
-
-    static class RecyclerViewHolder_SelectRecipes extends RecyclerView.ViewHolder
-        implements View.OnClickListener {
-
-
-        private TextView ingr_name, ingr_qty ;
-        private CheckBox checkbox_bought ;
-
-
-        RecyclerViewHolder_SelectRecipes(View view)
-        {
-            super(view);
-
-            ingr_name = view.findViewById(R.id.title);
-            ingr_qty = view.findViewById(R.id.subtitle);
-            checkbox_bought = view.findViewById(R.id.checkbox);
-        }
-
-        @Override
-        public void onClick(View view) {
-
-        }
-    }
-
-    private Context context ;
     private MainActivity main_act ;
+    private ArrayList<Aliment> al = new ArrayList<>();
 
-    private ListeCourses lc ;
 
     public Adapter_BuyShoppingList(Context context, ListeCourses lc) {
-        this.context = context ;
-        this.main_act = (MainActivity) this.context ;
-        this.lc = lc ;
+        this.main_act = (MainActivity) context ;
+        this.al.addAll(lc.getAliments());
     }
 
 
     @Override
-    public RecyclerViewHolder_SelectRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
+    public Holder_BuyShoppingList onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.row_2lines_expandable, viewGroup, false);
 
-        return new RecyclerViewHolder_SelectRecipes(v);
+        return new Holder_BuyShoppingList(v);
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder_SelectRecipes holder, final int i)
+    public void onBindViewHolder(final Holder_BuyShoppingList holder, final int i)
     {
-        ArrayList<Aliment> ingr_al = this.lc.getAliments();
+
     }
 
     @Override
     public int getItemCount() {
-        return (null != main_act.getFavoriteRecipes()
-                ? main_act.getFavoriteRecipes().size() : 0);
+        return (null != al ? al.size() : 0);
     }
 
 }

@@ -6,9 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -16,18 +14,18 @@ import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_CreateShoppingList;
-import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_SearchRecipe;
 
 
-public class Adapter_CreateShoppingList extends RecyclerView.Adapter<Holder_CreateShoppingList>
+public class Adapter_CreateShoppingList
+        extends RecyclerView.Adapter<Holder_CreateShoppingList>
 {
     private MainActivity main_act ;
+    private ArrayList<Recipe> al = new ArrayList<>();
 
-    private ArrayList<Recipe> recipe_list = new ArrayList<>();
 
     public Adapter_CreateShoppingList(Context context) {
         this.main_act = (MainActivity) context ;
-        this.recipe_list.addAll(main_act.getFavoriteRecipes()) ;
+        this.al.addAll(main_act.getFavoriteRecipes()) ;
     }
 
 
@@ -77,8 +75,7 @@ public class Adapter_CreateShoppingList extends RecyclerView.Adapter<Holder_Crea
     @Override
     public int getItemCount() {
 
-        return (null != main_act.getFavoriteRecipes()
-                ? main_act.getFavoriteRecipes().size() : 0);
+        return (null != al ? al.size() : 0);
     }
 
 }

@@ -25,8 +25,8 @@ public class Adapter_MyShoppingLists
         extends RecyclerView.Adapter<Holder_MyShoppingLists>
 {
     private MainActivity main_act ;
-    private Listener_AddRemoveShoppingList listener_addRemoveShoppingList ;
     private ArrayList<ListeCourses> al = new ArrayList<>();
+    private Listener_AddRemoveShoppingList listener_addRemoveShoppingList ;
 
 
     public Adapter_MyShoppingLists(Context context, Listener_AddRemoveShoppingList listener_addRemoveShoppingList) {
