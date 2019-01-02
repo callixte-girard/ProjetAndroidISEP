@@ -8,15 +8,17 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+//import android.support.v7.widget.SearchView;
+import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,7 @@ import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
+import fr.isep.c.projetandroidisep.myClasses.myCustomAndroid.MySearchView;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_SearchRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
@@ -70,6 +73,121 @@ public class Frag_SearchRecipe extends Fragment
 
         return view ;
     }
+
+
+    private void initSearchBar()
+    {
+        // make it fully visible
+        search_bar.setIconifiedByDefault(false);
+
+        // change text color
+        TextView query_field = getSearchSrcTextView(search_bar);
+        query_field.setTextColor(Color.WHITE);
+
+
+        // set method when search pressed
+        search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query)
+            {
+                Log.d("onQueryTextSubmit", query);
+
+
+                // reset all results list
+                results_number.setText("Searching...");
+
+                resetResultsList();
+
+                //// PERFORM SEARCH HERE
+                performSearchFromKeywordsAndDeepness(query);
+
+                // then resets deepness counter
+                current_deepness = 0 ;
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText)
+            {
+                String optional = "";
+
+                if (newText.isEmpty()) {
+                    optional = "_clear";
+                    //Misc is cleared, do your thing
+
+                    resetResultsList();
+                }
+
+                Log.d("onQueryTextChange" + optional, newText);
+
+
+                return true;
+            }
+        });
+/*      // CANNOT BE USED BECAUSE ICONIFIED DEFAULT SET TO FALSE, onClose is never called
+        search_bar.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                Log.d("onClose", "");
+                return false;
+            }
+        }); */
+    }
+
+
+    private void initResultsList()
+    {
+        results_list.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
+
+        // layout
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        results_list.setLayoutManager(linearLayoutManager);
+
+        // add a line to divide them more clearly
+        DividerItemDecoration itemDecor = new DividerItemDecoration
+                (getContext(), linearLayoutManager.getOrientation());
+        results_list.addItemDecoration(itemDecor);
+
+        // custom adapter
+        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe(getContext(), this);
+        results_list.setAdapter(adapter);
+    }
+
+
+    private void resetResultsList()
+    {
+        // cancels eventual new callings
+        current_deepness = deepness ;
+
+        for (AsyncTask task : async_tasks_list) {
+            task.cancel(true);
+            Log.d(task.toString(), "isCancelled=" + task.isCancelled());
+        }
+
+        // clear results
+        main_act.getSearchResults().clear();
+        updateResultsNumber();
+    }
+
+
+    public void updateResultsList(ArrayList<Recipe> new_list)
+    {
+        // updates adapter
+        ((Adapter_SearchRecipe) results_list.getAdapter()).updateResultsList(new_list);
+
+        // and label
+        updateResultsNumber();
+    }
+
+
+    private void updateResultsNumber()
+    {
+        // updates counter label
+        int count = main_act.getSearchResults().size();
+        results_number.setText(count + " results");
+    }
+
 
 
 
@@ -173,112 +291,6 @@ public class Frag_SearchRecipe extends Fragment
     }
 
 
-    private void initSearchBar()
-    {
-        // make it fully visible
-        search_bar.setIconifiedByDefault(false);
-
-        // change text color to white
-        int id = search_bar.getContext()
-                .getResources()
-                .getIdentifier("android:id/search_src_text", null, null);
-        TextView query_field = search_bar.findViewById(id);
-        query_field.setTextColor(Color.WHITE);
-
-
-        // set method when search pressed
-        search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query)
-            {
-                Log.d("onQueryTextSubmit", query);
-
-
-                // reset all results list
-                results_number.setText("Searching...");
-
-                resetResultsList();
-
-                //// PERFORM SEARCH HERE
-                performSearchFromKeywordsAndDeepness(query);
-
-                // then resets deepness counter
-                current_deepness = 0 ;
-
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText)
-            {
-                String optional = "";
-
-                if (newText.isEmpty()) {
-                    optional = "_clear";
-                    //Misc is cleared, do your thing
-                    resetResultsList();
-                }
-
-                Log.d("onQueryTextChange" + optional, newText);
-
-
-                return true;
-            }
-        });
-
-        search_bar.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                Log.d("onClose", "");
-                return false;
-            }
-        });
-    }
-
-
-    private void initResultsList()
-    {
-        results_list.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
-
-        // layout
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        results_list.setLayoutManager(linearLayoutManager);
-
-        // add a line to divide them more clearly
-        DividerItemDecoration itemDecor = new DividerItemDecoration
-                (getContext(), linearLayoutManager.getOrientation());
-        results_list.addItemDecoration(itemDecor);
-
-        // custom adapter
-        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe(getContext(), this);
-        results_list.setAdapter(adapter);
-    }
-
-
-    private void resetResultsList()
-    {
-        // cancels eventual new callings
-        current_deepness = deepness ;
-
-        for (AsyncTask task : async_tasks_list) {
-            task.cancel(true);
-        }
-
-        // clear results
-        main_act.getSearchResults().clear();
-    }
-
-
-    public void updateResultsList(ArrayList<Recipe> new_list)
-    {
-        // updates adapter
-        ((Adapter_SearchRecipe) results_list.getAdapter()).updateResultsList(new_list);
-
-        // updates counter
-        int count = main_act.getSearchResults().size();
-        results_number.setText(count + " results");
-
-    }
 
 
     protected void performSearchFromKeywordsAndDeepness(String search)
@@ -319,6 +331,17 @@ public class Frag_SearchRecipe extends Fragment
             async_tasks_list.add(task_fetchImages);
         }
     }
+
+
+    private TextView getSearchSrcTextView(SearchView search_bar)
+    {
+        int id = search_bar.getContext()
+                .getResources()
+                .getIdentifier("android:id/search_src_text", null, null);
+
+        return search_bar.findViewById(id);
+    }
+
 
 
 

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-import fr.isep.c.projetandroidisep.myClasses.Misc;
+import fr.isep.c.projetandroidisep.myClasses.utils.Misc;
 
 public class ListeCourses
 {

@@ -18,7 +18,7 @@ import fr.isep.c.projetandroidisep.fragments.Frag_MyShoppingLists;
 import fr.isep.c.projetandroidisep.fragments.Frag_SearchRecipe;
 import fr.isep.c.projetandroidisep.fragments.Frag_FavoriteRecipes;
 import fr.isep.c.projetandroidisep.fragments.Frag_User;
-import fr.isep.c.projetandroidisep.myClasses.ParseHtml;
+import fr.isep.c.projetandroidisep.myClasses.utils.ParseHtml;
 import fr.isep.c.projetandroidisep.myCustomTypes.*;
 
 //import com.facebook.AccessToken;

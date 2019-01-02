@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.Date;
 
-import fr.isep.c.projetandroidisep.myClasses.Misc;
+import fr.isep.c.projetandroidisep.myClasses.utils.Misc;
 
 import static fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses.DATE_PATTERN;
 

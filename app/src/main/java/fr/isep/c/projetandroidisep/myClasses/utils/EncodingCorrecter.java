@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.myClasses;
+package fr.isep.c.projetandroidisep.myClasses.utils;
 
 import java.util.HashMap;
 import java.util.List;

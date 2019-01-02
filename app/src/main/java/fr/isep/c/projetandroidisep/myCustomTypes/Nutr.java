@@ -1,6 +1,6 @@
 package fr.isep.c.projetandroidisep.myCustomTypes;
 
-import fr.isep.c.projetandroidisep.myClasses.*;
+import fr.isep.c.projetandroidisep.myClasses.utils.Disp;
 
 
 import java.util.ArrayList;

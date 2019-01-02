@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:padding="10dp">
 
+    <!-- <fr.isep.c.projetandroidisep.myClasses.myCustomAndroid.MySearchView  -->
     <SearchView
         android:id="@+id/search_bar"
         android:background="@color/colorPrimary"

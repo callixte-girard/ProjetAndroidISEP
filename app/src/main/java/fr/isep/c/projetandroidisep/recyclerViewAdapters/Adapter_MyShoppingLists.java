@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveShoppingList;
-import fr.isep.c.projetandroidisep.myClasses.Misc;
+import fr.isep.c.projetandroidisep.myClasses.utils.Misc;
 import fr.isep.c.projetandroidisep.myCustomTypes.ListeCourses;
 import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_MyShoppingLists;
 

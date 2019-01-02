@@ -8,7 +8,9 @@ import org.jsoup.nodes.Document;
 import java.util.ArrayList;
 
 
-import fr.isep.c.projetandroidisep.myClasses.*;
+import fr.isep.c.projetandroidisep.myClasses.utils.EncodingCorrecter;
+import fr.isep.c.projetandroidisep.myClasses.utils.Misc;
+import fr.isep.c.projetandroidisep.myClasses.utils.ParseHtml;
 //import fr.isep.c.projetandroidisep.myRecipes.*;
 //import fr.isep.c.projetandroidisep.myShoppingLists.*;
 

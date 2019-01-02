@@ -1,4 +1,4 @@
-package fr.isep.c.projetandroidisep.myClasses;
+package fr.isep.c.projetandroidisep.myClasses.utils;
 
 import java.io.File;
 import java.io.IOException;
