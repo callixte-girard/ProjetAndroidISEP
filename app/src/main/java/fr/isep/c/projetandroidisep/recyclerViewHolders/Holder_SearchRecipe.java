@@ -116,7 +116,7 @@ public class Holder_SearchRecipe
             {
                 LayoutInflater inflater = LayoutInflater.from(main_act);
                 LinearLayout layout = (LinearLayout) inflater.inflate
-                        (R.layout.row_2cells, null, false);
+                        (R.layout.grid_values_checkbox, null, false);
 
 
 

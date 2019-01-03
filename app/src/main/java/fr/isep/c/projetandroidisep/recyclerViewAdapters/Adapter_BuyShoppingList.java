@@ -42,7 +42,7 @@ public class Adapter_BuyShoppingList
     public Holder_BuyShoppingList onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_2cells, viewGroup, false);
+                .inflate(R.layout.grid_values_checkbox, viewGroup, false);
 
         return new Holder_BuyShoppingList(main_act, v, this.listener_buyIngredient);
     }
@@ -54,8 +54,13 @@ public class Adapter_BuyShoppingList
 
         holder.ingr_name_form.setText(ingr.returnNameAndForm());
 
-        String qty_disp = ingr.getQty() + " " + ingr.getUnit();
-        holder.ingr_qty_unit.setText(qty_disp);
+        if (ingr.getQty() != 0) {
+            holder.ingr_qty.setText(String.valueOf(ingr.getQty()));
+            holder.ingr_unit.setText(ingr.getUnit());
+        }
+
+        holder.ingr_qty.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+        holder.ingr_unit.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
 
         holder.checkbox_bought.setChecked(ingr.isSelected());
         holder.checkbox_bought.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -18,7 +18,7 @@ public class Holder_BuyShoppingList
     private MainActivity main_act ;
     private Listener_BuyIngredient listener_buyIngredient ;
 
-    public TextView ingr_name_form, ingr_qty_unit ;
+    public TextView ingr_name_form, ingr_qty, ingr_unit ;
     public CheckBox checkbox_bought ;
 
 
@@ -31,7 +31,8 @@ public class Holder_BuyShoppingList
         this.listener_buyIngredient = listener_buyIngredient ;
 
         ingr_name_form = view.findViewById(R.id.ingr_name_form);
-        ingr_qty_unit = view.findViewById(R.id.ingr_qty_unit);
+        ingr_qty = view.findViewById(R.id.ingr_qty);
+        ingr_unit = view.findViewById(R.id.ingr_unit);
         checkbox_bought = view.findViewById(R.id.checkbox);
 
         view.setOnClickListener(this);

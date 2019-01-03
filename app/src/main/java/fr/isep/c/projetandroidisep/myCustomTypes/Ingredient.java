@@ -47,15 +47,19 @@ public class Ingredient extends Aliment
 	private static boolean splitException(String nom)
 	{
 		// list manually all exceptions here
-		String[] splitExceptions = {
-				"noix",
-				"vinaigre",
-				"huile"
+		String[][] splitExceptions = {
+				{"noix", ""},
+				{"vinaigre", ""},
+				{"huile", ""},
+				{"pomme", "terre"}
 		} ;
 
-		for (String exc : splitExceptions)
+		for (String[] exc : splitExceptions)
 		{
-			if (nom.contains(exc))
+			String exc_req = exc[0];
+			String exc_opt = exc[1];
+
+			if (nom.contains(exc_req) && nom.contains(exc_opt))
 			{
 				return true ;
 			}
