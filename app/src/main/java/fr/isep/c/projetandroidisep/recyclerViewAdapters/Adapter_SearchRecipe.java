@@ -74,11 +74,7 @@ public class Adapter_SearchRecipe
                 // displays it if available (peut etre à déplacer dans un if ou autre)
                 if (!rec.getIngredients().isEmpty())
                 {
-                    if (holder.show_expandable) {
-                        holder.recipe_ingr_expandable.setVisibility(View.VISIBLE);
-                    } else {
-                        holder.recipe_ingr_expandable.setVisibility(View.GONE);
-                    }
+                    holder.buildIngredientsExpandableList(rec);
                 }
                 else if (rec_corresponding != null) {
                     // updates actual recipe with corresponding favorite object's ingr list
@@ -87,13 +83,14 @@ public class Adapter_SearchRecipe
                     holder.buildIngredientsExpandableList(rec);
                 }
                 else {
-                    putFetchingIngredientsLabel(holder);
+                    //putFetchingIngredientsLabel(holder);
 
                     // launch asynctask
                     holder.performFetchRecipeIngredients(rec);
                 }
 
-
+                // to show/hide expandable view
+                holder.hideShowExpandableList();
 
             }
         });
@@ -112,6 +109,7 @@ public class Adapter_SearchRecipe
 
     }
 
+
     public void putFetchingIngredientsLabel(Holder_SearchRecipe holder_searchRecipe)
     {
         if (holder_searchRecipe.recipe_ingr_expandable.getChildCount() == 0)
@@ -122,8 +120,6 @@ public class Adapter_SearchRecipe
         }
         Log.d("test", ""+holder_searchRecipe.recipe_ingr_expandable.getChildCount());
     }
-
-
 
 
     public void updateResultsList(ArrayList<Recipe> al) {

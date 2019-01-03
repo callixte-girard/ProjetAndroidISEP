@@ -174,6 +174,7 @@ public class Recipe
 		return this.ingredients ;
 	}
 	public void setIngredients(ArrayList<Ingredient> ingr_list) {
-		this.ingredients = ingr_list ;
+		this.ingredients.clear();
+		this.ingredients.addAll(ingr_list) ;
 	}
 }

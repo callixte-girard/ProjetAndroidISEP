@@ -81,12 +81,8 @@ public class Holder_SearchRecipe
             // update SearchRecipe UI
             buildIngredientsExpandableList(rec_to_update);
 
-            // toggles corresponding action
-            if (show_expandable) {
-                recipe_ingr_expandable.setVisibility(View.VISIBLE);
-            } else {
-                recipe_ingr_expandable.setVisibility(View.GONE);
-            }
+            // to show/hide expandable view
+            //hideShowExpandableList();
 
             Log.d("task_results_fetchIngr", url);
 
@@ -95,14 +91,19 @@ public class Holder_SearchRecipe
     }
 
 
+    public void hideShowExpandableList()
+    {
+        if (this.show_expandable) {
+            this.recipe_ingr_expandable.setVisibility(View.VISIBLE);
+        } else {
+            this.recipe_ingr_expandable.setVisibility(View.GONE);
+        }
+    }
+
+
     public void buildIngredientsExpandableList(Recipe rec)
     {
-
-        View view = recipe_ingr_expandable.getChildAt(0);
-        TextView label = (TextView) view ;
-        Log.d("label", label.getText().toString());
-
-        if (recipe_ingr_expandable.getChildCount() <= 1)
+        if (recipe_ingr_expandable.getChildCount() < 1)
         {
             // remove textview or make it invisible...
             recipe_ingr_expandable.removeAllViews();
