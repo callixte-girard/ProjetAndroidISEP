@@ -71,23 +71,6 @@ public class Adapter_SearchRecipe
 
                 Recipe rec_corresponding = Recipe.getByUrl(main_act.getFavoriteRecipes(), rec.getUrl());
 
-                if (rec_corresponding != null) {
-                    // updates actual recipe with corresponding favorite object's ingr list
-                    rec.setIngredients(rec_corresponding.getIngredients());
-                    // now updates UI
-                    holder.buildIngredientsExpandableList(rec, holder.recipe_ingr_expandable);
-                }
-                else {
-                    // blabla
-                    TextView fetching_label = new TextView(main_act);
-                    fetching_label.setText(MainActivity.FETCHING_INGREDIENTS);
-                    holder.recipe_ingr_expandable.addView(fetching_label);
-                    Log.d("test", ""+holder.recipe_ingr_expandable.getChildCount());
-
-                    // launch asynctask
-                    holder.performFetchRecipeIngredients(rec);
-                }
-
                 // displays it if available (peut etre à déplacer dans un if ou autre)
                 if (!rec.getIngredients().isEmpty())
                 {
@@ -97,6 +80,20 @@ public class Adapter_SearchRecipe
                         holder.recipe_ingr_expandable.setVisibility(View.GONE);
                     }
                 }
+                else if (rec_corresponding != null) {
+                    // updates actual recipe with corresponding favorite object's ingr list
+                    rec.setIngredients(rec_corresponding.getIngredients());
+                    // now updates UI
+                    holder.buildIngredientsExpandableList(rec);
+                }
+                else {
+                    putFetchingIngredientsLabel(holder);
+
+                    // launch asynctask
+                    holder.performFetchRecipeIngredients(rec);
+                }
+
+
 
             }
         });
@@ -114,6 +111,20 @@ public class Adapter_SearchRecipe
         expandable_ingr_list.setVisibility(View.GONE); // default : hidden
 
     }
+
+    public void putFetchingIngredientsLabel(Holder_SearchRecipe holder_searchRecipe)
+    {
+        if (holder_searchRecipe.recipe_ingr_expandable.getChildCount() == 0)
+        {
+            TextView fetching_label = new TextView(main_act);
+            fetching_label.setText(MainActivity.FETCHING_INGREDIENTS);
+            holder_searchRecipe.recipe_ingr_expandable.addView(fetching_label);
+        }
+        Log.d("test", ""+holder_searchRecipe.recipe_ingr_expandable.getChildCount());
+    }
+
+
+
 
     public void updateResultsList(ArrayList<Recipe> al) {
         this.al = al ;

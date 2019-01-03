@@ -20,6 +20,7 @@ import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
+import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_SearchRecipe;
 
 public class Holder_SearchRecipe
         extends RecyclerView.ViewHolder
@@ -78,7 +79,7 @@ public class Holder_SearchRecipe
             rec_to_update.setIngredients(ingr_list);
 
             // update SearchRecipe UI
-            buildIngredientsExpandableList(rec_to_update, this.recipe_ingr_expandable);
+            buildIngredientsExpandableList(rec_to_update);
 
             // toggles corresponding action
             if (show_expandable) {
@@ -94,21 +95,28 @@ public class Holder_SearchRecipe
     }
 
 
-    public void buildIngredientsExpandableList(Recipe rec, LinearLayout expandable_ingr_list)
+    public void buildIngredientsExpandableList(Recipe rec)
     {
-        if (expandable_ingr_list.getChildCount() <= 1)
+
+        View view = recipe_ingr_expandable.getChildAt(0);
+        TextView label = (TextView) view ;
+        Log.d("label", label.getText().toString());
+
+        if (recipe_ingr_expandable.getChildCount() <= 1)
         {
             // remove textview or make it invisible...
+            recipe_ingr_expandable.removeAllViews();
 
             for (Ingredient ingr : rec.getIngredients())
             {
                 TextView tv_ingr = new TextView(main_act);
                 tv_ingr.setText(" - " + ingr.returnNameAndForm());
                 //tv_ingr.setTextColor(tv_ingr.getResources().getColor(R.color.black));
-                expandable_ingr_list.addView(tv_ingr);
+                recipe_ingr_expandable.addView(tv_ingr);
             }
         }
-
     }
+
+
 }
 
