@@ -7,7 +7,9 @@ Egor Rumyantsev
 
 TO-DO :
 V expandable view
-- faire mode buy shopping list
+- rendre personnalisables directement les ingrédients des recettes
+V faire mode buy shopping list
+    - rajouter affichage voyant indiquant que la shopping list a bien été achetée
 V réparer pbs arret asynctasks en mode recherche :
     - trouver comment activer onQueryTextChange() quand le texte est vide
     V bon le résultat obtenu n'arrete pas tjs la derniere asynctask mais on s'en satisfera.

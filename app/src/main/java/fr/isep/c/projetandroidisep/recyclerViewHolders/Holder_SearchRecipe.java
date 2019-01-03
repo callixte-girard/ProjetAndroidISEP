@@ -3,6 +3,7 @@ package fr.isep.c.projetandroidisep.recyclerViewHolders;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -103,6 +104,9 @@ public class Holder_SearchRecipe
 
     public void buildIngredientsExpandableList(Recipe rec)
     {
+
+
+
         if (recipe_ingr_expandable.getChildCount() < 1)
         {
             // remove textview or make it invisible...
@@ -110,10 +114,24 @@ public class Holder_SearchRecipe
 
             for (Ingredient ingr : rec.getIngredients())
             {
+                LayoutInflater inflater = LayoutInflater.from(main_act);
+                LinearLayout layout = (LinearLayout) inflater.inflate
+                        (R.layout.row_2cells, null, false);
+
+
+
+                recipe_ingr_expandable.addView(layout);
+
+                /*
                 TextView tv_ingr = new TextView(main_act);
                 tv_ingr.setText(" - " + ingr.returnNameAndForm());
                 //tv_ingr.setTextColor(tv_ingr.getResources().getColor(R.color.black));
                 recipe_ingr_expandable.addView(tv_ingr);
+
+                CheckBox chkbx_select_ingr = new CheckBox(main_act);
+                chkbx_select_ingr.setChecked(ingr.isSelected());
+                recipe_ingr_expandable.addView(chkbx_select_ingr);
+                */
             }
         }
     }
