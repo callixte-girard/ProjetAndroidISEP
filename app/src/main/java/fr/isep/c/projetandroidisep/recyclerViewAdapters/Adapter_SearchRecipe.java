@@ -78,6 +78,12 @@ public class Adapter_SearchRecipe
                     holder.buildIngredientsExpandableList(rec, holder.recipe_ingr_expandable);
                 }
                 else {
+                    // blabla
+                    TextView fetching_label = new TextView(main_act);
+                    fetching_label.setText(MainActivity.FETCHING_INGREDIENTS);
+                    holder.recipe_ingr_expandable.addView(fetching_label);
+                    Log.d("test", ""+holder.recipe_ingr_expandable.getChildCount());
+
                     // launch asynctask
                     holder.performFetchRecipeIngredients(rec);
                 }

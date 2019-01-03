@@ -96,13 +96,19 @@ public class Holder_SearchRecipe
 
     public void buildIngredientsExpandableList(Recipe rec, LinearLayout expandable_ingr_list)
     {
-        for (Ingredient ingr : rec.getIngredients())
+        if (expandable_ingr_list.getChildCount() <= 1)
         {
-            TextView tv_ingr = new TextView(main_act);
-            tv_ingr.setText(" - " + ingr.returnNameAndForm());
-            //tv_ingr.setTextColor(tv_ingr.getResources().getColor(R.color.black));
-            expandable_ingr_list.addView(tv_ingr);
+            // remove textview or make it invisible...
+
+            for (Ingredient ingr : rec.getIngredients())
+            {
+                TextView tv_ingr = new TextView(main_act);
+                tv_ingr.setText(" - " + ingr.returnNameAndForm());
+                //tv_ingr.setTextColor(tv_ingr.getResources().getColor(R.color.black));
+                expandable_ingr_list.addView(tv_ingr);
+            }
         }
+
     }
 }
 
