@@ -38,6 +38,8 @@ public class Recipe
 	private String type = "" ; // dépend de l'user
 	private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>() ;
 
+	public boolean show_expandable = false ;
+
 	// it's just for google firebase
 	public Recipe() {}
 

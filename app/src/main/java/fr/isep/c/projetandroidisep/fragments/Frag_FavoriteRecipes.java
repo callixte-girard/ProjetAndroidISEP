@@ -30,7 +30,8 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Frag_FavoriteRecipes extends Fragment
-        implements Listener_AddRemoveRecipe
+        implements Listener_AddRemoveRecipe //, Listener_SelectIngredient
+
 {
     private MainActivity main_act ;
     private View view ;
@@ -79,6 +80,15 @@ public class Frag_FavoriteRecipes extends Fragment
         return view ;
     }
 
+/*
+    public void checkedListener_selectIngredient(View view, Recipe rec, final int position, boolean isChecked)
+    {
+        final Ingredient ingr = rec.getIngredients().get(position);
+
+        ingr.setSelected(isChecked);
+        Log.d("checkedListener_ingr", position + " | " + isChecked + " | " + ingr.getName());
+    }
+*/
 
 
     public void checkedListener_myRecipes(View view, final int position, boolean isChecked)
@@ -88,7 +98,8 @@ public class Frag_FavoriteRecipes extends Fragment
         Log.d("checkedListener_favo", position + " | " + isChecked + " | " + rec.getName());
 
         if (isChecked) {
-            if (!rec.alreadyExists(main_act.getFavoriteRecipes())) main_act.saveRecipeInFavorites(rec);
+            if (!rec.alreadyExists(main_act.getFavoriteRecipes()))
+                main_act.saveRecipeInFavorites(rec);
         } else {
             main_act.removeRecipeFromFavorites(rec);
 
@@ -103,6 +114,8 @@ public class Frag_FavoriteRecipes extends Fragment
                         }
                     }).show();
         }
+
+        updateFavoritesList(main_act.getFavoriteRecipes());
     }
 
 

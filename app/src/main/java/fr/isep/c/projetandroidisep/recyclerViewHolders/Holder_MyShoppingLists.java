@@ -15,7 +15,7 @@ public class Holder_MyShoppingLists
 
     public LinearLayout lc_header ;
     public TextView lc_name, lc_date_creation ;
-    public CheckBox checkbox_delete_shopping_list ;
+    public CheckBox checkbox_delete_shopping_list, checkbox_show_expandable ;
 
     private Listener_BuyShoppingList listener_buyShoppingList ;
 
@@ -27,7 +27,10 @@ public class Holder_MyShoppingLists
         lc_header = view.findViewById(R.id.header_vertical);
         lc_name = view.findViewById(R.id.title);
         lc_date_creation = view.findViewById(R.id.subtitle);
-        checkbox_delete_shopping_list = view.findViewById(R.id.checkbox);
+        checkbox_delete_shopping_list = view.findViewById(R.id.checkbox_add_remove);
+        checkbox_show_expandable = view.findViewById(R.id.checkbox_show_expandable);
+
+        checkbox_show_expandable.setVisibility(View.GONE); // and should remain it forever.
 
         view.setOnClickListener(this);
     }

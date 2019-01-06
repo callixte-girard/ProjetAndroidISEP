@@ -67,20 +67,11 @@ public class Adapter_FavoriteRecipes
             @Override
             public void onClick(View v) {
 
-                /*
-                holder.show_expandable = !holder.show_expandable ;
-                Log.d("show_expandable", rec.getName() + " | " + holder.show_expandable);
-
-                if (holder.show_expandable) {
-                    holder.recipe_ingr_expandable.setVisibility(View.VISIBLE);
-                } else {
-                    holder.recipe_ingr_expandable.setVisibility(View.GONE);
-                } */
             }
         });
 
         // checkboxes
-        holder.checkbox_show_expandable.setChecked(false);
+        holder.checkbox_show_expandable.setChecked(rec.show_expandable);
         holder.checkbox_show_expandable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -89,7 +80,10 @@ public class Adapter_FavoriteRecipes
                 Log.d("show_expandable", rec.getName() + " | " + isChecked);
 
                 // hides or show panel
-                if (isChecked) {
+                rec.show_expandable = isChecked ;
+
+                if (rec.show_expandable) {
+                //if (isChecked) {
                     holder.recipe_ingr_expandable.setVisibility(View.VISIBLE);
                 } else {
                     holder.recipe_ingr_expandable.setVisibility(View.GONE);
@@ -107,41 +101,54 @@ public class Adapter_FavoriteRecipes
             }
         });
 
-        initIngredientGrid(rec, holder);
+        initIngredientGrid(holder.getAdapterPosition(), holder);
     }
 
 
-    private void initIngredientGrid(Recipe rec, Holder_FavoriteRecipes holder)
+    private void initIngredientGrid(int index_rec, Holder_FavoriteRecipes holder)
     {
         holder.recipe_ingr_expandable.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
 
         // layout
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(main_act);
         holder.recipe_ingr_expandable.setLayoutManager(linearLayoutManager);
-
+/*
         // add a line to divide them more clearly
         DividerItemDecoration itemDecor = new DividerItemDecoration
                 (main_act, linearLayoutManager.getOrientation());
         holder.recipe_ingr_expandable.addItemDecoration(itemDecor);
-
+*/
         // custom adapter
         Adapter_IngredientGrid adapter = new Adapter_IngredientGrid
-                (main_act, rec, this);
+                (main_act, index_rec, this);
         holder.recipe_ingr_expandable.setAdapter(adapter);
 
-        // default : hidden
-        holder.recipe_ingr_expandable.setVisibility(View.GONE);
+        // set visibility in accordance
+        final Recipe rec = al.get(index_rec);
+
+        if (rec.show_expandable) {
+            holder.recipe_ingr_expandable.setVisibility(View.VISIBLE);
+        } else {
+            holder.recipe_ingr_expandable.setVisibility(View.GONE);
+        }
+
     }
 
 
-    public void checkedListener_selectIngredient(View view, Recipe rec, final int position, boolean isChecked)
+    public void checkedListener_selectIngredient(View view,
+        final int index_rec, final int index_ingr, boolean isChecked)
     {
-        final Ingredient ingr = rec.getIngredients().get(position);
+        //final Ingredient ingr = main_act
+        //        .getFavoriteRecipes().get(index_rec)
+        //        .getIngredients().get(index_ingr);
+        final Recipe rec = al.get(index_rec);
+        final Ingredient ingr = rec.getIngredients().get(index_ingr);
 
         ingr.setSelected(isChecked);
-        Log.d("checkedListener_ingr", position + " | " + isChecked + " | " + ingr.getName());
+        Log.d("checkedListener_ingr", rec.getName() + " | " + ingr.getName() + " | " + isChecked);
 
-        notifyDataSetChanged();
+        // saves recipe in db
+        main_act.saveRecipeInFavorites(rec);
     }
 
 

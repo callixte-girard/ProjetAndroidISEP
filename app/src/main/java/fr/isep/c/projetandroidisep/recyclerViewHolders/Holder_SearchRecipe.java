@@ -29,7 +29,7 @@ public class Holder_SearchRecipe
     public LinearLayout recipe_header, recipe_ingr_expandable ;
     public ImageView recipe_img ;
     public TextView recipe_name, recipe_duration, recipe_rating ;
-    public CheckBox checkbox_add_to_favorites ;
+    public CheckBox checkbox_add_to_favorites, checkbox_show_expandable ;
 
     private MainActivity main_act ;
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
@@ -48,7 +48,8 @@ public class Holder_SearchRecipe
         recipe_name = view.findViewById(R.id.title);
         recipe_duration = view.findViewById(R.id.subtitle);
         //recipe_rating = view.findViewById(R.id.recipe_rating);
-        checkbox_add_to_favorites = view.findViewById(R.id.checkbox);
+        checkbox_add_to_favorites = view.findViewById(R.id.checkbox_add_remove);
+        //checkbox_show_expandable = view.findViewById(R.id.checkbox_show_expandable);
         recipe_ingr_expandable = view.findViewById(R.id.expandable_list);
 
         view.setOnClickListener(this);

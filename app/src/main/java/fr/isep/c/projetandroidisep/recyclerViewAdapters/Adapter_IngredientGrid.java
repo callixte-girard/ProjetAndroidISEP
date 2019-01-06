@@ -25,18 +25,22 @@ public class Adapter_IngredientGrid
         //    implements Listener_SelectIngredient
 {
     private MainActivity main_act ;
-    private Recipe rec ;
+    //private Recipe rec ;
+    private int index_rec ;
     private ArrayList<Ingredient> al = new ArrayList<>();
 
     private Listener_SelectIngredient listener_selectIngredient;
 
 
-    public Adapter_IngredientGrid(Context context, Recipe rec
+    public Adapter_IngredientGrid(Context context
+         //   , Recipe rec
+           , int index_rec
         , Listener_SelectIngredient listener_selectIngredient
     ) {
         this.main_act = (MainActivity) context ;
-        this.rec = rec ;
-        this.al.addAll(this.rec.getIngredients());
+        //this.rec = rec ;
+        this.index_rec = index_rec ;
+        this.al.addAll(this.main_act.getFavoriteRecipes().get(index_rec).getIngredients());
         this.listener_selectIngredient = listener_selectIngredient ;
     }
 
@@ -73,7 +77,7 @@ public class Adapter_IngredientGrid
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 listener_selectIngredient.checkedListener_selectIngredient
-                        (buttonView, rec, holder.getAdapterPosition(), isChecked);
+                        (buttonView, index_rec, holder.getAdapterPosition(), isChecked);
             }
         });
     }
