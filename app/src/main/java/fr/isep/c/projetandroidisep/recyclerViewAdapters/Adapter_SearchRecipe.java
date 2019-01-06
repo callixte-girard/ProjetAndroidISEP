@@ -109,9 +109,6 @@ public class Adapter_SearchRecipe
             }
         });
 
-        LinearLayout expandable_ingr_list = holder.recipe_ingr_expandable ;
-        expandable_ingr_list.setVisibility(View.GONE); // default : hidden
-
     }
 
 

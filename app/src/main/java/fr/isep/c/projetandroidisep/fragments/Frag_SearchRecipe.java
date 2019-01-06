@@ -138,7 +138,8 @@ public class Frag_SearchRecipe extends Fragment
         results_list.addItemDecoration(itemDecor);
 
         // custom adapter
-        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe(getContext(), this);
+        Adapter_SearchRecipe adapter = new Adapter_SearchRecipe
+                (getContext(), this, this);
         results_list.setAdapter(adapter);
     }
 
