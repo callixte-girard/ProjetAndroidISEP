@@ -19,6 +19,7 @@ import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
 import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
+import fr.isep.c.projetandroidisep.interfaces.Listener_SelectIngredient;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
@@ -32,13 +33,17 @@ public class Adapter_SearchRecipe
     private ArrayList<Recipe> al ;
 
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
+    private Listener_SelectIngredient listener_selectIngredient ;
 
 
     public Adapter_SearchRecipe(Context context
             , Listener_AddRemoveRecipe listener_addRemoveRecipe
+            , Listener_SelectIngredient listener_selectIngredient
+
     ) {
         this.main_act = (MainActivity) context ;
         this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
+        this.listener_selectIngredient = listener_selectIngredient ;
     }
 
 
@@ -123,7 +128,8 @@ public class Adapter_SearchRecipe
 
 
     public void updateResultsList(ArrayList<Recipe> al) {
-        this.al = al ;
+        this.al.clear();
+        this.al.addAll(al);
         notifyDataSetChanged();
     }
 

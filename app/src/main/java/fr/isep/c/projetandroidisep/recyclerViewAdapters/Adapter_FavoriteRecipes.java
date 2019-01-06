@@ -25,20 +25,20 @@ import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_FavoriteRecipes;
 
 public class Adapter_FavoriteRecipes
         extends RecyclerView.Adapter<Holder_FavoriteRecipes>
-            implements Listener_SelectIngredient
 {
     private MainActivity main_act ;
     private ArrayList<Recipe> al = new ArrayList<>();
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
+    private Listener_SelectIngredient listener_selectIngredient ;
 
 
     public Adapter_FavoriteRecipes(Context context
             , Listener_AddRemoveRecipe listener_addRemoveRecipe
-        //    , Listener_SelectIngredient listener_selectIngredient
+            , Listener_SelectIngredient listener_selectIngredient
     ) {
         this.main_act = (MainActivity) context ;
         this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
-        //this.listener_selectIngredient = listener_selectIngredient ;
+        this.listener_selectIngredient = listener_selectIngredient ;
         updateFavoritesList(main_act.getFavoriteRecipes());
     }
 
@@ -49,7 +49,7 @@ public class Adapter_FavoriteRecipes
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.row_2lines_expandable, viewGroup, false);
 
-        return new Holder_FavoriteRecipes(v, listener_addRemoveRecipe);
+        return new Holder_FavoriteRecipes(v, listener_addRemoveRecipe, listener_selectIngredient);
     }
 
 
@@ -120,7 +120,7 @@ public class Adapter_FavoriteRecipes
 */
         // custom adapter
         Adapter_IngredientGrid adapter = new Adapter_IngredientGrid
-                (main_act, index_rec, this);
+                (main_act, index_rec, this.listener_selectIngredient);
         holder.recipe_ingr_expandable.setAdapter(adapter);
 
         // set visibility in accordance
@@ -132,23 +132,6 @@ public class Adapter_FavoriteRecipes
             holder.recipe_ingr_expandable.setVisibility(View.GONE);
         }
 
-    }
-
-
-    public void checkedListener_selectIngredient(View view,
-        final int index_rec, final int index_ingr, boolean isChecked)
-    {
-        //final Ingredient ingr = main_act
-        //        .getFavoriteRecipes().get(index_rec)
-        //        .getIngredients().get(index_ingr);
-        final Recipe rec = al.get(index_rec);
-        final Ingredient ingr = rec.getIngredients().get(index_ingr);
-
-        ingr.setSelected(isChecked);
-        Log.d("checkedListener_ingr", rec.getName() + " | " + ingr.getName() + " | " + isChecked);
-
-        // saves recipe in db
-        main_act.saveRecipeInFavorites(rec);
     }
 
 

@@ -61,7 +61,7 @@ public class Adapter_IngredientGrid
     {
         final Ingredient ingr = al.get(i);
 
-        holder.ingr_name_form.setText(ingr.returnNameAndForm());
+        holder.ingr_name_form.setText(" - " + ingr.returnNameAndForm());
 
         if (ingr.getQty() != 0) {
             holder.ingr_qty.setText(String.valueOf(ingr.getQty()));

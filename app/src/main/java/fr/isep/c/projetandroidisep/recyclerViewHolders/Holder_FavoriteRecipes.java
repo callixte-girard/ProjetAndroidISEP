@@ -23,13 +23,16 @@ public class Holder_FavoriteRecipes
     public CheckBox checkbox_delete_from_favorites, checkbox_show_expandable ;
 
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
+    private Listener_SelectIngredient listener_selectIngredient ;
 
 
     public Holder_FavoriteRecipes(View view
             , Listener_AddRemoveRecipe listener_addRemoveRecipe
+            , Listener_SelectIngredient listener_selectIngredient
     ) {
         super(view);
         this.listener_addRemoveRecipe = listener_addRemoveRecipe ;
+        this.listener_selectIngredient = listener_selectIngredient ;
 
         recipe_header = view.findViewById(R.id.header_vertical); // the linearlayout clickable
         recipe_name = view.findViewById(R.id.title);
