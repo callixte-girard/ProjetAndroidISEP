@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.*;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
+import fr.isep.c.projetandroidisep.interfaces.Listener_SelectIngredient;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_FavoriteRecipes;
@@ -77,6 +78,7 @@ public class Frag_FavoriteRecipes extends Fragment
 
         return view ;
     }
+
 
 
     public void checkedListener_myRecipes(View view, final int position, boolean isChecked)
@@ -140,7 +142,8 @@ public class Frag_FavoriteRecipes extends Fragment
         my_favorite_recipes.addItemDecoration(itemDecor);
 
         // custom adapter
-        Adapter_FavoriteRecipes adapter = new Adapter_FavoriteRecipes(getContext(), this);
+        Adapter_FavoriteRecipes adapter = new Adapter_FavoriteRecipes
+                (getContext(), this);
         my_favorite_recipes.setAdapter(adapter);
     }
 

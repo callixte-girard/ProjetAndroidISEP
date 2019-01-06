@@ -21,7 +21,6 @@ import fr.isep.c.projetandroidisep.interfaces.Listener_AddRemoveRecipe;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
-import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_SearchRecipe;
 
 public class Holder_SearchRecipe
         extends RecyclerView.ViewHolder
@@ -116,7 +115,7 @@ public class Holder_SearchRecipe
             {
                 LayoutInflater inflater = LayoutInflater.from(main_act);
                 LinearLayout layout = (LinearLayout) inflater.inflate
-                        (R.layout.grid_values_checkbox, null, false);
+                        (R.layout.row_grid_chkbx, null, false);
 
 
 
