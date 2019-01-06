@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
 import fr.isep.c.projetandroidisep.asyncTasks.Task_FetchIngredients;
+import fr.isep.c.projetandroidisep.interfaces.Listener_SelectIngredient;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.recyclerViewAdapters.Adapter_SearchRecipe;
@@ -39,7 +40,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 public class Frag_SearchRecipe extends Fragment
         implements Response_SearchRecipe, Response_FetchImages, Response_FetchIngredients
-        ,Listener_AddRemoveRecipe
+        ,Listener_AddRemoveRecipe, Listener_SelectIngredient
 {
     private MainActivity main_act ;
 
@@ -177,6 +178,18 @@ public class Frag_SearchRecipe extends Fragment
         results_number.setText(count + " results");
     }
 
+
+    public void checkedListener_selectIngredient
+            (View view, final int index_rec, final int index_ingr, boolean isChecked)
+    {
+        final Recipe rec = main_act.getSearchResults().get(index_rec);
+        final Ingredient ingr = rec.getIngredients().get(index_ingr);
+
+        ingr.setSelected(isChecked);
+        Log.d("checkedListener_ingr", rec.getName() + " | " + ingr.getName() + " | " + isChecked);
+
+        updateResultsList(main_act.getFavoriteRecipes());
+    }
 
 
 

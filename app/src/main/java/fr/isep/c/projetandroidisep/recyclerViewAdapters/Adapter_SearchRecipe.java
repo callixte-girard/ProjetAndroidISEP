@@ -30,7 +30,7 @@ public class Adapter_SearchRecipe
         extends RecyclerView.Adapter<Holder_SearchRecipe>
 {
     private MainActivity main_act;
-    private ArrayList<Recipe> al ;
+    private ArrayList<Recipe> al = new ArrayList<>();
 
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
     private Listener_SelectIngredient listener_selectIngredient ;
