@@ -233,8 +233,10 @@ public class Adapter_FavoriteRecipes
             public void onClick(View v) {
 
                 // launches new fragment
-                main_act.destroyFrag_recipeDetails();
-                main_act.displayFrag_recipeDetails(rec);
+                try {
+                    //main_act.destroyFrag_recipeDetails();
+                    main_act.displayFrag_recipeDetails(rec);
+                } catch (NullPointerException npe) {}
             }
         });
 

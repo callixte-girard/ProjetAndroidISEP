@@ -4,33 +4,32 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:layout_centerVertical="true"
-    android:layout_centerHorizontal="true"
     android:padding="20dp">
 
 
-    <include layout="@layout/tv_primary"
+    <include layout="@layout/tv_title"
         android:id="@+id/recipe_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:layout_alignParentTop="true"
-        android:textSize="40sp" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"/>
 
     <include layout="@layout/img_square_large"
         android:id="@+id/recipe_img"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/recipe_name"/>
 
     <include layout="@layout/tv_secondary"
         android:id="@+id/recipe_instructions"
         android:inputType="textMultiLine"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/recipe_img"
-        android:textSize="20sp"/>
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/recipe_img"/>
 
     <include layout="@layout/container_button_centered"
         android:id="@+id/button_container"

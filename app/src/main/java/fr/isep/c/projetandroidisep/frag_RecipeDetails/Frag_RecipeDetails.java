@@ -50,8 +50,8 @@ public class Frag_RecipeDetails extends Fragment
 
         // instructions
         recipe_instructions = view.findViewById(R.id.recipe_instructions);
-        //String instructions_unified = Misc.patchStringArrayList(instructions);
-        //recipe_instructions.setText(instructions_unified);
+        String instructions_unified = Misc.patchStringArrayList(instructions);
+        recipe_instructions.setText(instructions_unified);
 
         // button
         button_back = view.findViewById(R.id.button_center);
