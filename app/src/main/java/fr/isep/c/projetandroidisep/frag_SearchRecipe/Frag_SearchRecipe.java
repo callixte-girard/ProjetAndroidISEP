@@ -70,7 +70,6 @@ public class Frag_SearchRecipe extends Fragment
         TextView query_field = getSearchSrcTextView(search_bar);
         query_field.setTextColor(Color.WHITE);
 
-
         // set method when search pressed
         search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -114,6 +113,7 @@ public class Frag_SearchRecipe extends Fragment
     private void initResultsList()
     {
         results_list.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
+        results_list.setNestedScrollingEnabled(false);
 
         // layout
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -174,7 +174,7 @@ public class Frag_SearchRecipe extends Fragment
         ingr.setSelected(isChecked);
         Log.d("checkedListener_ingr", rec.getName() + " | " + ingr.getName() + " | " + isChecked);
 
-        updateResultsList(((MainActivity) getActivity()).getFavoriteRecipes());
+        updateResultsList(((MainActivity) getActivity()).getSearchResults());
     }
 
 
@@ -212,8 +212,20 @@ public class Frag_SearchRecipe extends Fragment
         {
             ArrayList<Recipe> search_results = Recipe.fetchPageResultsFromDoc(doc);
 
-            for (Recipe rec : search_results) {
-                performFetchRecipeIngredients(rec);
+            for (Recipe rec : search_results)
+            {
+                // first checks if it's already present in the favorites
+                Recipe rec_corresp = Recipe.getByUrl(
+                        ((MainActivity) getActivity()).getFavoriteRecipes(), rec.getUrl()
+                );
+
+                //if (rec_corresp.getIngredients().isEmpty())
+                if (rec_corresp == null) {
+                    performFetchRecipeIngredients(rec);
+                } else {
+                    rec.setIngredients(rec_corresp.getIngredients());
+                }
+
                 //performFetchRecipeImages(rec);
             }
 

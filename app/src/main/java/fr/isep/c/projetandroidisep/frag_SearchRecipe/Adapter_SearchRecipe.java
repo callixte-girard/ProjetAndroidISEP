@@ -28,7 +28,7 @@ public class Adapter_SearchRecipe
         extends RecyclerView.Adapter<Adapter_SearchRecipe.Holder_SearchRecipe>
             implements Response_FetchIngredients
 {
-    public class Adapter_IngredientGrid
+    private class Adapter_IngredientGrid
             extends RecyclerView.Adapter<Adapter_IngredientGrid.Holder_IngredientGrid>
             //    implements Listener_SearchRecipe_SelectIngredient
     {
@@ -37,21 +37,18 @@ public class Adapter_SearchRecipe
                 extends RecyclerView.ViewHolder
                 implements View.OnClickListener
         {
-            private MainActivity main_act ;
-
-            private Listener_SearchRecipe_SelectIngredient listener_SearchRecipe_selectIngredient;
+            private Listener_SearchRecipe_SelectIngredient listener_searchRecipe_selectIngredient;
 
             public TextView ingr_name_form, ingr_qty, ingr_unit ;
             public CheckBox chkbx_ingr_select ;
 
 
             public Holder_IngredientGrid(Context context, View view
-                    , Listener_SearchRecipe_SelectIngredient listener_SearchRecipe_selectIngredient
+                    , Listener_SearchRecipe_SelectIngredient listener_searchRecipe_selectIngredient
             ) {
                 super(view);
 
-                this.main_act = (MainActivity) context ;
-                this.listener_SearchRecipe_selectIngredient = listener_SearchRecipe_selectIngredient;
+                this.listener_searchRecipe_selectIngredient = listener_searchRecipe_selectIngredient;
 
                 ingr_name_form = view.findViewById(R.id.ingr_name_form);
                 ingr_qty = view.findViewById(R.id.ingr_qty);
@@ -73,22 +70,20 @@ public class Adapter_SearchRecipe
         private int index_rec ;
         private ArrayList<Ingredient> al = new ArrayList<>();
 
-        private Listener_SearchRecipe_SelectIngredient listener_SearchRecipe_selectIngredient;
+        private Listener_SearchRecipe_SelectIngredient listener_searchRecipe_selectIngredient;
 
 
         public Adapter_IngredientGrid(Context context
                                       //   , Recipe rec
                 , int index_rec
-                , Listener_SearchRecipe_SelectIngredient listener_SearchRecipe_selectIngredient
+                , Listener_SearchRecipe_SelectIngredient listener_searchRecipe_selectIngredient
         ) {
             this.main_act = (MainActivity) context ;
             //this.rec = rec ;
             this.index_rec = index_rec ;
-            this.al.addAll(this.main_act.getFavoriteRecipes().get(index_rec).getIngredients());
-            this.listener_SearchRecipe_selectIngredient = listener_SearchRecipe_selectIngredient;
+            this.al.addAll(this.main_act.getSearchResults().get(index_rec).getIngredients());
+            this.listener_searchRecipe_selectIngredient = listener_searchRecipe_selectIngredient;
         }
-
-
 
 
         @Override
@@ -97,7 +92,7 @@ public class Adapter_SearchRecipe
             View v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.row_grid_chkbx, viewGroup, false);
 
-            return new Holder_IngredientGrid(main_act, v, listener_SearchRecipe_selectIngredient);
+            return new Holder_IngredientGrid(main_act, v, listener_searchRecipe_selectIngredient);
         }
 
         @Override
@@ -120,7 +115,7 @@ public class Adapter_SearchRecipe
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                    listener_SearchRecipe_selectIngredient.checkedListener_selectIngredient
+                    listener_searchRecipe_selectIngredient.checkedListener_selectIngredient
                             (buttonView, index_rec, holder.getAdapterPosition(), isChecked);
                 }
             });
@@ -145,19 +140,17 @@ public class Adapter_SearchRecipe
         public TextView recipe_name, recipe_duration, recipe_rating ;
         public CheckBox checkbox_add_to_favorites, checkbox_show_expandable ;
 
-        private MainActivity main_act ;
-        private Listener_SearchRecipe_AddRemove listener_searchRecipeAddRemove;
+        private Listener_SearchRecipe_AddRemove listener_searchRecipe_addRemove;
 
         public boolean show_expandable = false ;
 
 
         public Holder_SearchRecipe(Context context, View view
-                , Listener_SearchRecipe_AddRemove listener_searchRecipeAddRemove)
+                , Listener_SearchRecipe_AddRemove listener_searchRecipe_addRemove)
         {
             super(view);
 
-            this.listener_searchRecipeAddRemove = listener_searchRecipeAddRemove;
-            this.main_act = (MainActivity) context ;
+            this.listener_searchRecipe_addRemove = listener_searchRecipe_addRemove;
 
             recipe_header = view.findViewById(R.id.header_vertical);
             //recipe_img = view.findViewById(R.id.recipe_img);
@@ -181,7 +174,6 @@ public class Adapter_SearchRecipe
         public void hideShowExpandableList()
         {
             if (this.show_expandable) {
-                //if (isChecked) {
                 this.recipe_ingr_expandable.setVisibility(View.VISIBLE);
             } else {
                 this.recipe_ingr_expandable.setVisibility(View.GONE);
@@ -194,18 +186,18 @@ public class Adapter_SearchRecipe
     private MainActivity main_act;
     private ArrayList<Recipe> al = new ArrayList<>();
 
-    private Listener_SearchRecipe_AddRemove listener_searchRecipeAddRemove;
-    private Listener_SearchRecipe_SelectIngredient listener_SearchRecipe_selectIngredient;
+    private Listener_SearchRecipe_AddRemove listener_searchRecipe_addRemove;
+    private Listener_SearchRecipe_SelectIngredient listener_searchRecipe_selectIngredient;
 
 
     public Adapter_SearchRecipe(Context context
-            , Listener_SearchRecipe_AddRemove listener_searchRecipeAddRemove
-            , Listener_SearchRecipe_SelectIngredient listener_SearchRecipe_selectIngredient
+            , Listener_SearchRecipe_AddRemove listener_searchRecipe_addRemove
+            , Listener_SearchRecipe_SelectIngredient listener_searchRecipe_selectIngredient
 
     ) {
         this.main_act = (MainActivity) context ;
-        this.listener_searchRecipeAddRemove = listener_searchRecipeAddRemove;
-        this.listener_SearchRecipe_selectIngredient = listener_SearchRecipe_selectIngredient;
+        this.listener_searchRecipe_addRemove = listener_searchRecipe_addRemove;
+        this.listener_searchRecipe_selectIngredient = listener_searchRecipe_selectIngredient;
     }
 
 
@@ -215,7 +207,7 @@ public class Adapter_SearchRecipe
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.row_2lines_expandable, viewGroup, false);
 
-        return new Holder_SearchRecipe(main_act, v, this.listener_searchRecipeAddRemove);
+        return new Holder_SearchRecipe(main_act, v, this.listener_searchRecipe_addRemove);
     }
 
 
@@ -237,7 +229,7 @@ public class Adapter_SearchRecipe
         });
 
         // checkboxes
-        holder.checkbox_show_expandable.setChecked(holder.checkbox_show_expandable.isChecked());
+        holder.checkbox_show_expandable.setChecked(holder.show_expandable);
         holder.checkbox_show_expandable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -248,6 +240,13 @@ public class Adapter_SearchRecipe
                 holder.show_expandable = isChecked ;
                 holder.hideShowExpandableList();
 
+                Recipe rec_corresp = Recipe.getByUrl
+                        (main_act.getFavoriteRecipes(), rec.getUrl());
+
+                if (rec_corresp != null) {
+                    rec.setIngredients(rec_corresp.getIngredients());
+                }
+/*
                 if (rec.getIngredients().isEmpty())
                 {
                     Recipe rec_corresponding ;
@@ -268,7 +267,7 @@ public class Adapter_SearchRecipe
                     } else {
                         performFetchRecipeIngredients(rec);
                     }
-                }
+                }*/
             }
         });
 
@@ -277,7 +276,8 @@ public class Adapter_SearchRecipe
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                listener_searchRecipeAddRemove.checkedListener_myRecipes(buttonView, holder.getAdapterPosition(), isChecked);
+                listener_searchRecipe_addRemove.checkedListener_myRecipes
+                        (buttonView, holder.getAdapterPosition(), isChecked);
             }
         });
 
@@ -349,7 +349,7 @@ public class Adapter_SearchRecipe
 */
         // custom adapter
         Adapter_IngredientGrid adapter = new Adapter_IngredientGrid
-                (main_act, index_rec, this.listener_SearchRecipe_selectIngredient);
+                (main_act, index_rec, this.listener_searchRecipe_selectIngredient);
         holder.recipe_ingr_expandable.setAdapter(adapter);
 
         // default : hidden

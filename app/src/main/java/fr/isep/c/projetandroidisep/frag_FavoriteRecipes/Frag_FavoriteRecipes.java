@@ -23,7 +23,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Frag_FavoriteRecipes extends Fragment
-        implements Listener_SearchRecipe_AddRemove, Listener_SearchRecipe_SelectIngredient
+        implements Listener_FavoriteRecipes_AddRemove, Listener_FavoriteRecipes_SelectIngredient
 
 {
     private View view ;
@@ -141,6 +141,7 @@ public class Frag_FavoriteRecipes extends Fragment
         my_favorite_recipes = view.findViewById(R.id.my_favorite_recipes);
 
         my_favorite_recipes.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
+        my_favorite_recipes.setNestedScrollingEnabled(false);
 
         // layout
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

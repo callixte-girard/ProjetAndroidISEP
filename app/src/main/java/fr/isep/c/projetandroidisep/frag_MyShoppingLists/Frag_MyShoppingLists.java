@@ -110,6 +110,7 @@ public class Frag_MyShoppingLists extends Fragment
     private void initShoppingLists()
     {
         my_shopping_lists.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
+        my_shopping_lists.setNestedScrollingEnabled(false);
 
         // layout
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
