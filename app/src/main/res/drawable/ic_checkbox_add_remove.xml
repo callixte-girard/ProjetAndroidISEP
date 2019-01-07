@@ -7,7 +7,7 @@
             android:drawable="@drawable/checkbox_off_background_focus_yellow" />
             -->
     <item android:state_checked="true"
-        android:drawable="@drawable/ic_add" />
-    <item android:state_checked="false"
         android:drawable="@drawable/ic_remove" />
+    <item android:state_checked="false"
+        android:drawable="@drawable/ic_add" />
 </selector>

@@ -24,7 +24,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 public class Holder_SearchRecipe
         extends RecyclerView.ViewHolder
-        implements View.OnClickListener, Response_FetchIngredients
+        implements View.OnClickListener //, Response_FetchIngredients
 {
     public LinearLayout recipe_header ;
     public RecyclerView recipe_ingr_expandable ;
@@ -34,7 +34,9 @@ public class Holder_SearchRecipe
 
     private MainActivity main_act ;
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
-    //public boolean show_expandable = false ;
+
+    public boolean show_expandable = false ;
+
 
     public Holder_SearchRecipe(Context context, View view
             , Listener_AddRemoveRecipe listener_addRemoveRecipe)
@@ -62,38 +64,12 @@ public class Holder_SearchRecipe
 
     }
 
-    public void performFetchRecipeIngredients(Recipe rec)
+
+
+    public void hideShowExpandableList()
     {
-        Task_FetchIngredients task_fetchIngredients = new Task_FetchIngredients();
-        task_fetchIngredients.setDelegate(this);
-        task_fetchIngredients.setUrl(rec.getUrl());
-        task_fetchIngredients.execute(task_fetchIngredients.getUrl());
-    }
-
-    @Override
-    public void processFinish_fetchIngredients(Document doc, String url)
-    {
-        try {
-            ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
-
-            // --> finally adds to appropriate recipe
-            Recipe rec_to_update = Recipe.getByUrl(main_act.getSearchResults(), url);
-            rec_to_update.setIngredients(ingr_list);
-
-            // update SearchRecipe UI
-            buildIngredientsExpandableList(rec_to_update);
-
-            Log.d("task_results_fetchIngr", url);
-
-        } catch (Exception e) {}
-
-    }
-
-
-    public void hideShowExpandableList(boolean isChecked)
-    {
-        //if (this.show_expandable) {
-        if (isChecked) {
+        if (this.show_expandable) {
+        //if (isChecked) {
             this.recipe_ingr_expandable.setVisibility(View.VISIBLE);
         } else {
             this.recipe_ingr_expandable.setVisibility(View.GONE);

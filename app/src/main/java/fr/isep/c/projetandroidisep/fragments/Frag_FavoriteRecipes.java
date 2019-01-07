@@ -105,7 +105,7 @@ public class Frag_FavoriteRecipes extends Fragment
 
         if (isChecked)
         {
-            /// normalement tout est deja fait
+
         }
         else {
             main_act.removeRecipeFromFavorites(rec);
@@ -122,7 +122,7 @@ public class Frag_FavoriteRecipes extends Fragment
                     }).show();
         }
 
-        updateFavoritesList(main_act.getFavoriteRecipes());
+        //updateFavoritesList(main_act.getFavoriteRecipes());
     }
 
 

@@ -25,6 +25,8 @@ public class Holder_FavoriteRecipes
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
     private Listener_SelectIngredient listener_selectIngredient ;
 
+    public boolean show_expandable = false ;
+
 
     public Holder_FavoriteRecipes(View view
             , Listener_AddRemoveRecipe listener_addRemoveRecipe
@@ -47,10 +49,10 @@ public class Holder_FavoriteRecipes
     }
 
 
-    public void hideShowExpandableList(boolean isChecked)
+    public void hideShowExpandableList()
     {
-        //if (this.show_expandable) {
-        if (isChecked) {
+        if (this.show_expandable) {
+        //if (isChecked) {
             this.recipe_ingr_expandable.setVisibility(View.VISIBLE);
         } else {
             this.recipe_ingr_expandable.setVisibility(View.GONE);

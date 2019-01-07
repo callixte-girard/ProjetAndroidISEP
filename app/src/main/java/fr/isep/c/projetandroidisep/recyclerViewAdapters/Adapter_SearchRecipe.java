@@ -1,6 +1,7 @@
 package fr.isep.c.projetandroidisep.recyclerViewAdapters;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,11 +24,13 @@ import fr.isep.c.projetandroidisep.interfaces.Listener_SelectIngredient;
 import fr.isep.c.projetandroidisep.interfaces.Response_FetchIngredients;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
+import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_FavoriteRecipes;
 import fr.isep.c.projetandroidisep.recyclerViewHolders.Holder_SearchRecipe;
 
 
 public class Adapter_SearchRecipe
         extends RecyclerView.Adapter<Holder_SearchRecipe>
+            implements Response_FetchIngredients
 {
     private MainActivity main_act;
     private ArrayList<Recipe> al = new ArrayList<>();
@@ -75,40 +78,36 @@ public class Adapter_SearchRecipe
         });
 
         // checkboxes
-        holder.checkbox_show_expandable.setChecked(false);
+        holder.checkbox_show_expandable.setChecked(holder.checkbox_show_expandable.isChecked());
         holder.checkbox_show_expandable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                // to show/hide expandable view
-                holder.hideShowExpandableList(isChecked);
-
-                //holder.show_expandable = isChecked ;
                 Log.d("show_expandable", rec.getName() + " | " + isChecked);
 
-                if (isChecked)
+                // hides or show panel
+                holder.show_expandable = isChecked ;
+                holder.hideShowExpandableList();
+
+                if (rec.getIngredients().isEmpty())
                 {
-                    Recipe rec_corresponding = Recipe.getByUrl
-                            (main_act.getFavoriteRecipes(), rec.getUrl());
+                    Recipe rec_corresponding ;
 
-                    // displays it if available (peut etre à déplacer dans un if ou autre)
-                    if (!rec.getIngredients().isEmpty())
+                    try
                     {
-                        holder.buildIngredientsExpandableList(rec);
+                        rec_corresponding = Recipe.getByUrl
+                                (main_act.getFavoriteRecipes(), rec.getUrl());
                     }
-                    else if (rec_corresponding != null)
+                    catch (NullPointerException npe)
                     {
-                        // updates actual recipe with corresponding favorite object's ingr list
+                        rec_corresponding = null ;
+                    }
+
+                    // else
+                    if (rec_corresponding != null) {
                         rec.setIngredients(rec_corresponding.getIngredients());
-                        // now updates UI
-                        holder.buildIngredientsExpandableList(rec);
-                    }
-                    else
-                    {
-                        //putFetchingIngredientsLabel(holder);
-
-                        // launch asynctask
-                        holder.performFetchRecipeIngredients(rec);
+                    } else {
+                        performFetchRecipeIngredients(rec);
                     }
                 }
             }
@@ -126,6 +125,42 @@ public class Adapter_SearchRecipe
     }
 
 
+
+    public void performFetchRecipeIngredients(Recipe rec)
+    {
+        Task_FetchIngredients task_fetchIngredients = new Task_FetchIngredients();
+        task_fetchIngredients.setDelegate(this);
+        task_fetchIngredients.setUrl(rec.getUrl());
+        task_fetchIngredients.execute(task_fetchIngredients.getUrl());
+    }
+
+
+    @Override
+    public void processFinish_fetchIngredients(Document doc, String url)
+    {
+
+        try {
+            Log.d("task_results_holder", url);
+
+            ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
+
+            // --> finally adds to appropriate recipe
+            //Recipe rec_to_update = Recipe.getByUrl(main_act.getSearchResults(), url);
+            Recipe rec_to_update = Recipe.getByUrl(al, url);
+            rec_to_update.setIngredients(ingr_list);
+            Log.d("test", rec_to_update.getName() + " | " + rec_to_update.getIngredients().size());
+
+            // update SearchRecipe UI
+            updateResultsList(main_act.getSearchResults());
+            //updateResultsList(al);
+
+
+        } catch (Exception e) {}
+
+    }
+
+
+
     public void putFetchingIngredientsLabel(Holder_SearchRecipe holder_searchRecipe)
     {
         if (holder_searchRecipe.recipe_ingr_expandable.getChildCount() == 0)
@@ -135,6 +170,30 @@ public class Adapter_SearchRecipe
             holder_searchRecipe.recipe_ingr_expandable.addView(fetching_label);
         }
         Log.d("test", ""+holder_searchRecipe.recipe_ingr_expandable.getChildCount());
+    }
+
+
+    private void initIngredientGrid(int index_rec, Holder_SearchRecipe holder)
+    {
+        holder.recipe_ingr_expandable.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
+
+        // layout
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(main_act);
+        holder.recipe_ingr_expandable.setLayoutManager(linearLayoutManager);
+/*
+        // add a line to divide them more clearly
+        DividerItemDecoration itemDecor = new DividerItemDecoration
+                (main_act, linearLayoutManager.getOrientation());
+        holder.recipe_ingr_expandable.addItemDecoration(itemDecor);
+*/
+        // custom adapter
+        Adapter_IngredientGrid adapter = new Adapter_IngredientGrid
+                (main_act, index_rec, this.listener_selectIngredient);
+        holder.recipe_ingr_expandable.setAdapter(adapter);
+
+        // default : hidden
+        holder.hideShowExpandableList();
+
     }
 
 

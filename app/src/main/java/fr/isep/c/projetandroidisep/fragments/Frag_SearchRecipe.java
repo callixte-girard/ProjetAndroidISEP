@@ -203,10 +203,12 @@ public class Frag_SearchRecipe extends Fragment
             if (!rec.alreadyExists(main_act.getFavoriteRecipes()))
             {
                 main_act.saveRecipeInFavorites(rec);
-
-                if (rec.getIngredients().isEmpty()) {
-                    performFetchRecipeIngredients(rec);
-                }
+/*
+                if (rec.getIngredients().isEmpty())
+                {
+                    ((Adapter_SearchRecipe) results_list.getAdapter())
+                            .performFetchRecipeIngredients(rec);
+                }*/
             }
         }
         else {
@@ -222,8 +224,14 @@ public class Frag_SearchRecipe extends Fragment
         // parse et ajoute les 15 recipes du doc aux résultats
         try
         {
-            main_act.getSearchResults().addAll(Recipe.fetchPageResultsFromDoc(doc));
-            //performFetchRecipeImages(search_results);
+            ArrayList<Recipe> search_results = Recipe.fetchPageResultsFromDoc(doc);
+
+            for (Recipe rec : search_results) {
+                performFetchRecipeIngredients(rec);
+                //performFetchRecipeImages(rec);
+            }
+
+            main_act.getSearchResults().addAll(search_results);
         }
         catch (Exception ex) {}
 
@@ -278,9 +286,10 @@ public class Frag_SearchRecipe extends Fragment
             Recipe rec_to_update = Recipe.getByUrl(main_act.getSearchResults(), url);
             rec_to_update.setIngredients(ingr_list);
 
+            // update SearchRecipe UI
             updateResultsList(main_act.getSearchResults());
 
-            Log.d("task_results_fetchIngr", url);
+            Log.d("task_results_frag", url);
 
         } catch (Exception e) {}
 
@@ -323,17 +332,14 @@ public class Frag_SearchRecipe extends Fragment
     }
 
 
-    protected void performFetchRecipeImages(ArrayList<Recipe> al)
+    protected void performFetchRecipeImages(Recipe rec)
     {
-        for (Recipe rec : al)
-        {
-            Task_FetchImages task_fetchImages = new Task_FetchImages();
-            task_fetchImages.setDelegate(this);
-            task_fetchImages.setUrl(rec.getUrl());
-            task_fetchImages.execute(task_fetchImages.getUrl());
+        Task_FetchImages task_fetchImages = new Task_FetchImages();
+        task_fetchImages.setDelegate(this);
+        task_fetchImages.setUrl(rec.getUrl());
+        task_fetchImages.execute(task_fetchImages.getUrl());
 
-            async_tasks_list.add(task_fetchImages);
-        }
+        async_tasks_list.add(task_fetchImages);
     }
 
 

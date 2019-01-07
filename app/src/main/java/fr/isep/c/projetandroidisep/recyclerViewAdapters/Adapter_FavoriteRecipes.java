@@ -28,6 +28,7 @@ public class Adapter_FavoriteRecipes
 {
     private MainActivity main_act ;
     private ArrayList<Recipe> al = new ArrayList<>();
+
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
     private Listener_SelectIngredient listener_selectIngredient ;
 
@@ -71,8 +72,8 @@ public class Adapter_FavoriteRecipes
         });
 
         // checkboxes
-        //holder.checkbox_show_expandable.setChecked(rec.show_expandable);
-        holder.checkbox_show_expandable.setChecked(false);
+        holder.checkbox_show_expandable.setChecked(holder.show_expandable);
+        //holder.checkbox_show_expandable.setChecked(holder.checkbox_show_expandable.isChecked());
         holder.checkbox_show_expandable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -80,9 +81,8 @@ public class Adapter_FavoriteRecipes
                 Log.d("show_expandable", rec.getName() + " | " + isChecked);
 
                 // hides or show panel
-                //rec.show_expandable = isChecked ;
-
-                holder.hideShowExpandableList(isChecked);
+                holder.show_expandable = isChecked ;
+                holder.hideShowExpandableList();
             }
         });
 
@@ -119,7 +119,7 @@ public class Adapter_FavoriteRecipes
         holder.recipe_ingr_expandable.setAdapter(adapter);
 
         // default : hidden
-        holder.hideShowExpandableList(false);
+        holder.hideShowExpandableList();
 
     }
 
