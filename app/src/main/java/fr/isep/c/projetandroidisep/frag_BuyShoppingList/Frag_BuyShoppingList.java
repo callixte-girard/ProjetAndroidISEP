@@ -27,18 +27,19 @@ public class Frag_BuyShoppingList extends Fragment
     //private SearchView filter_favorite_recipes ;
     private Button button_finish, button_back ;
 
+    private View view  ;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_buy_shopping_list, container, false);
+        view = inflater.inflate(R.layout.fragment_buy_shopping_list, container, false);
 
         label = view.findViewById(R.id.label);
         label.setText("Check the aliments you bought :");
 
         //filter_favorite_recipes = view.findViewById(R.id.filter_favorite_recipes);
 
-        select_bought_aliments = view.findViewById(R.id.select_bought_aliments);
 
         /*
         button_finish = view.findViewById(R.id.button_right);
@@ -78,6 +79,8 @@ public class Frag_BuyShoppingList extends Fragment
 
     private void initBuyShoppingList()
     {
+        select_bought_aliments = view.findViewById(R.id.select_bought_aliments);
+
         select_bought_aliments.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
 
         // layout

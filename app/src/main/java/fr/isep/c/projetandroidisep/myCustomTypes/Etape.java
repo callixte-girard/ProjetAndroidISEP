@@ -44,8 +44,6 @@ public class Etape
             numero = Integer.parseInt(numero_spl[1]);
             description = el.ownText();
 
-            Log.d("test", numero + "- " + description);
-
             // MODE 1 : Etape object (lol)
             //etapes.add(new Etape(numero, description));
             // MODE 2 : Strings simples, on crée le num à la volée

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import fr.isep.c.projetandroidisep.frag_BuyShoppingList.Frag_BuyShoppingList;
 import fr.isep.c.projetandroidisep.frag_CreateShoppingList.Frag_CreateShoppingList;
 import fr.isep.c.projetandroidisep.frag_MyShoppingLists.Frag_MyShoppingLists;
+import fr.isep.c.projetandroidisep.frag_RecipeDetails.Frag_RecipeDetails;
 import fr.isep.c.projetandroidisep.frag_SearchRecipe.Frag_SearchRecipe;
 import fr.isep.c.projetandroidisep.frag_FavoriteRecipes.Frag_FavoriteRecipes;
 import fr.isep.c.projetandroidisep.frag_User.Frag_User;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity
 
     private Frag_SearchRecipe frag_search_recipe ;
     private Frag_FavoriteRecipes frag_favorite_recipes ;
+    private Frag_RecipeDetails frag_recipe_details ;
     private Frag_MyShoppingLists frag_my_shopping_lists ;
     private Frag_User frag_user  ;
     private Frag_CreateShoppingList frag_create_shopping_list ;
@@ -162,9 +164,6 @@ public class MainActivity extends AppCompatActivity
             frag_my_shopping_lists = new Frag_MyShoppingLists();
             frag_user = new Frag_User();
 
-            //frag_create_shopping_list = new Frag_CreateShoppingList();
-            //frag_buy_shopping_list = new Frag_BuyShoppingList();
-
             setBottomNavigationDrawer();
 
         } else {
@@ -217,8 +216,6 @@ public class MainActivity extends AppCompatActivity
             return null;
         }
     }
-
-
 
 
     public void signOut() {
@@ -349,6 +346,22 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
+    public void displayFrag_recipeDetails(Recipe rec)
+    {
+        // creates info to transfer
+        frag_recipe_details = new Frag_RecipeDetails();
+        Bundle bundle = new Bundle();
+        bundle.putString("recipe_name", rec.getName());
+        bundle.putString("recipe_img_url", rec.getImgUrl());
+        bundle.putStringArrayList("recipe_instructions", rec.getInstructions());
+        frag_recipe_details.setArguments(bundle);
+
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.frame_container, frag_recipe_details)
+                .commit();
+    }
+
     public void destroyFrag_createShoppingList()
     {
         fragmentManager
@@ -379,6 +392,17 @@ public class MainActivity extends AppCompatActivity
                 .commitAllowingStateLoss();
     }
 
+    public void destroyFrag_recipeDetails()
+    {
+        fragmentManager
+                .beginTransaction()
+                .remove(frag_recipe_details)
+                .commitAllowingStateLoss();
+
+        // destroys it now
+        frag_recipe_details = null ;
+    }
+
     ////////////////////////////////////////////////////////:
 
 
@@ -395,19 +419,6 @@ public class MainActivity extends AppCompatActivity
 
         favorite_recipes_ref.orderByChild("dateAjout");
         favorite_recipes_ref.setValue(rec);
-    }
-
-    public void saveIngredientsInRecipe(Recipe rec)
-    {
-        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference current_user_ref = FirebaseDatabase.getInstance().getReference()
-                .child(current_user.getUid());
-
-        DatabaseReference favorite_recipes_ingr_ref = current_user_ref.child("favorite_recipes")
-                .child(ParseHtml.shortifyUrl(rec.getUrl()))
-                .child("ingredients");
-
-        favorite_recipes_ingr_ref.setValue(rec.getIngredients());
     }
 
     public void saveShoppingList(ListeCourses lc)

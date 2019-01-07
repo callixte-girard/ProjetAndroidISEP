@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
@@ -153,7 +155,7 @@ public class Adapter_SearchRecipe
             this.listener_searchRecipe_addRemove = listener_searchRecipe_addRemove;
 
             recipe_header = view.findViewById(R.id.header_vertical);
-            //recipe_img = view.findViewById(R.id.recipe_img);
+            recipe_img = view.findViewById(R.id.image);
             recipe_name = view.findViewById(R.id.title);
             recipe_duration = view.findViewById(R.id.subtitle);
             //recipe_rating = view.findViewById(R.id.recipe_rating);
@@ -216,6 +218,9 @@ public class Adapter_SearchRecipe
     public void onBindViewHolder(final Holder_SearchRecipe holder, final int position)
     {
         final Recipe rec = al.get(holder.getAdapterPosition());
+
+        // image
+        Glide.with(main_act).load(rec.getImgUrl()).into(holder.recipe_img);
 
         // labels
         holder.recipe_name.setText(rec.getName());
@@ -331,7 +336,6 @@ public class Adapter_SearchRecipe
             fetching_label.setText(MainActivity.FETCHING_INGREDIENTS);
             holder_searchRecipe.recipe_ingr_expandable.addView(fetching_label);
         }
-        Log.d("test", ""+holder_searchRecipe.recipe_ingr_expandable.getChildCount());
     }
 
 

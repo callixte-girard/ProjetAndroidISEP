@@ -2,6 +2,7 @@ package fr.isep.c.projetandroidisep.myClasses.utils;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -55,6 +56,31 @@ public class Misc {
 		
 		
 		return convertArrayIntoAL(split); 
+	}
+
+
+	public static String patchStringArray(String[] str_arr)
+	{
+		String str_unified = "" ;
+
+		for (String s : str_arr) {
+			str_unified += s + "\r\n" ;
+		}
+
+		return str_unified ;
+	}
+
+
+	public static String patchStringArrayList(ArrayList<String> str_al)
+	{
+		String str_unified = "" ;
+
+		for (String s : str_al) {
+			str_unified += s + "\r\n" ;
+			Log.d("test", str_unified);
+		}
+
+		return str_unified ;
 	}
 
 

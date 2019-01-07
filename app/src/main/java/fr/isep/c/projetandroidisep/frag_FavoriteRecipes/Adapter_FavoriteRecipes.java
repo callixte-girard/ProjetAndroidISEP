@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
@@ -154,7 +156,7 @@ public class Adapter_FavoriteRecipes
 
             recipe_header = view.findViewById(R.id.header_vertical); // the linearlayout clickable
             recipe_name = view.findViewById(R.id.title);
-            //recipe_img = view.findViewById(R.id.recipe_img);
+            recipe_img = view.findViewById(R.id.image);
             recipe_duration = view.findViewById(R.id.subtitle);
             //recipe_rating = view.findViewById(R.id.recipe_rating);
             checkbox_delete_from_favorites = view.findViewById(R.id.checkbox_add_remove);
@@ -218,6 +220,9 @@ public class Adapter_FavoriteRecipes
     {
         final Recipe rec = al.get(holder.getAdapterPosition());
 
+        // image
+        Glide.with(main_act).load(rec.getImgUrl()).into(holder.recipe_img);
+
         // labels
         holder.recipe_name.setText(rec.getName());
         holder.recipe_duration.setText(rec.getDuration());
@@ -227,6 +232,9 @@ public class Adapter_FavoriteRecipes
             @Override
             public void onClick(View v) {
 
+                // launches new fragment
+                main_act.destroyFrag_recipeDetails();
+                main_act.displayFrag_recipeDetails(rec);
             }
         });
 

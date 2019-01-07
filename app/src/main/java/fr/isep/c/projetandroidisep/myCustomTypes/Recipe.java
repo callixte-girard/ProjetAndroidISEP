@@ -32,7 +32,6 @@ public class Recipe
 	private String url ;
 	private ArrayList<String> instructions ;
 	private String imgUrl ;
-	private Bitmap imgBitmap ;
 	private double rating = 0 ;
 	private String duration = "?" ;
 	private String type = "" ; // dépend de l'user
@@ -164,8 +163,6 @@ public class Recipe
 	}
 	public String getImgUrl() { return this.imgUrl ; }
 	public void setImgUrl(String imgUrl) { this.imgUrl = imgUrl ; }
-	public Bitmap getImgBitmap() {return this.imgBitmap ; }
-	public void setImgBitmap(Bitmap imgBitmap) { this.imgBitmap = imgBitmap ; }
 	public String getDateAjout() {return this.dateAjout ;}
 	public void setDateAjout(String dateAjout) { this.dateAjout = dateAjout ;}
 	public ArrayList<String> getInstructions() {
