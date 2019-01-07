@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.myCustomTypes.Etape;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
@@ -301,20 +302,20 @@ public class Adapter_SearchRecipe
     {
 
         try {
-            Log.d("task_results_holder", url);
-
             ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
+            ArrayList<String> etapes_list = Etape.fetchInstructions(doc);
 
             // --> finally adds to appropriate recipe
             //Recipe rec_to_update = Recipe.getByUrl(main_act.getSearchResults(), url);
             Recipe rec_to_update = Recipe.getByUrl(al, url);
             rec_to_update.setIngredients(ingr_list);
-            Log.d("test", rec_to_update.getName() + " | " + rec_to_update.getIngredients().size());
+            rec_to_update.setInstructions(etapes_list);
 
             // update SearchRecipe UI
             updateResultsList(main_act.getSearchResults());
             //updateResultsList(al);
 
+            Log.d("task_results_holder", url);
 
         } catch (Exception e) {}
 

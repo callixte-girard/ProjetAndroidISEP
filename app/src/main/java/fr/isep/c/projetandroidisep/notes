@@ -7,6 +7,8 @@ Freepik
 
 
 TO-DO :
+- refaire un layout plus adaptable aux petits écrans
+- faire fragment detail_recipe
 V expandable view
 V améliorer le fait de parser tous les ingrédients de tous les résultats de recherche...
 V rendre personnalisables directement les ingrédients des recettes
@@ -21,6 +23,7 @@ V réparer pbs arret asynctasks en mode recherche :
     - create sl
     - buy sl
 V customiser icones
+V rajouter description dans le parser
 - implémenter récupération des images (seems not to work for now)
 V backup delete with snackbar
 - implémenter onBackPressed pour chaque fragment

@@ -202,19 +202,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
-
-    public Drawable loadImageFromUrl(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    public Bitmap getBitmapFromURL(String src) {
+    private Bitmap loadImageFromUrl(String src) {
         try {
             java.net.URL url = new java.net.URL(src);
             HttpURLConnection connection = (HttpURLConnection) url

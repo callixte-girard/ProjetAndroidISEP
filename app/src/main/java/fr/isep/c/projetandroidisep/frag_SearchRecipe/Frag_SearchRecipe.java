@@ -23,13 +23,14 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
+import fr.isep.c.projetandroidisep.myCustomTypes.Etape;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 
 public class Frag_SearchRecipe extends Fragment
-        implements Response_SearchRecipe, Response_FetchImages, Response_FetchIngredients
+        implements Response_SearchRecipe, Response_FetchIngredients
         ,Listener_SearchRecipe_AddRemove, Listener_SearchRecipe_SelectIngredient
 {
     private SearchView search_bar ;
@@ -279,12 +280,14 @@ public class Frag_SearchRecipe extends Fragment
     {
         try {
             ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
+            ArrayList<String> etape_list = Etape.fetchInstructions(doc) ;
 
             // --> finally adds to appropriate recipe
             Recipe rec_to_update = Recipe.getByUrl(
                     ((MainActivity) getActivity()).getSearchResults(), url
             );
             rec_to_update.setIngredients(ingr_list);
+            rec_to_update.setInstructions(etape_list);
 
             // update SearchRecipe UI
             updateResultsList(((MainActivity) getActivity()).getSearchResults());
@@ -293,16 +296,6 @@ public class Frag_SearchRecipe extends Fragment
 
         } catch (Exception e) {}
 
-    }
-
-
-    @Override
-    public void processFinish_fetchImages(Bitmap bitmap, String url)
-    {
-        // récupère l'image et la refourgue à la recette en question
-
-        Recipe rec = Recipe.getByUrl(((MainActivity) getActivity()).getSearchResults(), url);
-        rec.setImgBitmap(bitmap);
     }
 
 
@@ -329,17 +322,6 @@ public class Frag_SearchRecipe extends Fragment
         task_fetchIngredients.execute(task_fetchIngredients.getUrl());
 
         async_tasks_list.add(task_fetchIngredients);
-    }
-
-
-    protected void performFetchRecipeImages(Recipe rec)
-    {
-        Task_FetchImages task_fetchImages = new Task_FetchImages();
-        task_fetchImages.setDelegate(this);
-        task_fetchImages.setUrl(rec.getUrl());
-        task_fetchImages.execute(task_fetchImages.getUrl());
-
-        async_tasks_list.add(task_fetchImages);
     }
 
 

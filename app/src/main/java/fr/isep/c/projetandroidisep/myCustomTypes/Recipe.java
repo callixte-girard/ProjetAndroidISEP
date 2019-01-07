@@ -30,7 +30,7 @@ public class Recipe
 	private String dateAjout ;
     private String name ;
 	private String url ;
-	private String instructions ;
+	private ArrayList<String> instructions ;
 	private String imgUrl ;
 	private Bitmap imgBitmap ;
 	private double rating = 0 ;
@@ -73,9 +73,6 @@ public class Recipe
 		}
 		return null ;
 	}
-
-	//public static Recipe getById(ArrayList<Recipe> al_scan, int id)
-
 
 
 	public static ArrayList<Recipe> fetchPageResultsFromDoc(Document doc)
@@ -171,6 +168,13 @@ public class Recipe
 	public void setImgBitmap(Bitmap imgBitmap) { this.imgBitmap = imgBitmap ; }
 	public String getDateAjout() {return this.dateAjout ;}
 	public void setDateAjout(String dateAjout) { this.dateAjout = dateAjout ;}
+	public ArrayList<String> getInstructions() {
+		return this.instructions ;
+	}
+	public void setInstructions(ArrayList<String> instructions)
+	{
+		this.instructions = instructions ;
+	}
 	public ArrayList<Ingredient> getIngredients()
 	{
 		return this.ingredients ;
