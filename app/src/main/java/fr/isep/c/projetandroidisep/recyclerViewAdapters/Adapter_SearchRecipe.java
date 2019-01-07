@@ -71,32 +71,46 @@ public class Adapter_SearchRecipe
             @Override
             public void onClick(View v) {
 
-                holder.show_expandable = !holder.show_expandable ;
-                Log.d("show_expandable", rec.getName() + " | " + holder.show_expandable);
+            }
+        });
 
-                Recipe rec_corresponding = Recipe.getByUrl(main_act.getFavoriteRecipes(), rec.getUrl());
-
-                // displays it if available (peut etre à déplacer dans un if ou autre)
-                if (!rec.getIngredients().isEmpty())
-                {
-                    holder.buildIngredientsExpandableList(rec);
-                }
-                else if (rec_corresponding != null) {
-                    // updates actual recipe with corresponding favorite object's ingr list
-                    rec.setIngredients(rec_corresponding.getIngredients());
-                    // now updates UI
-                    holder.buildIngredientsExpandableList(rec);
-                }
-                else {
-                    //putFetchingIngredientsLabel(holder);
-
-                    // launch asynctask
-                    holder.performFetchRecipeIngredients(rec);
-                }
+        // checkboxes
+        holder.checkbox_show_expandable.setChecked(false);
+        holder.checkbox_show_expandable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 // to show/hide expandable view
-                holder.hideShowExpandableList();
+                holder.hideShowExpandableList(isChecked);
 
+                //holder.show_expandable = isChecked ;
+                Log.d("show_expandable", rec.getName() + " | " + isChecked);
+
+                if (isChecked)
+                {
+                    Recipe rec_corresponding = Recipe.getByUrl
+                            (main_act.getFavoriteRecipes(), rec.getUrl());
+
+                    // displays it if available (peut etre à déplacer dans un if ou autre)
+                    if (!rec.getIngredients().isEmpty())
+                    {
+                        holder.buildIngredientsExpandableList(rec);
+                    }
+                    else if (rec_corresponding != null)
+                    {
+                        // updates actual recipe with corresponding favorite object's ingr list
+                        rec.setIngredients(rec_corresponding.getIngredients());
+                        // now updates UI
+                        holder.buildIngredientsExpandableList(rec);
+                    }
+                    else
+                    {
+                        //putFetchingIngredientsLabel(holder);
+
+                        // launch asynctask
+                        holder.performFetchRecipeIngredients(rec);
+                    }
+                }
             }
         });
 

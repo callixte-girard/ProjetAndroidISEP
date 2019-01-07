@@ -46,6 +46,18 @@ public class Holder_FavoriteRecipes
         view.setOnClickListener(this);
     }
 
+
+    public void hideShowExpandableList(boolean isChecked)
+    {
+        //if (this.show_expandable) {
+        if (isChecked) {
+            this.recipe_ingr_expandable.setVisibility(View.VISIBLE);
+        } else {
+            this.recipe_ingr_expandable.setVisibility(View.GONE);
+        }
+    }
+
+
     @Override
     public void onClick(View view) {
 

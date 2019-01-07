@@ -80,15 +80,6 @@ public class Frag_FavoriteRecipes extends Fragment
         return view ;
     }
 
-/*
-    public void checkedListener_selectIngredient(View view, Recipe rec, final int position, boolean isChecked)
-    {
-        final Ingredient ingr = rec.getIngredients().get(position);
-
-        ingr.setSelected(isChecked);
-        Log.d("checkedListener_ingr", position + " | " + isChecked + " | " + ingr.getName());
-    }
-*/
 
     public void checkedListener_selectIngredient
             (View view, final int index_rec, final int index_ingr, boolean isChecked)
@@ -99,10 +90,10 @@ public class Frag_FavoriteRecipes extends Fragment
         ingr.setSelected(isChecked);
         Log.d("checkedListener_ingr", rec.getName() + " | " + ingr.getName() + " | " + isChecked);
 
+        updateFavoritesList(main_act.getFavoriteRecipes());
+
         // saves recipe in db
         main_act.saveRecipeInFavorites(rec);
-
-        updateFavoritesList(main_act.getFavoriteRecipes());
     }
 
 
@@ -112,10 +103,11 @@ public class Frag_FavoriteRecipes extends Fragment
         final Recipe rec = main_act.getFavoriteRecipes().get(position);
         Log.d("checkedListener_favo", position + " | " + isChecked + " | " + rec.getName());
 
-        if (isChecked) {
-            if (!rec.alreadyExists(main_act.getFavoriteRecipes()))
-                main_act.saveRecipeInFavorites(rec);
-        } else {
+        if (isChecked)
+        {
+            /// normalement tout est deja fait
+        }
+        else {
             main_act.removeRecipeFromFavorites(rec);
 
             //backup if error
@@ -180,14 +172,17 @@ public class Frag_FavoriteRecipes extends Fragment
         // updates adapter
         ((Adapter_FavoriteRecipes) my_favorite_recipes.getAdapter()).updateFavoritesList(new_list);
 
-        // updates counter
-        int count = main_act.getFavoriteRecipes().size();
-        number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
-
+        // and label
+        updateFavoritesNumber();
     }
 
 
-
+    private void updateFavoritesNumber()
+    {
+        // updates counter
+        int count = main_act.getFavoriteRecipes().size();
+        number_favorite_recipes.setText(String.valueOf(count) + " favorite recipes");
+    }
 
 
 

@@ -198,13 +198,18 @@ public class Frag_SearchRecipe extends Fragment
         Recipe rec = main_act.getSearchResults().get(position);
         Log.d("checkedListener_search", position + " | " + isChecked + " | " + rec.getName());
 
-        if (isChecked) {
-            if (!rec.alreadyExists(main_act.getFavoriteRecipes())) {
+        if (isChecked)
+        {
+            if (!rec.alreadyExists(main_act.getFavoriteRecipes()))
+            {
                 main_act.saveRecipeInFavorites(rec);
 
-                performFetchRecipeIngredients(rec);
+                if (rec.getIngredients().isEmpty()) {
+                    performFetchRecipeIngredients(rec);
+                }
             }
-        } else {
+        }
+        else {
             main_act.removeRecipeFromFavorites(rec);
         }
     }
@@ -270,11 +275,10 @@ public class Frag_SearchRecipe extends Fragment
             ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
 
             // --> finally adds to appropriate recipe
-            Recipe rec_to_update = Recipe.getByUrl(main_act.getFavoriteRecipes(), url);
+            Recipe rec_to_update = Recipe.getByUrl(main_act.getSearchResults(), url);
             rec_to_update.setIngredients(ingr_list);
 
-            // saves
-            main_act.saveIngredientsInRecipe(rec_to_update);
+            updateResultsList(main_act.getSearchResults());
 
             Log.d("task_results_fetchIngr", url);
 
@@ -291,8 +295,6 @@ public class Frag_SearchRecipe extends Fragment
         Recipe rec = Recipe.getByUrl(main_act.getSearchResults(), url);
         rec.setImgBitmap(bitmap);
     }
-
-
 
 
     protected void performSearchFromKeywordsAndDeepness(String search)

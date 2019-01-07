@@ -26,14 +26,15 @@ public class Holder_SearchRecipe
         extends RecyclerView.ViewHolder
         implements View.OnClickListener, Response_FetchIngredients
 {
-    public LinearLayout recipe_header, recipe_ingr_expandable ;
+    public LinearLayout recipe_header ;
+    public RecyclerView recipe_ingr_expandable ;
     public ImageView recipe_img ;
     public TextView recipe_name, recipe_duration, recipe_rating ;
     public CheckBox checkbox_add_to_favorites, checkbox_show_expandable ;
 
     private MainActivity main_act ;
     private Listener_AddRemoveRecipe listener_addRemoveRecipe ;
-    public boolean show_expandable = false ;
+    //public boolean show_expandable = false ;
 
     public Holder_SearchRecipe(Context context, View view
             , Listener_AddRemoveRecipe listener_addRemoveRecipe)
@@ -49,8 +50,8 @@ public class Holder_SearchRecipe
         recipe_duration = view.findViewById(R.id.subtitle);
         //recipe_rating = view.findViewById(R.id.recipe_rating);
         checkbox_add_to_favorites = view.findViewById(R.id.checkbox_add_remove);
-        //checkbox_show_expandable = view.findViewById(R.id.checkbox_show_expandable);
-        recipe_ingr_expandable = view.findViewById(R.id.expandable_list);
+        checkbox_show_expandable = view.findViewById(R.id.checkbox_show_expandable);
+        recipe_ingr_expandable = view.findViewById(R.id.ingr_grid_expandable);
 
         view.setOnClickListener(this);
     }
@@ -82,9 +83,6 @@ public class Holder_SearchRecipe
             // update SearchRecipe UI
             buildIngredientsExpandableList(rec_to_update);
 
-            // to show/hide expandable view
-            //hideShowExpandableList();
-
             Log.d("task_results_fetchIngr", url);
 
         } catch (Exception e) {}
@@ -92,9 +90,10 @@ public class Holder_SearchRecipe
     }
 
 
-    public void hideShowExpandableList()
+    public void hideShowExpandableList(boolean isChecked)
     {
-        if (this.show_expandable) {
+        //if (this.show_expandable) {
+        if (isChecked) {
             this.recipe_ingr_expandable.setVisibility(View.VISIBLE);
         } else {
             this.recipe_ingr_expandable.setVisibility(View.GONE);
@@ -106,36 +105,7 @@ public class Holder_SearchRecipe
     {
 
 
-
-        if (recipe_ingr_expandable.getChildCount() < 1)
-        {
-            // remove textview or make it invisible...
-            recipe_ingr_expandable.removeAllViews();
-
-            for (Ingredient ingr : rec.getIngredients())
-            {
-                LayoutInflater inflater = LayoutInflater.from(main_act);
-                LinearLayout layout = (LinearLayout) inflater.inflate
-                        (R.layout.row_grid_chkbx, null, false);
-
-
-
-                recipe_ingr_expandable.addView(layout);
-
-                /*
-                TextView tv_ingr = new TextView(main_act);
-                tv_ingr.setText(" - " + ingr.returnNameAndForm());
-                //tv_ingr.setTextColor(tv_ingr.getResources().getColor(R.color.black));
-                recipe_ingr_expandable.addView(tv_ingr);
-
-                CheckBox chkbx_select_ingr = new CheckBox(main_act);
-                chkbx_select_ingr.setChecked(ingr.isSelected());
-                recipe_ingr_expandable.addView(chkbx_select_ingr);
-                */
-            }
-        }
     }
-
 
 }
 

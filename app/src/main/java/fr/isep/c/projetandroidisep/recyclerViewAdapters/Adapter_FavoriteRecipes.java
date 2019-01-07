@@ -71,23 +71,18 @@ public class Adapter_FavoriteRecipes
         });
 
         // checkboxes
-        holder.checkbox_show_expandable.setChecked(rec.show_expandable);
+        //holder.checkbox_show_expandable.setChecked(rec.show_expandable);
+        holder.checkbox_show_expandable.setChecked(false);
         holder.checkbox_show_expandable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                // launches asynctask if needed
                 Log.d("show_expandable", rec.getName() + " | " + isChecked);
 
                 // hides or show panel
-                rec.show_expandable = isChecked ;
+                //rec.show_expandable = isChecked ;
 
-                if (rec.show_expandable) {
-                //if (isChecked) {
-                    holder.recipe_ingr_expandable.setVisibility(View.VISIBLE);
-                } else {
-                    holder.recipe_ingr_expandable.setVisibility(View.GONE);
-                }
+                holder.hideShowExpandableList(isChecked);
             }
         });
 
@@ -123,14 +118,8 @@ public class Adapter_FavoriteRecipes
                 (main_act, index_rec, this.listener_selectIngredient);
         holder.recipe_ingr_expandable.setAdapter(adapter);
 
-        // set visibility in accordance
-        final Recipe rec = al.get(index_rec);
-
-        if (rec.show_expandable) {
-            holder.recipe_ingr_expandable.setVisibility(View.VISIBLE);
-        } else {
-            holder.recipe_ingr_expandable.setVisibility(View.GONE);
-        }
+        // default : hidden
+        holder.hideShowExpandableList(false);
 
     }
 
