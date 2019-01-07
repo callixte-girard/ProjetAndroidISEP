@@ -33,7 +33,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:padding="@dimen/fab_margin"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_cross_add"
         android:tint="@color/white"/>
 
 

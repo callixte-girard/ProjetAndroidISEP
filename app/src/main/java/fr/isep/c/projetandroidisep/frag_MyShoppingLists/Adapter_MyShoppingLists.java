@@ -42,7 +42,7 @@ public class Adapter_MyShoppingLists
     public Holder_MyShoppingLists onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_2lines_expandable, viewGroup, false);
+                .inflate(R.layout.row_2lines_expandable_add_remove, viewGroup, false);
 
         return new Holder_MyShoppingLists(v, listener_buyShoppingList);
     }

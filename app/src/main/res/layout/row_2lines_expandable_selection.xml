@@ -4,26 +4,8 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical">
 
-    <!-- ta be flattened like the others -->
-    <LinearLayout
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true">
-
-        <include layout="@layout/img_square_small"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/header_vertical"
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <include layout="@layout/tv_primary"/>
-        <include layout="@layout/tv_secondary"/>
-    </LinearLayout>
-
+    <include layout="@layout/row_2lines_labels_generic"
+        android:id="@+id/header_vertical"/>
 
     <RelativeLayout
         android:id="@+id/checkboxes"
@@ -40,18 +22,12 @@
             android:layout_alignParentStart="true"/>
 
         <include layout="@layout/checkbox_generic"
-            android:id="@+id/checkbox_add_remove"
+            android:id="@+id/checkbox_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
-    <!--
-    <include layout="@layout/expandable_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header_vertical"/>
-        -->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ingr_grid_expandable"

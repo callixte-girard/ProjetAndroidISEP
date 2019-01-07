@@ -51,7 +51,8 @@ public class Ingredient extends Aliment
 				{"noix", ""},
 				{"vinaigre", ""},
 				{"huile", ""},
-				{"pomme", "terre"}
+				{"pomme", "terre"},
+				{"piment", "cayenne"}
 		} ;
 
 		for (String[] exc : splitExceptions)

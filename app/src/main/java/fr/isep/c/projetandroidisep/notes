@@ -8,7 +8,8 @@ Freepik
 
 TO-DO :
 V expandable view
-- rendre personnalisables directement les ingrédients des recettes
+V améliorer le fait de parser tous les ingrédients de tous les résultats de recherche...
+V rendre personnalisables directement les ingrédients des recettes
 V faire mode buy shopping list
     - rajouter affichage voyant indiquant que la shopping list a bien été achetée
 V réparer pbs arret asynctasks en mode recherche :
@@ -19,7 +20,7 @@ V réparer pbs arret asynctasks en mode recherche :
     - my shopping lists
     - create sl
     - buy sl
-- customiser icones
+V customiser icones
 - implémenter récupération des images (seems not to work for now)
 V backup delete with snackbar
 - implémenter onBackPressed pour chaque fragment

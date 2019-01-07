@@ -17,8 +17,6 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.frag_SearchRecipe.Listener_SearchRecipe_SelectIngredient;
-import fr.isep.c.projetandroidisep.frag_SearchRecipe.Listener_SearchRecipe_AddRemove;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
@@ -167,10 +165,10 @@ public class Adapter_FavoriteRecipes
         }
 
 
-        public void hideShowExpandableList()
+        public void hideShowExpandableList(boolean isChecked)
         {
-            if (this.show_expandable) {
-                //if (isChecked) {
+            //if (this.show_expandable) {
+            if (isChecked) {
                 this.recipe_ingr_expandable.setVisibility(View.VISIBLE);
             } else {
                 this.recipe_ingr_expandable.setVisibility(View.GONE);
@@ -208,7 +206,7 @@ public class Adapter_FavoriteRecipes
     public Holder_FavoriteRecipes onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_2lines_expandable, viewGroup, false);
+                .inflate(R.layout.row_2lines_expandable_add_remove, viewGroup, false);
 
         return new Holder_FavoriteRecipes
                 (v, listener_favoriteRecipes_addRemove, listener_favoriteRecipes_selectIngredient);
@@ -233,7 +231,7 @@ public class Adapter_FavoriteRecipes
         });
 
         // checkboxes
-        holder.checkbox_show_expandable.setChecked(holder.show_expandable);
+        holder.checkbox_show_expandable.setChecked(false);
         holder.checkbox_show_expandable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -242,7 +240,7 @@ public class Adapter_FavoriteRecipes
 
                 // hides or show panel
                 holder.show_expandable = isChecked ;
-                holder.hideShowExpandableList();
+                holder.hideShowExpandableList(holder.show_expandable);
             }
         });
 
@@ -280,7 +278,7 @@ public class Adapter_FavoriteRecipes
         holder.recipe_ingr_expandable.setAdapter(adapter);
 
         // default : hidden
-        holder.hideShowExpandableList();
+        holder.hideShowExpandableList(false);
 
     }
 
@@ -290,7 +288,6 @@ public class Adapter_FavoriteRecipes
         this.al.addAll(al);
         notifyDataSetChanged();
     }
-
 
     @Override
     public int getItemCount() {

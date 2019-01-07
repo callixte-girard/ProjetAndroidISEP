@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.frag_FavoriteRecipes.Adapter_FavoriteRecipes;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
@@ -171,9 +170,10 @@ public class Adapter_SearchRecipe
         }
 
 
-        public void hideShowExpandableList()
+        public void hideShowExpandableList(boolean isChecked)
         {
-            if (this.show_expandable) {
+            //if (this.show_expandable) {
+            if (isChecked) {
                 this.recipe_ingr_expandable.setVisibility(View.VISIBLE);
             } else {
                 this.recipe_ingr_expandable.setVisibility(View.GONE);
@@ -205,7 +205,7 @@ public class Adapter_SearchRecipe
     public Holder_SearchRecipe onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_2lines_expandable, viewGroup, false);
+                .inflate(R.layout.row_2lines_expandable_add_remove, viewGroup, false);
 
         return new Holder_SearchRecipe(main_act, v, this.listener_searchRecipe_addRemove);
     }
@@ -238,7 +238,7 @@ public class Adapter_SearchRecipe
 
                 // hides or show panel
                 holder.show_expandable = isChecked ;
-                holder.hideShowExpandableList();
+                holder.hideShowExpandableList(holder.show_expandable);
 
                 Recipe rec_corresp = Recipe.getByUrl
                         (main_act.getFavoriteRecipes(), rec.getUrl());
@@ -353,7 +353,7 @@ public class Adapter_SearchRecipe
         holder.recipe_ingr_expandable.setAdapter(adapter);
 
         // default : hidden
-        holder.hideShowExpandableList();
+        holder.hideShowExpandableList(false);
 
     }
 
