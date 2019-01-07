@@ -12,12 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
-import fr.isep.c.projetandroidisep.fragments.Frag_BuyShoppingList;
-import fr.isep.c.projetandroidisep.fragments.Frag_CreateShoppingList;
-import fr.isep.c.projetandroidisep.fragments.Frag_MyShoppingLists;
-import fr.isep.c.projetandroidisep.fragments.Frag_SearchRecipe;
-import fr.isep.c.projetandroidisep.fragments.Frag_FavoriteRecipes;
-import fr.isep.c.projetandroidisep.fragments.Frag_User;
+import fr.isep.c.projetandroidisep.frag_BuyShoppingList.Frag_BuyShoppingList;
+import fr.isep.c.projetandroidisep.frag_CreateShoppingList.Frag_CreateShoppingList;
+import fr.isep.c.projetandroidisep.frag_MyShoppingLists.Frag_MyShoppingLists;
+import fr.isep.c.projetandroidisep.frag_SearchRecipe.Frag_SearchRecipe;
+import fr.isep.c.projetandroidisep.frag_FavoriteRecipes.Frag_FavoriteRecipes;
+import fr.isep.c.projetandroidisep.frag_User.Frag_User;
 import fr.isep.c.projetandroidisep.myClasses.utils.ParseHtml;
 import fr.isep.c.projetandroidisep.myCustomTypes.*;
 
