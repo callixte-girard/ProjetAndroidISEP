@@ -77,7 +77,6 @@ public class Misc {
 
 		for (String s : str_al) {
 			str_unified += s + "\r\n" ;
-			Log.d("test", str_unified);
 		}
 
 		return str_unified ;
