@@ -28,7 +28,6 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 public class Adapter_SearchRecipe
         extends RecyclerView.Adapter<Adapter_SearchRecipe.Holder_SearchRecipe>
-            implements Response_FetchIngredients
 {
     private class Adapter_IngredientGrid
             extends RecyclerView.Adapter<Adapter_IngredientGrid.Holder_IngredientGrid>
@@ -293,52 +292,6 @@ public class Adapter_SearchRecipe
 
 
 
-    public void performFetchRecipeIngredients(Recipe rec)
-    {
-        Task_FetchIngredients task_fetchIngredients = new Task_FetchIngredients();
-        task_fetchIngredients.setDelegate(this);
-        task_fetchIngredients.setUrl(rec.getUrl());
-        task_fetchIngredients.execute(task_fetchIngredients.getUrl());
-    }
-
-
-    @Override
-    public void processFinish_fetchIngredients(Document doc, String url)
-    {
-
-        try {
-            ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
-            ArrayList<String> etapes_list = Etape.fetchInstructions(doc);
-
-            // --> finally adds to appropriate recipe
-            //Recipe rec_to_update = Recipe.getByUrl(main_act.getSearchResults(), url);
-            Recipe rec_to_update = Recipe.getByUrl(al, url);
-            rec_to_update.setIngredients(ingr_list);
-            rec_to_update.setInstructions(etapes_list);
-
-            // update SearchRecipe UI
-            updateResultsList(main_act.getSearchResults());
-            //updateResultsList(al);
-
-            Log.d("task_results_holder", url);
-
-        } catch (Exception e) {}
-
-    }
-
-
-
-    public void putFetchingIngredientsLabel(Holder_SearchRecipe holder_searchRecipe)
-    {
-        if (holder_searchRecipe.recipe_ingr_expandable.getChildCount() == 0)
-        {
-            TextView fetching_label = new TextView(main_act);
-            fetching_label.setText(MainActivity.FETCHING_INGREDIENTS);
-            holder_searchRecipe.recipe_ingr_expandable.addView(fetching_label);
-        }
-    }
-
-
     private void initIngredientGrid(int index_rec, Holder_SearchRecipe holder)
     {
         holder.recipe_ingr_expandable.setHasFixedSize(false); // je sais pas trop ce que ca change en vrai...
@@ -367,6 +320,10 @@ public class Adapter_SearchRecipe
         this.al.clear();
         this.al.addAll(al);
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Recipe> getResultsList() {
+        return this.al ;
     }
 
     @Override

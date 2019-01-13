@@ -9,6 +9,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 //import android.support.v7.widget.SearchView;
+import android.widget.Adapter;
 import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +31,7 @@ import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
 
 public class Frag_SearchRecipe extends Fragment
-        implements Response_SearchRecipe //, Response_FetchIngredients
+        implements Response_SearchRecipe, Response_FetchIngredients
         ,Listener_SearchRecipe_AddRemove, Listener_SearchRecipe_SelectIngredient
 {
     private SearchView search_bar ;
@@ -160,9 +161,9 @@ public class Frag_SearchRecipe extends Fragment
 
     private void updateResultsNumber()
     {
-        // updates counter label
-        int count = ((MainActivity) getActivity()).getSearchResults().size();
-        results_number.setText(count + " results");
+            // updates counter label
+            int count = ((MainActivity) getActivity()).getSearchResults().size();
+            results_number.setText(count + " results");
     }
 
 
@@ -222,8 +223,7 @@ public class Frag_SearchRecipe extends Fragment
 
                 //if (rec_corresp.getIngredients().isEmpty())
                 if (rec_corresp == null) {
-                    ((Adapter_SearchRecipe) results_list.getAdapter())
-                            .performFetchRecipeIngredients(rec);
+                    performFetchRecipeIngredients(rec);
                 } else {
                     rec.setIngredients(rec_corresp.getIngredients());
                 }
@@ -274,29 +274,31 @@ public class Frag_SearchRecipe extends Fragment
     }
 
 
-//    @Override
-//    public void processFinish_fetchIngredients(Document doc, String url)
-//    {
-//        try {
-//            ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
-//            ArrayList<String> etape_list = Etape.fetchInstructions(doc) ;
-//
-//            // --> finally adds to appropriate recipe
-//            Recipe rec_to_update = Recipe.getByUrl(
-//                    ((MainActivity) getActivity()).getSearchResults(), url
-//            );
-//            rec_to_update.setIngredients(ingr_list);
-//            rec_to_update.setInstructions(etape_list);
-//
-//            // update SearchRecipe UI
-//            updateResultsList(((MainActivity) getActivity()).getSearchResults());
-//
-//            Log.d("task_results_frag", url);
-//
-//        } catch (Exception e) {}
-//
-//    }
-//
+    @Override
+    public void processFinish_fetchIngredients(Document doc, String url)
+    {
+        ((MainActivity) getActivity()).counter ++ ;
+
+        try {
+            ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
+            ArrayList<String> etapes_list = Etape.fetchInstructions(doc);
+
+            // --> finally adds to appropriate recipe
+            //Recipe rec_to_update = Recipe.getByUrl(main_act.getSearchResults(), url);
+            Recipe rec_to_update = Recipe.getByUrl(
+                    ((Adapter_SearchRecipe) results_list.getAdapter()).getResultsList(), url);
+            rec_to_update.setIngredients(ingr_list);
+            rec_to_update.setInstructions(etapes_list);
+
+            // update SearchRecipe UI
+            updateResultsList(((MainActivity) getActivity()).getSearchResults());
+
+            Log.d("task_results_holder", url);
+
+        } catch (Exception e) {}
+
+    }
+
 
     protected void performSearchFromKeywordsAndDeepness(String search)
     {
@@ -313,15 +315,15 @@ public class Frag_SearchRecipe extends Fragment
     }
 
 
-//    protected void performFetchRecipeIngredients(Recipe rec)
-//    {
-//        Task_FetchIngredients task_fetchIngredients = new Task_FetchIngredients();
-//        task_fetchIngredients.setDelegate(this);
-//        task_fetchIngredients.setUrl(rec.getUrl());
-//        task_fetchIngredients.execute(task_fetchIngredients.getUrl());
-//
-//        async_tasks_list.add(task_fetchIngredients);
-//    }
+    protected void performFetchRecipeIngredients(Recipe rec)
+    {
+        Task_FetchIngredients task_fetchIngredients = new Task_FetchIngredients();
+        task_fetchIngredients.setDelegate(this);
+        task_fetchIngredients.setUrl(rec.getUrl());
+        task_fetchIngredients.execute(task_fetchIngredients.getUrl());
+
+        async_tasks_list.add(task_fetchIngredients);
+    }
 
 
     private TextView getSearchSrcTextView(SearchView search_bar)
