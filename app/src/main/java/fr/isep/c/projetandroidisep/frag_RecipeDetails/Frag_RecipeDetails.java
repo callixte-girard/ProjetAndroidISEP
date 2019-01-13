@@ -47,6 +47,7 @@ public class Frag_RecipeDetails extends Fragment
         // image
         recipe_img = view.findViewById(R.id.recipe_img);
         Glide.with(this).load(img_url).into(recipe_img);
+        //recipe_img.setVisibility(View.GONE);
 
         // instructions
         recipe_instructions = view.findViewById(R.id.recipe_instructions);

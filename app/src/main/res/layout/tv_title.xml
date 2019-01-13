@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/big_title"
-    android:textSize="30sp"
+    android:textSize="25sp"
     android:textColor="@android:color/black"
     android:gravity="center"
     android:layout_width="wrap_content"

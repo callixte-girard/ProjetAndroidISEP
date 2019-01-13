@@ -3,5 +3,5 @@
     android:id="@+id/image"
     android:textColor="@color/grey"
     android:gravity="center_vertical"
-    android:layout_width="200dp"
-    android:layout_height="200dp"/>
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
