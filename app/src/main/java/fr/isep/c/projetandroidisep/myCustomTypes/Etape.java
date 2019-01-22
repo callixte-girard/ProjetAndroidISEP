@@ -36,22 +36,16 @@ public class Etape
 
         for (Element el : instructions)
         {
-            //int numero ;
             String description ;
 
-//            // num
-//            String[] numero_spl = el.getElementsByClass("__secondary").first()
-//                    .html().split(" ");
-//            numero = Integer.parseInt(numero_spl[1]);
-//
-            // desc
-            description = el.ownText();
+            // numero etape (remove etape number)
+            el.getElementsByTag("h3").remove();
+
+            // desc (includes other children)
+            description = el.text();
 //            Log.d("test", description);
 
-            // MODE 1 : Etape object (lol)
-            //etapes.add(new Etape(numero, description));
-            // MODE 2 : Strings simples, on crée le num à la volée
-            etapes.add(description);
+            etapes.add("- " + description);
         }
 
         return etapes ;

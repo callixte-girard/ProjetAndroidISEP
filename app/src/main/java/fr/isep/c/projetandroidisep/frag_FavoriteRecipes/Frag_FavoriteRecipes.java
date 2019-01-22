@@ -102,8 +102,8 @@ public class Frag_FavoriteRecipes extends Fragment
 
             //backup if error
             Snackbar.make(view,
-                        rec.getName() + MainActivity.REMOVED_SUCCESSFULLY,
-                        Snackbar.LENGTH_LONG)
+                        /* rec.getName() + */ MainActivity.REMOVED_SUCCESSFULLY,
+                        Snackbar.LENGTH_SHORT)
                     .setAction("UNDO", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

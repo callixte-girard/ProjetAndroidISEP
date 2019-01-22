@@ -140,7 +140,8 @@ public class MainActivity extends AppCompatActivity
 
     // other shits
     public static final int MAX_LABEL_LENGTH = 31 ;
-    public static final String REMOVED_SUCCESSFULLY = " has been removed successfully. ";
+//    public static final String REMOVED_SUCCESSFULLY = " has been removed successfully. ";
+    public static final String REMOVED_SUCCESSFULLY = "Recipe has been removed";
     public static final String FETCHING_INGREDIENTS = "Fething ingredients, please wait...";
 
     public int counter = 0 ;
