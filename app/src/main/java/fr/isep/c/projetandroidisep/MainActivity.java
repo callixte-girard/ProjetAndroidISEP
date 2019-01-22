@@ -144,8 +144,6 @@ public class MainActivity extends AppCompatActivity
     public static final String REMOVED_SUCCESSFULLY = "Recipe has been removed";
     public static final String FETCHING_INGREDIENTS = "Fething ingredients, please wait...";
 
-    public int counter = 0 ;
-
     /////////////////////////////////////////////////////////////////////////////////
 
     @Override

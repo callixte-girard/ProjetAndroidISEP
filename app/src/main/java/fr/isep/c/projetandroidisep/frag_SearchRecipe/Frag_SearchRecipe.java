@@ -37,7 +37,7 @@ public class Frag_SearchRecipe extends Fragment
     private TextView results_number ;
     //private FloatingActionButton add_recipe ;
 
-    private final int deepness = 0 ; // creuse 2 fois, càd cherche 3 x 15 résultats maximum.
+    private final int deepness = 3 ; // creuse N fois <=> cherche (N+1) x 15 résultats maximum.
     private int current_deepness = 0 ;
 
     private View view ;
@@ -95,7 +95,8 @@ public class Frag_SearchRecipe extends Fragment
             {
                 String optional = "";
 
-                if (newText.isEmpty()) {
+                if (newText.length() < 3)
+                {
                     optional = "_clear";
                     //Misc is cleared, do your thing
 
@@ -142,7 +143,13 @@ public class Frag_SearchRecipe extends Fragment
         }
 
         // clear results
+        // 1st in main activity
         ((MainActivity) getActivity()).getSearchResults().clear();
+        // 2nd in the adapter displaying results.
+        ((Adapter_SearchRecipe) results_list.getAdapter()).updateResultsList(
+                ((MainActivity) getActivity()).getSearchResults()
+        );
+        // 3rd the counting label.
         updateResultsNumber();
     }
 
@@ -151,6 +158,15 @@ public class Frag_SearchRecipe extends Fragment
     {
         // updates adapter
         ((Adapter_SearchRecipe) results_list.getAdapter()).updateResultsList(new_list);
+
+        // and label
+        updateResultsNumber();
+    }
+
+    public void addRecipeToResults(Recipe rec)
+    {
+        // updates adapter
+        ((Adapter_SearchRecipe) results_list.getAdapter()).addRecipeToResults(rec);
 
         // and label
         updateResultsNumber();
@@ -231,7 +247,7 @@ public class Frag_SearchRecipe extends Fragment
         }
         catch (Exception ex) {}
 
-        updateResultsList(((MainActivity) getActivity()).getSearchResults());
+//        updateResultsList(((MainActivity) getActivity()).getSearchResults());
 
         // refait une nouvelle task
         if (current_deepness < deepness)
@@ -275,21 +291,22 @@ public class Frag_SearchRecipe extends Fragment
     @Override
     public void processFinish_fetchIngredients(Document doc, String url)
     {
-        ((MainActivity) getActivity()).counter ++ ;
-
         try {
             ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
             ArrayList<String> etapes_list = Instructions.fetchInstructions(doc);
 
             // --> finally adds to appropriate recipe
-            //Recipe rec_to_update = Recipe.getByUrl(main_act.getSearchResults(), url);
             Recipe rec_to_update = Recipe.getByUrl(
-                    ((Adapter_SearchRecipe) results_list.getAdapter()).getResultsList(), url);
+                    ((MainActivity) getActivity()).getSearchResults()
+//                    ((Adapter_SearchRecipe) results_list.getAdapter()).getResultsList()
+            , url);
+
             rec_to_update.setIngredients(ingr_list);
             rec_to_update.setInstructions(etapes_list);
 
             // update SearchRecipe UI
-            updateResultsList(((MainActivity) getActivity()).getSearchResults());
+//            updateResultsList(((MainActivity) getActivity()).getSearchResults());
+            addRecipeToResults(rec_to_update);
 
             Log.d("task_results_holder", url);
 

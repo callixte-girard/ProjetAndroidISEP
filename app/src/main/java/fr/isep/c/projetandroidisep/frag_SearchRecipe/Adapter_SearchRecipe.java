@@ -313,6 +313,11 @@ public class Adapter_SearchRecipe
     }
 
 
+    public void addRecipeToResults(Recipe rec) {
+        this.al.add(rec);
+//        notifyDataSetChanged();
+    }
+
     public void updateResultsList(ArrayList<Recipe> al) {
         this.al.clear();
         this.al.addAll(al);
