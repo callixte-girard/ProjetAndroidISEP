@@ -180,7 +180,7 @@ public class FirebaseUIActivity extends AppCompatActivity {
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
-                        .setLogo(R.drawable.ic_squidge_logo1)      // Set logo drawable
+                        .setLogo(R.drawable.ic_squidge_logo)      // Set logo drawable
                         .setTheme(R.style.AppTheme)      // Set theme
                         .build(),
                 RC_SIGN_IN);
