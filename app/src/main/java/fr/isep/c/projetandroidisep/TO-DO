@@ -1,25 +1,29 @@
-V faire fragment detail_recipe
-    V corriger bug ingredients mal affichés
-    V rajouter tirets par étape mais sans écrire "Etape n" à chaque fois
-- ne lancer que les tasks pour les recettes cliquées
-    - n'afficher la recette qu'une fois ses détails récupérés
-- refaire un layout plus adaptable aux petits écrans
-V expandable view
-V améliorer le fait de parser tous les ingrédients de tous les résultats de recherche...
-V rendre personnalisables directement les ingrédients des recettes
-V faire mode buy shopping list
-    - rajouter affichage voyant indiquant que la shopping list a bien été achetée
-V réparer pbs arret asynctasks en mode recherche :
-    - trouver comment activer onQueryTextChange() quand le texte est vide
-    V bon le résultat obtenu n'arrete pas tjs la derniere asynctask mais on s'en satisfera.
+### NOUVELLES FONCTIONNALITES A RAJOUTER / BUGS A CORRIGER :
+- rajouter affichage voyant indiquant que la shopping list a bien été achetée
 - add filters in fragments :
     - favorite recipes
     - my shopping lists
     - create sl
     - buy sl
-V customiser icones
-V rajouter description dans le parser
-V implémenter récupération des images
-V backup delete with snackbar
+
+### BONUS :
+- refaire un layout plus adaptable aux petits écrans
 - implémenter onBackPressed pour chaque fragment
 - sort favorite recipes by last added
+
+
+### FINIS :
+X faire fragment detail_recipe
+    X corriger bug ingredients mal affichés
+    X rajouter tirets par étape mais sans écrire "Etape n" à chaque fois
+X améliorer le fait de parser tous les ingrédients de tous les résultats de recherche...
+    X n'afficher la recette qu'une fois ses détails récupérés
+X expandable view
+X rendre personnalisables directement les ingrédients des recettes
+X faire mode buy shopping list
+X réparer pbs arret asynctasks en mode recherche :
+    X bon le résultat obtenu n'arrete pas tjs la derniere asynctask mais on s'en satisfera.
+X customiser icones
+X rajouter description dans le parser
+X implémenter récupération des images
+X backup delete with snackbar
