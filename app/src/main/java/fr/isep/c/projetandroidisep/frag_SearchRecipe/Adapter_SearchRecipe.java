@@ -15,13 +15,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.jsoup.nodes.Document;
-
 import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.myCustomTypes.Etape;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 

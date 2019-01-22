@@ -8,17 +8,17 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
-public class Etape
+public class Instructions
 {
     private int numero ;
     private String description ;
     private Recipe rec ;
 
 
-    public Etape() {}
+    public Instructions() {}
 
 
-    public Etape(int numero, String description)
+    public Instructions(int numero, String description)
     {
         //this.rec = rec ;
         this.numero = numero ;
@@ -28,7 +28,7 @@ public class Etape
 
     public static ArrayList<String> fetchInstructions(Document doc)
     {
-        //ArrayList<Etape> etapes = new ArrayList<>();
+        //ArrayList<Instructions> etapes = new ArrayList<>();
         ArrayList<String> etapes = new ArrayList<>();
 
         Elements instructions = doc
@@ -45,7 +45,7 @@ public class Etape
             description = el.text();
 //            Log.d("test", description);
 
-            etapes.add("- " + description);
+            etapes.add(description);
         }
 
         return etapes ;

@@ -71,11 +71,14 @@ public class Misc {
 	}
 
 
-	public static String patchStringArrayList(ArrayList<String> str_al)
+	public static String patchStringArrayList(ArrayList<String> str_al, boolean add_hyphen)
 	{
 		String str_unified = "" ;
 
-		for (String s : str_al) {
+		for (String s : str_al)
+		{
+			if (add_hyphen) str_unified += "- " ;
+
 			str_unified += s + "\r\n" ;
 		}
 

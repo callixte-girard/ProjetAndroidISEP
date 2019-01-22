@@ -1,6 +1,5 @@
 package fr.isep.c.projetandroidisep.frag_SearchRecipe;
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 //import android.support.v7.widget.SearchView;
-import android.widget.Adapter;
 import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +22,7 @@ import java.util.ArrayList;
 
 import fr.isep.c.projetandroidisep.MainActivity;
 import fr.isep.c.projetandroidisep.R;
-import fr.isep.c.projetandroidisep.myCustomTypes.Etape;
+import fr.isep.c.projetandroidisep.myCustomTypes.Instructions;
 import fr.isep.c.projetandroidisep.myCustomTypes.Ingredient;
 import fr.isep.c.projetandroidisep.myCustomTypes.Recipe;
 
@@ -281,7 +279,7 @@ public class Frag_SearchRecipe extends Fragment
 
         try {
             ArrayList<Ingredient> ingr_list = Ingredient.fetchAllFromDoc(doc);
-            ArrayList<String> etapes_list = Etape.fetchInstructions(doc);
+            ArrayList<String> etapes_list = Instructions.fetchInstructions(doc);
 
             // --> finally adds to appropriate recipe
             //Recipe rec_to_update = Recipe.getByUrl(main_act.getSearchResults(), url);

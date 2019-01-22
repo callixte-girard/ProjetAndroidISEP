@@ -51,7 +51,7 @@ public class Frag_RecipeDetails extends Fragment
 
         // instructions
         recipe_instructions = view.findViewById(R.id.recipe_instructions);
-        String instructions_unified = Misc.patchStringArrayList(instructions);
+        String instructions_unified = Misc.patchStringArrayList(instructions, true);
         recipe_instructions.setText(instructions_unified);
 
         // button
