@@ -37,7 +37,9 @@ public class Task_FetchIngredients extends AsyncTask<String, Void, Document>
     @Override
     public void onPostExecute(Document doc)
     {
-        // and then return
-        this.delegate_fetch_ingredients.processFinish_fetchIngredients(doc, this.url);
+        if (!this.isCancelled()) {
+            // and then return
+            this.delegate_fetch_ingredients.processFinish_fetchIngredients(doc, this.url);
+        }
     }
 }

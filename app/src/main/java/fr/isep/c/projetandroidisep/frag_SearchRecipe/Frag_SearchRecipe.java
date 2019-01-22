@@ -37,7 +37,7 @@ public class Frag_SearchRecipe extends Fragment
     private TextView results_number ;
     //private FloatingActionButton add_recipe ;
 
-    private final int deepness = 3 ; // creuse N fois <=> cherche (N+1) x 15 résultats maximum.
+    private final int deepness = 4 ; // creuse N fois <=> cherche (N+1) x 15 résultats maximum.
     private int current_deepness = 0 ;
 
     private View view ;
@@ -79,6 +79,7 @@ public class Frag_SearchRecipe extends Fragment
 
                 // reset all results list
                 resetResultsList();
+
                 results_number.setText("Searching...");
 
                 //// PERFORM SEARCH HERE
@@ -93,17 +94,10 @@ public class Frag_SearchRecipe extends Fragment
             @Override
             public boolean onQueryTextChange(String newText)
             {
-                String optional = "";
-
                 if (newText.length() < 3)
-                {
-                    optional = "_clear";
-                    //Misc is cleared, do your thing
-
                     resetResultsList();
-                }
 
-                Log.d("onQueryTextChange" + optional, newText);
+                Log.d("onQueryTextChange", newText);
 
                 return true;
             }
@@ -135,12 +129,11 @@ public class Frag_SearchRecipe extends Fragment
     private void resetResultsList()
     {
         // cancels eventual new callings
-        current_deepness = deepness ;
-
         for (AsyncTask task : async_tasks_list) {
             task.cancel(true);
-            Log.d(task.toString(), "isCancelled=" + task.isCancelled());
+//            Log.d(task.toString(), " | isCancelled: " + task.isCancelled());
         }
+        current_deepness = deepness ;
 
         // clear results
         // 1st in main activity
@@ -226,9 +219,9 @@ public class Frag_SearchRecipe extends Fragment
         // parse et ajoute les 15 recipes du doc aux résultats
         try
         {
-            ArrayList<Recipe> search_results = Recipe.fetchPageResultsFromDoc(doc);
+            ArrayList<Recipe> results_15 = Recipe.fetchPageResultsFromDoc(doc);
 
-            for (Recipe rec : search_results)
+            for (Recipe rec : results_15)
             {
                 // first checks if it's already present in the favorites
                 Recipe rec_corresp = Recipe.getByUrl(
@@ -243,7 +236,7 @@ public class Frag_SearchRecipe extends Fragment
                 }
             }
 
-            ((MainActivity) getActivity()).getSearchResults().addAll(search_results);
+            ((MainActivity) getActivity()).getSearchResults().addAll(results_15);
         }
         catch (Exception ex) {}
 

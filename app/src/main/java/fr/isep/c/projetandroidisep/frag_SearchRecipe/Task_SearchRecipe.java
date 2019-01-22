@@ -31,10 +31,9 @@ public class Task_SearchRecipe extends AsyncTask<String, Void, Document>
     @Override
     public void onPostExecute(Document doc)
     {
-        // traitement local pour parser les données
-
-
-        // and then return
-        this.delegate_search_recipe.processFinish_searchRecipe(doc);
+        if (!this.isCancelled()) {
+            // and then return
+            this.delegate_search_recipe.processFinish_searchRecipe(doc);
+        }
     }
 }
